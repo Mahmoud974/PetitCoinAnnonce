@@ -45,14 +45,14 @@ export default function ContactForm() {
 
   return (
     <>
-      <div className="flex flex-row justify-between max-w-3xl  ">
+      <div className="flex flex-row justify-between    ">
         <p className="mb-3">Prendre contact par mail ou téléphone : </p>
         <div className="flex flex-row">
           <Phone className="  text-red-700" />
           <p className="ml-2 underline text-red-700">Contacter par téléphone</p>
         </div>
       </div>
-      <div className="max-w-3xl   bg-[#121212] text-white p-8  ">
+      <div className="    bg-[#121212] text-white p-8  ">
         <h2 className="text-2xl font-bold mb-6 text-center">Contactez-nous</h2>
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Civilité */}

@@ -25,7 +25,7 @@ export default function Footer() {
     <>
       <div className="bg-red-600 w-auto h-6"></div>
       <footer className="bg-black text-white py-10 px-6 lg:px-20 relative mt-auto">
-        <div className="container mx-auto grid grid-cols-1 lg:grid-cols-4 gap-10 text-center lg:text-left">
+        <div className="container mx-auto grid grid-cols-1 lg:grid-cols-4 gap-10 text-center lg:text-left max-w-7xl">
           {/* SERVICES */}
           <div>
             <h3 className="text-red-600 font-semibold mb-4">NOS SERVICES</h3>

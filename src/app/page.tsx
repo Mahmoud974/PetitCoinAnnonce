@@ -15,7 +15,7 @@ export default function Page() {
         title={"Annonces locales, opportunités globales"}
       />
 
-      <div className="container mx-auto mt-24">
+      <div className="container mx-auto mt-24 max-w-7xl">
         <div className="flex">
           <div className="w-2 bg-red-600 h-auto mr-3"></div>
           <div>

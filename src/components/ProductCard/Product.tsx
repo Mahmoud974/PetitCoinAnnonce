@@ -3,7 +3,6 @@ import {
   Printer,
   HandCoins,
   Pin,
-  Star,
   Clock4,
   FlagTriangleRight,
 } from "lucide-react";
@@ -16,10 +15,10 @@ import { Button } from "../ui/button";
 
 export default function Product() {
   return (
-    <main className="mx-auto gap-5 flex container">
+    <main className="mx-auto gap-5 flex container max-w-7xl ">
       <ImgProfil />
       <div>
-        <div className="flex justify-between">
+        <div className="flex justify-between items-start">
           <div>
             <h1 className="text-3xl font-bold mb-2">
               Vente de voiture Hyundai
@@ -36,7 +35,7 @@ export default function Product() {
               <p> il y a 2 semaines à 07:54</p>
             </div>
           </div>
-          <ul className="flex my-4 gap-4 items-center  ">
+          <ul className="flex  gap-4 items-center  ">
             <li className="flex">
               <Share className="text-red-500" />{" "}
               <p className="ml-1">{`Partager l'annonce`}</p>

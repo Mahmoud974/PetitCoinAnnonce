@@ -8,7 +8,7 @@ export default function Icons() {
     <div className="flex  justify-between">
       <div>
         <h2 className="text-xl font-bold mb-2">Informations clé</h2>
-        <ul className="gap-6 grid grid-cols-4  ">
+        <ul className="gap-9 grid grid-cols-4  ">
           <li>
             <div className="flex items-start">
               <Car />{" "}

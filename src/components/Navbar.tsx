@@ -7,8 +7,8 @@ import MenuProfil from "./MenuProfil";
 export default function Navbar() {
   //bg-[#FDB714]
   return (
-    <nav className="py-8 bg-red-600 text-white">
-      <div className="container mx-auto flex flex-col justify-between">
+    <nav className="py-8 bg-red-600 text-white ">
+      <div className="container mx-auto flex flex-col justify-between max-w-7xl">
         <div className="flex justify-between items-center">
           <p className="font-bold">Project-online</p>
           <Button className="bg-[#181a1b]">
@@ -20,7 +20,8 @@ export default function Navbar() {
             <MenuProfil />
           </div>
         </div>
-        <ul className="flex mt-10 justify-between items-center text-white    font-bold">
+        <div className="border-t my-6 border-gray-300  "></div>
+        <ul className="flex  justify-between items-center text-white    font-bold">
           <li>Immobilier</li>
           <li>Auto-Moto</li>
           <li>Emploi</li>
