@@ -2,10 +2,10 @@ import React from "react";
 import { CircleX, Heart } from "lucide-react";
 export default function Recents() {
   return (
-    <div className="mt-4">
-      <h2 className="text-1xl font-bold">Recherches récentes</h2>
+    <div className="mt-8">
+      <h2 className="text-xl md:text-2xl font-bold ">Recherches récentes</h2>
       <ul className="flex gap-4 mt-4">
-        <li className="flex-1 bg-gradient-to-r rounded-xl bg-black text-white">
+        <li className="flex-1 bg-gradient-to-r rounded-xl space-y-3 bg-red-600 text-[#181a1b]">
           <div className="  rounded-xl p-3">
             <div className="flex justify-between">
               <p className="font-bold">Vos coup de coeur</p>

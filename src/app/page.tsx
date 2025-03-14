@@ -4,6 +4,7 @@ import Banner from "@/components/Banner";
 import Footer from "@/components/Footer";
 import Recents from "@/components/Recents";
 import { CarousselCategory } from "@/components/CarousselCategory";
+import AppPromo from "@/components/AppPromo";
 
 export default function Page() {
   return (
@@ -13,9 +14,10 @@ export default function Page() {
         name="/home.jpg"
         title={"Annonces locales, opportunités globales"}
       />
-      <div className="container mx-auto mt-5">
+
+      <div className="container mx-auto mt-24">
         <div className="flex">
-          <div className="w-2 bg-yellow-300 h-auto mr-3"></div>
+          <div className="w-2 bg-red-600 h-auto mr-3"></div>
           <div>
             <h1 className="text-2xl font-bold">
               Nos rubriques, pour toutes les occasions
@@ -26,8 +28,10 @@ export default function Page() {
             </p>
           </div>
         </div>
+
         <Recents />
         <CarousselCategory />
+        <AppPromo />
       </div>
       <Footer />
     </div>

@@ -1,32 +1,26 @@
 import React from "react";
-import { CircleUserRound, Heart, Bell, CirclePlus } from "lucide-react";
+import { CirclePlus } from "lucide-react";
 import { InputWithButton } from "@/components/ui/Search";
 import { Button } from "@/components/ui/button";
+import MenuProfil from "./MenuProfil";
 
 export default function Navbar() {
+  //bg-[#FDB714]
   return (
-    <nav className="py-8 bg-[#FDB714] text-black">
+    <nav className="py-8 bg-red-600 text-white">
       <div className="container mx-auto flex flex-col justify-between">
-        <div className="flex justify-between">
+        <div className="flex justify-between items-center">
           <p className="font-bold">Project-online</p>
-          <Button>
+          <Button className="bg-[#181a1b]">
             Déposer une annonce <CirclePlus />
           </Button>
           <InputWithButton />
 
-          <ul className="flex gap-4">
-            <li className="cursor-pointer">
-              <Heart />
-            </li>
-            <li className="cursor-pointer">
-              <Bell />
-            </li>
-            <li className="cursor-pointer">
-              <CircleUserRound />
-            </li>
-          </ul>
+          <div className="cursor-pointer text-white">
+            <MenuProfil />
+          </div>
         </div>
-        <ul className="flex justify-between items-center  mt-4 font-bold">
+        <ul className="flex mt-10 justify-between items-center text-white    font-bold">
           <li>Immobilier</li>
           <li>Auto-Moto</li>
           <li>Emploi</li>
