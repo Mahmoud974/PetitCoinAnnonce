@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { Home, Lightbulb, Calculator } from "lucide-react";
+import Link from "next/link";
 
 interface BannerProps {
   name: string;
@@ -29,15 +30,19 @@ const Banner: React.FC<BannerProps> = ({ name, title }) => {
         <div className="container mx-auto flex justify-center gap-12 text-white">
           <div className="flex items-center gap-2">
             <Home className="text-red-600" size={24} />
-            <span className="text-red-600 font-bold">
-              ESTIMER LA VALEUR DE MON BIEN &gt;
-            </span>
+            <Link href="/equipments">
+              <span className="text-red-600 font-bold">
+                ESTIMER LA VALEUR DE MON BIEN &gt;
+              </span>
+            </Link>
           </div>
           <div className="flex items-center gap-2">
             <Lightbulb className="text-red-600" size={24} />
-            <span className="text-red-600 font-bold">
-              INVESTIR DANS LE NEUF &gt;
-            </span>
+            <Link href="/lists">
+              <span className="text-red-600 font-bold">
+                INVESTIR DANS LE NEUF &gt;
+              </span>
+            </Link>
           </div>
           <div className="flex items-center gap-2">
             <Calculator className="text-red-600" size={24} />

@@ -52,7 +52,7 @@ export default function ContactForm() {
           <p className="ml-2 underline text-red-700">Contacter par téléphone</p>
         </div>
       </div>
-      <div className="    bg-[#121212] text-white p-8  ">
+      <div className=" rounded-xl   bg-[#121212] text-white p-8  ">
         <h2 className="text-2xl font-bold mb-6 text-center">Contactez-nous</h2>
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Civilité */}

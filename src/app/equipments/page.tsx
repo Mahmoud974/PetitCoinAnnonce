@@ -1,8 +1,7 @@
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
-import ProductCard from "@/components/ProductCard";
+
 import Product from "@/components/ProductCard/Product";
-import ProfileCard from "@/components/Profil";
 
 import React from "react";
 

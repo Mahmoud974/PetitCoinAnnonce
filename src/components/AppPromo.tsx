@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function AppPromo() {
   return (
-    <div className="bg-red-600 mb-12 text-white p-6 rounded-lg flex items-center justify-between  mx-auto shadow-lg">
+    <div className="bg-red-600 mb-12 text-white p-6 rounded-lg flex items-center justify-between  mx-auto shadow-lg max-w-7xl">
       <div>
         <h2 className="text-2xl font-bold">Plus simple avec l’application</h2>
         <p className="mt-2">

@@ -1,10 +1,10 @@
 import {
-  Share,
   Printer,
   HandCoins,
   Pin,
   Clock4,
   FlagTriangleRight,
+  Share2,
 } from "lucide-react";
 import React from "react";
 import Icons from "./Icons";
@@ -12,6 +12,7 @@ import ImgProfil from "./ImgProfil";
 import ContactForm from "./Form";
 import { FaStar } from "react-icons/fa";
 import { Button } from "../ui/button";
+import Image from "next/image";
 
 export default function Product() {
   return (
@@ -37,7 +38,7 @@ export default function Product() {
           </div>
           <ul className="flex  gap-4 items-center  ">
             <li className="flex">
-              <Share className="text-red-500" />{" "}
+              <Share2 className="text-red-500" />{" "}
               <p className="ml-1">{`Partager l'annonce`}</p>
             </li>
             <li className="flex">
@@ -127,12 +128,29 @@ export default function Product() {
           </div>
           <Button>Suivre</Button>
         </div>
-        <div className="border-t border-gray-300 my-4"></div>
-        <ContactForm />
+
         <div className="flex mt-3">
           <FlagTriangleRight className="w-5" />
           <p className="underline text-base">Signaler l’annonce</p>
         </div>
+        <div className="border-t border-gray-300 my-4"></div>
+        <div className="flex justify-between">
+          <div>
+            <div className="flex my-2">
+              <Pin className="text-red-500" />{" "}
+              <p className="ml-1 font-bold">64110 Mazères-Lezons</p>
+            </div>
+            <Image
+              src="/map.png"
+              alt="Kellian"
+              width={1050}
+              height={1050}
+              className="rounded-lg w-auto"
+            />
+          </div>
+        </div>
+        <div className="border-t border-gray-300 my-4"></div>
+        <ContactForm />
       </div>
     </main>
   );
