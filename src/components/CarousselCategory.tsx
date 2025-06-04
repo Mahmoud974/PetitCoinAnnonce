@@ -26,13 +26,17 @@ const DummyContent = () => {
         return (
           <div
             key={"dummy-content" + index}
-            className="bg-[#F5F5F7] dark:bg-neutral-800 p-1 md:p-14   mb-4"
+            className="bg-[#F5F5F7] dark:bg-neutral-800 p-1 md:p-14 mb-4"
           >
-            <div className="relative w-full h-64 md:h-96 mx-auto">
+            <div className="relative w-full h-48 md:h-64 mx-auto">
+              {" "}
+              {/* Réduit la hauteur ici */}
               <Image
                 src="https://assets.aceternity.com/macbook.png"
                 alt="Macbook mockup from Aceternity UI"
-                layout="fill"
+                layout="intrinsic" // Changer de `fill` à `intrinsic` pour contrôler la taille
+                width={500} // Ajoute une largeur spécifique
+                height={300} // Définir une hauteur spécifique pour l'image
                 objectFit="contain"
                 className="rounded-xl"
               />

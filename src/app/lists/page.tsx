@@ -88,7 +88,7 @@ export default function Page() {
         <div className="w-3/4">
           <div className="grid gap-6">
             {annonces.map((annonce) => (
-              <Link href="/equipments" key={annonce.id}>
+              <Link href="/item" key={annonce.id}>
                 <div className=" bg-[#131416] p-4 rounded-lg   flex gap-4">
                   <Image
                     width={200}

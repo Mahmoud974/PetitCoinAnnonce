@@ -12,8 +12,6 @@ export default function page() {
 
       <div className="flex container justify-between mx-auto my-6">
         <Product />
-        {/* <ProductCard /> */}
-        {/* <ProfileCard /> */}
       </div>
       <Footer />
     </div>

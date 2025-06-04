@@ -26,9 +26,11 @@ export default function Navbar() {
           <Link href="/">
             <p className="font-bold">Project-online</p>
           </Link>
-          <Button className="bg-[#181a1b]">
-            Déposer une annonce <CirclePlus />
-          </Button>
+          <Link href="/add">
+            <Button className="bg-[#181a1b]">
+              Déposer une annonce <CirclePlus />
+            </Button>
+          </Link>
           <InputWithButton />
 
           <div className="cursor-pointer flex items-center space-x-4 text-white">
