@@ -19,8 +19,9 @@ export default function CardPrincipal() {
         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
  
          <div className="absolute top-3 right-3 flex space-x-2">
-           <button className="p-2 bg-red-500  hover:bg-white rounded-full shadow-md transition-all duration-200 hover:scale-110">
+           <button className="p-2 flex items-center bg-red-500  hover:bg-white rounded-full shadow-md transition-all duration-200 hover:scale-110">
              <Heart className="w-5 h-5  hover:text-red-500 transition-colors duration-200" />
+             <p className='ml-1'>14</p>
            </button>
         
          </div>
@@ -53,9 +54,11 @@ export default function CardPrincipal() {
           <h3 className="font-bold text-lg text-white group-hover:text-red-600 transition-colors duration-200">
             Pièce seat ibiza
           </h3>
-          <p className="text-sm text-white  mt-1">
-            Pièce d&apos;origine en excellent état...
+        <Link href="/lists/immobilier">
+        <p className="text-sm text-white mt-1 hover:text-red-600">
+            Immobilier
           </p>
+        </Link>
         </div>
 
         

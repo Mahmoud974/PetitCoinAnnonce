@@ -29,7 +29,7 @@ export default function Card() {
 
       {/* Content */}
       <div className="p-4 space-y-3">
-        {/* User info */}
+       
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
             <div className="bg-gradient-to-r from-green-400 to-green-600 w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm shadow-md">
@@ -55,7 +55,7 @@ export default function Card() {
             Pièce seat ibiza
           </h3>
           <p className="text-sm text-white  mt-1">
-            Pièce d&apos;origine en excellent état...
+            Immobilier
           </p>
         </div>
 

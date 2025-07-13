@@ -1,3 +1,4 @@
+'use client'
 
 import React from "react";
 import {
@@ -16,29 +17,40 @@ import { InputWithButton } from "@/components/ui/Search";
 import { Button } from "@/components/ui/button";
 import MenuProfil from "./MenuProfil";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
+// 🔧 Liste centralisée des catégories
+const categories = [
+  { slug: "immobilier", label: "Immobilier", icon: <Building2 size={24} /> },
+  { slug: "emploi", label: "Emploi", icon: <BriefcaseBusiness size={24} /> },
+  { slug: "seconde-main", label: "Seconde main", icon: <Shirt size={24} /> },
+  { slug: "animaux", label: "Animaux", icon: <Dog size={24} /> },
+  { slug: "services", label: "Services", icon: <HandPlatter size={24} /> },
+  { slug: "vacances", label: "Vacances", icon: <Caravan size={24} /> },
+  { slug: "affaires-pro", label: "Affaires pro", icon: <Volleyball size={24} /> },
+];
 
 export default function Navbar() {
-
-  
+  const pathname = usePathname();
   const notificationCount = 3;
+
   return (
-    <nav className="py-8 bg-red-600 text-white ">
+    <nav className="py-8 bg-red-600 text-white">
       <div className="container mx-auto flex flex-col justify-between max-w-7xl">
+        {/* Barre du haut */}
         <div className="flex justify-between items-center cursor-pointer">
           <Link href="/">
-            <p className="font-bold">Project-online</p>
+            <p className="font-bold text-xl">Project-online</p>
           </Link>
           <Link href="/add">
             <Button className="bg-[#181a1b]">
-              Déposer une annonce <CirclePlus />
+              Déposer une annonce <CirclePlus className="ml-2" />
             </Button>
           </Link>
           <InputWithButton />
-
           <div className="cursor-pointer flex items-center space-x-4 text-white">
             <Link href="/favorites">
-            <Heart />
+              <Heart />
             </Link>
             <div className="relative">
               <button className="relative text-white p-2 rounded-full hover:bg-gray-700 transition">
@@ -56,51 +68,27 @@ export default function Navbar() {
 
         <div className="border border-t my-6 border-white"></div>
 
-        <ul className="flex justify-between items-center text-white font-bold">
-  <li>
-    <Link href="/lists/immobilier" className="flex flex-col items-center cursor-pointer">
-      <Building2 />
-      <p>Immobilier</p>
-    </Link>
-  </li>
-  <li>
-    <Link href="/lists/emploi" className="flex flex-col items-center cursor-pointer">
-      <BriefcaseBusiness />
-      <p>Emploi</p>
-    </Link>
-  </li>
-  <li>
-    <Link href="/lists/seconde-main" className="flex flex-col items-center cursor-pointer">
-      <Shirt />
-      <p>Seconde main</p>
-    </Link>
-  </li>
-  <li>
-    <Link href="/lists/animaux" className="flex flex-col items-center cursor-pointer">
-      <Dog />
-      <p>Animaux</p>
-    </Link>
-  </li>
-  <li>
-    <Link href="/lists/services" className="flex flex-col items-center cursor-pointer">
-      <HandPlatter />
-      <p>Services</p>
-    </Link>
-  </li>
-  <li>
-    <Link href="/lists/vacances" className="flex flex-col items-center cursor-pointer">
-      <Caravan />
-      <p>Vacances</p>
-    </Link>
-  </li>
-  <li>
-    <Link href="/lists/affaires-pro" className="flex flex-col items-center cursor-pointer">
-      <Volleyball />
-      <p>Affaires pro</p>
-    </Link>
-  </li>
-</ul>
-
+        {/* Catégories */}
+        <ul className="flex justify-between items-center text-white font-bold gap-3 overflow-x-auto">
+          {categories.map((cat) => {
+            const isActive = pathname === `/lists/${cat.slug}`;
+            return (
+              <li key={cat.slug}>
+                <Link
+                  href={`/lists/${cat.slug}`}
+                  className={`flex flex-col items-center px-3 py-2 rounded-xl transition-all duration-200 ${
+                    isActive
+                      ? "bg-white text-red-600 scale-105 shadow-md"
+                      : "hover:bg-white/20"
+                  }`}
+                >
+                  {cat.icon}
+                  <span className="text-sm mt-1">{cat.label}</span>
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
       </div>
     </nav>
   );

@@ -23,27 +23,15 @@ export default function Page(){
         <Recents />
 
         <div className="">
-        <h1 className="text-2xl my-6 font-bold"> Photos, videos & audios </h1>
+        <h1 className="text-2xl my-6 font-bold"> {` Fil d'actu`}</h1>
      <div className="grid grid-cols-4 gap-4">
-     {Array.from({ length: 4 }).map((_, index) => (
+     {Array.from({ length: 14 }).map((_, index) => (
         <CardPrincipal key={index} />
       ))}
      </div>
 
         </div>
-
-        <div className="">
-     <div>
-     <h1 className="text-2xl my-6 font-bold"> Voitures </h1>
-     <p>{` Voir + d'annonces`}</p>
-     </div>
-     <div className="grid grid-cols-4 gap-4">
-     {Array.from({ length: 4 }).map((_, index) => (
-        <CardPrincipal key={index} />
-      ))}
-     </div>
-
-        </div>
+ 
 
         <AppPromo />
       </div>
