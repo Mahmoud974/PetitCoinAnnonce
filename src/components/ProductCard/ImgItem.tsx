@@ -1,7 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowLeft, ArrowRight, Clock10, Heart, Pin } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  Clock10,
+  FlagTriangleRight,
+  Heart,
+  Phone,
+  Pin,
+  Share2,
+} from "lucide-react";
 import Image from "next/image";
 
 const items = [
@@ -9,27 +18,29 @@ const items = [
     src: "/4.jpg",
     alt: "Kellian",
     location: "64110 Mazères-Lezons",
-    time: "il y a 2 semaines",
+    time: "03/06/2025",
     price: "490€",
   },
   {
     src: "/1.jpg",
     alt: "Example 2",
     location: "75001 Paris",
-    time: "il y a 1 semaine",
+    time: "03/06/2025",
     price: "550€",
   },
   {
     src: "/3.jpg",
     alt: "Example 3",
     location: "69002 Lyon",
-    time: "il y a 3 jours",
+    time: "03/06/2025",
     price: "620€",
   },
 ];
 
 export default function ImgCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  // Exemple de compteur de "likes" pour chaque diapositive
+  const [likeCounts, setLikeCounts] = useState<number[]>(items.map(() => 0));
 
   const prevSlide = () => {
     setCurrentIndex((prevIndex) =>
@@ -43,16 +54,29 @@ export default function ImgCarousel() {
     );
   };
 
+  const incrementLike = () => {
+    setLikeCounts((prev) => {
+      const newCounts = [...prev];
+      newCounts[currentIndex] += 1;
+      return newCounts;
+    });
+  };
+
   const { src, alt, location, time, price } = items[currentIndex];
+  const likeCount = likeCounts[currentIndex];
+  const slideNumber = currentIndex + 1;
 
   return (
-    <div className="relative w-[350px] mx-auto">
-      <div className="overflow-hidden rounded-xl shadow-lg">
-        {/* Conteneur image + flèches */}
+    <div className="sticky top-0 w-[350px] mx-auto">
+      <div className="overflow-hidden rounded-xl shadow-lg bg-white">
         <div className="relative w-[350px] h-[350px]">
-          <Image src={src} alt={alt} fill className="rounded-lg object-cover" />
+          <Image
+            src={src}
+            alt={alt}
+            fill
+            className="rounded-t-lg object-cover"
+          />
 
-          {/* Flèche gauche */}
           <button
             onClick={prevSlide}
             className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-75 z-20"
@@ -60,8 +84,6 @@ export default function ImgCarousel() {
           >
             <ArrowLeft size={20} />
           </button>
-
-          {/* Flèche droite */}
           <button
             onClick={nextSlide}
             className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-75 z-20"
@@ -70,36 +92,64 @@ export default function ImgCarousel() {
             <ArrowRight size={20} />
           </button>
 
-          {/* Icône cœur (favori) */}
-          <div className="absolute top-2 right-2 bg-red-700 shadow-lg text-white px-4 py-4 rounded-full z-10">
-            <Heart />
+          <div className="absolute top-4 right-4 flex space-x-2 z-10">
+            <button
+              className="bg-red-600 bg-opacity-70 hover:bg-opacity-90 rounded-full p-3 flex items-center justify-center transition"
+              aria-label="Partager"
+            >
+              <Share2 className="w-5 h-5 text-white " />
+            </button>
+
+            <button
+              onClick={incrementLike}
+              className="bg-red-600 bg-opacity-70 hover:bg-opacity-90 rounded-full px-3 py-2 flex items-center gap-1 transition"
+              aria-label="J’aime"
+            >
+              <span className="text-white font-medium">{likeCount}</span>
+              <Heart className="w-4 h-4 text-white" />
+            </button>
+          </div>
+
+          {/* Overlay en haut à gauche : position du slide */}
+          <div className="absolute top-4 left-4 bg-black bg-opacity-50 rounded-full px-3 py-1 text-white text-sm font-medium z-10">
+            {slideNumber} / {items.length}
           </div>
         </div>
 
-        {/* Footer du slide */}
         <div className="p-4 bg-[#131416] text-white">
           <div className="flex gap-2 items-center">
             <div className="flex items-center">
-              <Pin className="text-red-500" />
-              <p className="ml-1">{location}</p>
+              <Pin className="text-red-500 w-5 h-5" />
+              <p className="ml-1 text-sm">{location}</p>
             </div>
             <div className="flex items-center ml-auto">
-              <Clock10 className="text-red-500" />
-              <p className="ml-1">{time}</p>
+              <Clock10 className="text-red-500 w-5 h-5" />
+              <p className="ml-1 text-sm">{time}</p>
             </div>
           </div>
 
-          <div className="flex mt-6 justify-between items-center">
+          <div className="flex gap-2 mt-3">
+            <Phone className="text-red-500 w-5 h-5" />
+            <p>08.90.12.12.12</p>
+          </div>
+
+          <div className="flex mt-3 justify-between items-center">
             <div>
-              <p>Prix</p>
+              <p className="text-gray-400 text-sm">Prix</p>
               <p className="text-4xl font-bold">{price}</p>
             </div>
-            <button className="px-3 bg-red-700 text-white font-semibold py-4 rounded-lg hover:bg-blue-700 transition">
-              Prendre contact
-            </button>
+            <div>
+              <button className="px-3 bg-red-700 text-white font-semibold py-2 rounded-lg hover:bg-red-800 transition">
+                Prendre contact
+              </button>
+            </div>
           </div>
         </div>
       </div>
+      <div className="flex mt-3">
+            <FlagTriangleRight className="w-5" />
+            <p className="underline text-base">Signaler l’annonce</p>
+          </div>
     </div>
   );
 }

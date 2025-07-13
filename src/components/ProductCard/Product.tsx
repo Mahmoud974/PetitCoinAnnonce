@@ -1,11 +1,4 @@
-import {
-  Printer,
-  HandCoins,
-  Clock4,
-  FlagTriangleRight,
-  Share2,
-  MoveLeft,
-} from "lucide-react";
+import { HandCoins, Clock4,  MoveLeft } from "lucide-react";
 import React from "react";
 import Icons from "./Icons";
 
@@ -26,23 +19,13 @@ export default function Product() {
         <div>
           <div className="flex justify-between items-start">
             <div>
-              <h1 className="text-3xl font-bold mb-2">
-                Vente de voiture Hyundai
-              </h1>
               <small className="text-gray-400">
                 Réf. annonce : Mouss 9926569973
               </small>
+              <h1 className="text-3xl font-bold mb-2">
+                Seat LEON 1.4 TSI 150CH ACT FR START&STOP DSG
+              </h1>
             </div>
-            <ul className="flex  gap-4 items-center  ">
-              <li className="flex">
-                <Share2 className="text-red-500" />{" "}
-                <p className="ml-1">{`Partager l'annonce`}</p>
-              </li>
-              <li className="flex">
-                <Printer className="text-red-500" />{" "}
-                <p className="ml-1">{`Partager l'annonce`}</p>
-              </li>
-            </ul>
           </div>
           <div className="border-t border-gray-300 my-4"></div>
           <div className="flex mt-3 justify-between">
@@ -62,23 +45,7 @@ export default function Product() {
           <Icons />
           <div className="border-t border-gray-300 my-4"></div>
 
-          <div className="flex justify-between">
-            <div>
-              <h2 className="text-xl font-bold mb-2">Engagements</h2>
-              <ul className=" flex items-center gap-4    text-gray-700">
-                <li className="bg-gray-700 text-white rounded-full w-auto text-center px-2">
-                  Rapidité et fiabilité
-                </li>
-                <li className="bg-gray-700 text-white rounded-full w-auto text-center px-2">
-                  Dynamique et souriant
-                </li>
-                <li className="bg-gray-700 text-white rounded-full w-auto text-center px-2">
-                  Réactif et flexible
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div className="border-t border-gray-300 my-4"></div>
+           
           <div className="flex justify-between">
             <div>
               <h2 className="text-xl font-bold mb-2">Moyen de paiement</h2>
@@ -127,10 +94,7 @@ export default function Product() {
             <Button>Suivre</Button>
           </div>
 
-          <div className="flex mt-3">
-            <FlagTriangleRight className="w-5" />
-            <p className="underline text-base">Signaler l’annonce</p>
-          </div>
+         
           <div className="border-t border-gray-300 my-4"></div>
 
           <ContactForm />
