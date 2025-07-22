@@ -1,7 +1,8 @@
 'use client'
-import CardPrincipal from '@/components/CardPrincipal'
+ 
 import React from 'react'
 import { useParams } from 'next/navigation';
+import CardPrincipalAnnonce from '@/components/CardPrincipalAnnonce';
 
 const TITLES: Record<string, string> = {
   immobilier: "Immobilier",
@@ -16,17 +17,17 @@ const TITLES: Record<string, string> = {
 export default function Page() {
   const params = useParams();
   const slug = params.slug as string;
-  const title = TITLES[slug] || "Catégorie";
+  const title = TITLES[slug] || "Annonce(s)" ;
   console.log(slug);
   
 
   return (
-    <div className=' my-12  max-w-7xl container mx-auto'>
+    <div className='mt-[100px] container mx-auto'>
       <h1 className="text-2xl font-bold">{title}</h1>
       <hr className='border-gray-300 my-4' />
       <div className='flex gap-3'>
-        <CardPrincipal />
-        <CardPrincipal />
+        <CardPrincipalAnnonce />
+  
       </div>
     </div>
   );

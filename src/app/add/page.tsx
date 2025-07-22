@@ -3,6 +3,16 @@
 import Image from "next/image";
 import { useState } from "react";
 
+const categories = [
+  { label: "Immobilier", icon: "🏢" },
+  { label: "Emploi", icon: "💼" },
+  { label: "Seconde main", icon: "👕" },
+  { label: "Animaux", icon: "🐶" },
+  { label: "Services", icon: "🧰" },
+  { label: "Vacances", icon: "🚐" },
+  { label: "Affaires pro", icon: "📊" },
+];
+
 export default function FormulaireAnnonce() {
   const [form, setForm] = useState({
     title: "",
@@ -15,6 +25,7 @@ export default function FormulaireAnnonce() {
     kilometrage: "",
     energie: "",
     transmission: "",
+    category: "",
   });
 
   const [images, setImages] = useState<File[]>([]);
@@ -31,6 +42,10 @@ export default function FormulaireAnnonce() {
     setImages(files);
   };
 
+  const handleCategoryClick = (cat: string) => {
+    setForm((prev) => ({ ...prev, category: cat }));
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log({ ...form, images });
@@ -43,70 +58,100 @@ export default function FormulaireAnnonce() {
         onSubmit={handleSubmit}
         className="w-full max-w-md p-8 rounded-lg text-white"
       >
-        <h2 className="text-2xl font-semibold mb-8 text-center">Déposer une annonce</h2>
+        <h2 className="text-2xl font-semibold mb-6 text-center">Déposer une annonce</h2>
+
+        {/* Sélection de catégorie */}
+        <div className="grid grid-cols-3 gap-4 mb-8 text-center">
+          {categories.map((cat) => (
+            <div
+              key={cat.label}
+              onClick={() => handleCategoryClick(cat.label)}
+              className={`cursor-pointer flex flex-col items-center p-3 rounded ${
+                form.category === cat.label ? "bg-white text-black" : "text-white hover:bg-white/20"
+              } transition`}
+            >
+              <span className="text-2xl">{cat.icon}</span>
+              <span className="text-sm mt-2 font-semibold">{cat.label}</span>
+            </div>
+          ))}
+        </div>
 
         {/* Champs principaux */}
-        <div className="mb-4">
-          <input
-            type="text"
-            name="title"
-            placeholder="Titre de l’annonce"
-            value={form.title}
-            onChange={handleChange}
-            className="w-full bg-transparent text-white placeholder-gray-400 border-b border-white focus:border-blue-400 outline-none py-2"
-            required
-          />
-        </div>
+        <input
+          type="text"
+          name="title"
+          placeholder="Titre de l’annonce"
+          value={form.title}
+          onChange={handleChange}
+          required
+          className="w-full mb-4 bg-transparent text-white placeholder-gray-400 border-b border-white focus:border-blue-400 outline-none py-2"
+        />
 
-        <div className="mb-4">
-          <input
-            type="number"
-            name="price"
-            placeholder="Prix (€)"
-            value={form.price}
-            onChange={handleChange}
-            className="w-full bg-transparent text-white placeholder-gray-400 border-b border-white focus:border-blue-400 outline-none py-2"
-            required
-          />
-        </div>
+        <input
+          type="number"
+          name="price"
+          placeholder="Prix (€)"
+          value={form.price}
+          onChange={handleChange}
+          required
+          className="w-full mb-4 bg-transparent text-white placeholder-gray-400 border-b border-white focus:border-blue-400 outline-none py-2"
+        />
 
-        <div className="mb-4">
-          <input
-            type="text"
-            name="spot"
-            placeholder="Ville / Lieu"
-            value={form.spot}
-            onChange={handleChange}
-            className="w-full bg-transparent text-white placeholder-gray-400 border-b border-white focus:border-blue-400 outline-none py-2"
-            required
-          />
-        </div>
+        <input
+          type="text"
+          name="spot"
+          placeholder="Ville / Lieu"
+          value={form.spot}
+          onChange={handleChange}
+          required
+          className="w-full mb-4 bg-transparent text-white placeholder-gray-400 border-b border-white focus:border-blue-400 outline-none py-2"
+        />
 
-        <div className="mb-4">
-          <input
-            type="text"
-            name="phone"
-            placeholder="Téléphone"
-            value={form.phone}
-            onChange={handleChange}
-            className="w-full bg-transparent text-white placeholder-gray-400 border-b border-white focus:border-blue-400 outline-none py-2"
-            required
-          />
-        </div>
+        <input
+          type="text"
+          name="phone"
+          placeholder="Téléphone"
+          value={form.phone}
+          onChange={handleChange}
+          required
+          className="w-full mb-4 bg-transparent text-white placeholder-gray-400 border-b border-white focus:border-blue-400 outline-none py-2"
+        />
 
+        <textarea
+          name="description"
+          placeholder="Description de l’annonce"
+          value={form.description}
+          onChange={handleChange}
+          required
+          rows={4}
+          className="w-full mb-6 bg-transparent text-white placeholder-gray-400 border-b border-white focus:border-blue-400 outline-none py-2 resize-none"
+        />
+
+        {/* Upload d'images */}
         <div className="mb-6">
-          <textarea
-            name="description"
-            placeholder="Description de l’annonce"
-            value={form.description}
-            onChange={handleChange}
-            className="w-full bg-transparent text-white placeholder-gray-400 border-b border-white focus:border-blue-400 outline-none py-2 resize-none"
-            rows={4}
-            required
+          <label className="block mb-2 text-sm text-gray-400">Ajouter jusqu'à 4 images</label>
+          <input
+            type="file"
+            accept="image/*"
+            multiple
+            onChange={handleImageChange}
+            className="block w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-white file:text-black hover:file:bg-gray-200"
           />
+          <div className="flex flex-wrap gap-2 mt-4">
+            {images.map((img, index) => (
+              <Image
+                key={index}
+                src={URL.createObjectURL(img)}
+                alt={`image-${index}`}
+                width={80}
+                height={80}
+                className="rounded object-cover"
+              />
+            ))}
+          </div>
         </div>
 
-        {/* Informations clés simplifiées */}
+        {/* Informations clés */}
         <div className="mb-6 space-y-4">
           <h3 className="text-lg font-semibold text-white mb-2">Informations clés</h3>
 
@@ -158,32 +203,6 @@ export default function FormulaireAnnonce() {
             onChange={handleChange}
             className="w-full bg-transparent text-white placeholder-gray-400 border-b border-white focus:border-blue-400 outline-none py-2"
           />
-        </div>
-
-        {/* Upload d'images */}
-        <div className="mb-6">
-          <label className="block mb-2 text-sm text-gray-400">
-            Ajouter jusqu'à 4 images
-          </label>
-          <input
-            type="file"
-            accept="image/*"
-            multiple
-            onChange={handleImageChange}
-            className="block w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-white file:text-black hover:file:bg-gray-200"
-          />
-          <div className="flex flex-wrap gap-2 mt-4">
-            {images.map((img, index) => (
-              <Image
-                key={index}
-                src={URL.createObjectURL(img)}
-                alt={`image-${index}`}
-                width={80}
-                height={80}
-                className="rounded object-cover"
-              />
-            ))}
-          </div>
         </div>
 
         <button

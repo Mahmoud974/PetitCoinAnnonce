@@ -4,7 +4,7 @@ import React from "react";
 export default function page() {
   return (
     <div>
-      <div className="flex container justify-between mx-auto my-6 ">
+      <div className="flex container justify-between mx-auto mt-12 ">
         <Product />
       </div>
     </div>

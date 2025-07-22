@@ -2,11 +2,12 @@
 
 import React from "react";
 import {
-  Bell,
+ 
   BriefcaseBusiness,
   Building2,
   Caravan,
   CirclePlus,
+  CircleUserRound,
   Dog,
   HandPlatter,
   Heart,
@@ -15,11 +16,18 @@ import {
 } from "lucide-react";
 import { InputWithButton } from "@/components/ui/Search";
 import { Button } from "@/components/ui/button";
-import MenuProfil from "./MenuProfil";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
-// 🔧 Liste centralisée des catégories
+ 
 const categories = [
   { slug: "immobilier", label: "Immobilier", icon: <Building2 size={24} /> },
   { slug: "emploi", label: "Emploi", icon: <BriefcaseBusiness size={24} /> },
@@ -32,7 +40,7 @@ const categories = [
 
 export default function Navbar() {
   const pathname = usePathname();
-  const notificationCount = 3;
+  
 
   return (
     <nav className="py-8 bg-red-600 text-white">
@@ -52,23 +60,31 @@ export default function Navbar() {
             <Link href="/favorites">
               <Heart />
             </Link>
-            <div className="relative">
-              <button className="relative text-white p-2 rounded-full hover:bg-gray-700 transition">
-                <Bell className="w-6 h-6" />
-                {notificationCount > 0 && (
-                  <span className="absolute top-2 right-3 transform translate-x-1/2 -translate-y-1/2 bg-black text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full border-2 border-white">
-                    {notificationCount}
-                  </span>
-                )}
-              </button>
-            </div>
-            <MenuProfil />
+            
+            <DropdownMenu>
+              <DropdownMenuTrigger>
+                <CircleUserRound />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuLabel>Mon compte</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>
+                  <Link href="/annonces">Mes annonces</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Link href="/settings">Paramètres</Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <Link href="/account">
+                <DropdownMenuItem>Login</DropdownMenuItem></Link>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </div>
 
         <div className="border border-t my-6 border-white"></div>
 
-        {/* Catégories */}
+       
         <ul className="flex justify-between items-center text-white font-bold gap-3 overflow-x-auto">
           {categories.map((cat) => {
             const isActive = pathname === `/lists/${cat.slug}`;

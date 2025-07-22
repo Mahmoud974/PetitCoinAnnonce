@@ -1,15 +1,15 @@
 import React from 'react'
 import Image from 'next/image'
-import { MapPin, Clock, HeartIcon, Heart } from 'lucide-react';
+import { MapPin, Clock, HeartIcon,  CircleX } from 'lucide-react';
 import Link from 'next/link';
 
-export default function CardPrincipal() {
+export default function CardPrincipalAnnonce() {
   return (
     <div className="group max-w-xs  rounded-2xl border-none text-white shadow-xl  hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 hover:border-gray-200">
-    <Link href='/item' className='cursor-pointer'>
+     
       <div className="relative overflow-hidden">
         <Image
-          src="/2.jpg"
+          src="/1.jpg"
           alt="Pièce seat ibiza"
           width={400}
           height={300}
@@ -20,8 +20,8 @@ export default function CardPrincipal() {
  
          <div className="absolute top-3 right-3 flex space-x-2">
            <button className="p-2 flex items-center bg-red-500  hover:bg-white rounded-full shadow-md transition-all duration-200 hover:scale-110">
-             <Heart className="w-5 h-5  hover:text-red-500 transition-colors duration-200" />
-             <p className='ml-1'>14</p>
+           <CircleX  className="w-5 h-5  hover:text-red-500 transition-colors duration-200" onClick={()=> confirm(`Voulez-vous supprimer l'annonces`)}/>
+           
            </button>
         
          </div>
@@ -79,13 +79,13 @@ export default function CardPrincipal() {
 
         
         <div className="flex space-x-2 pt-2">
-          <button className="flex-1 bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg font-semibold transition-colors duration-200 text-sm">
-            Contact
+          <button className="flex-1 bg-orange-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg font-semibold transition-colors duration-200 text-sm">
+           Modifier
           </button>
          
         </div>
       </div>
-      </Link>
+   
     </div>
   )
 }

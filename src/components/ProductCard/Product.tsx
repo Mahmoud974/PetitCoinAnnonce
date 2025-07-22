@@ -10,11 +10,11 @@ import ImgItem from "./ImgItem";
 export default function Product() {
   return (
     <div className="mx-auto">
-      <button className="flex border p-2  mb-3 rounde-lg gap-2">
+      <button className="flex border p-2     rounde-lg gap-2">
         <MoveLeft />
         <p>Retour à la liste</p>
       </button>
-      <main className="mx-auto gap-5 flex container max-w-7xl ">
+      <main className="mx-auto gap-5 flex container max-w-7xl mt-6 ">
         <ImgItem />
         <div>
           <div className="flex justify-between items-start">

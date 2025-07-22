@@ -12,7 +12,7 @@ const Banner: React.FC<BannerProps> = ({ name, title }) => {
   return (
     <div className="relative w-full h-[300px]">
       
-      <Image
+      {/* <Image
         src={name}
         quality={100}
         alt="Image d'accueil parlant avec une femme de la prestation"
@@ -53,7 +53,7 @@ const Banner: React.FC<BannerProps> = ({ name, title }) => {
             </Link>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
