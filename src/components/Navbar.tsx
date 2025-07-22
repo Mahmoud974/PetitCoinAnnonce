@@ -5,6 +5,7 @@ import {
  
   BriefcaseBusiness,
   Building2,
+  Car,
   Caravan,
   CirclePlus,
   CircleUserRound,
@@ -31,6 +32,7 @@ import {
 const categories = [
   { slug: "immobilier", label: "Immobilier", icon: <Building2 size={24} /> },
   { slug: "emploi", label: "Emploi", icon: <BriefcaseBusiness size={24} /> },
+  { slug: "locomotion", label: "Locomotion", icon: <Car size={24} /> },
   { slug: "seconde-main", label: "Seconde main", icon: <Shirt size={24} /> },
   { slug: "animaux", label: "Animaux", icon: <Dog size={24} /> },
   { slug: "services", label: "Services", icon: <HandPlatter size={24} /> },

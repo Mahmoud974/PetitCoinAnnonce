@@ -39,7 +39,7 @@ const items = [
 
 export default function ImgCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
-  // Exemple de compteur de "likes" pour chaque diapositive
+ 
   const [likeCounts, setLikeCounts] = useState<number[]>(items.map(() => 0));
 
   const prevSlide = () => {

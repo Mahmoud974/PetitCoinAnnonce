@@ -1,33 +1,15 @@
-'use client'
-import CardPrincipal from '@/components/CardPrincipal'
 import React from 'react'
-import { useParams } from 'next/navigation';
+import ListsLocomotion from './ListsLocomotion';
+ 
 
-const TITLES: Record<string, string> = {
-  immobilier: "Immobilier",
-  emploi: "Emploi",
-  'seconde-main': "Seconde main",
-  animaux: "Animaux",
-  services: "Services",
-  vacances: "Vacances",
-  'affaires-pro': "Affaires pro",
-};
-
-export default function Page() {
-  const params = useParams();
-  const slug = params.slug as string;
-  const title = TITLES[slug] || "Catégorie";
-  console.log(slug);
+export default async function page() {
+  const data = await fetch('http://localhost:3000/api/users', {
+    cache: 'no-store'
+  });
   
-
+  const posts = await data.json();
+  
   return (
-    <div className=' my-12  max-w-7xl container mx-auto'>
-      <h1 className="text-2xl font-bold">{title}</h1>
-      <hr className='border-gray-300 my-4' />
-      <div className='flex gap-3'>
-        <CardPrincipal />
-        <CardPrincipal />
-      </div>
-    </div>
-  );
+  <ListsLocomotion posts={posts}/>
+  )
 }
