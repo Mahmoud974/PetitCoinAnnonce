@@ -3,7 +3,7 @@ import ListsLocomotion from './ListsLocomotion';
  
 
 export default async function page() {
-  const data = await fetch('http://localhost:3000/api/users', {
+  const data = await fetch('http://localhost:3000/api/cars', {
     cache: 'no-store'
   });
   

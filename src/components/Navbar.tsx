@@ -37,7 +37,7 @@ const categories = [
   { slug: "animaux", label: "Animaux", icon: <Dog size={24} /> },
   { slug: "services", label: "Services", icon: <HandPlatter size={24} /> },
   { slug: "vacances", label: "Vacances", icon: <Caravan size={24} /> },
-  { slug: "affaires-pro", label: "Affaires pro", icon: <Volleyball size={24} /> },
+  { slug: "activites", label: "Activites", icon: <Volleyball size={24} /> },
 ];
 
 export default function Navbar() {

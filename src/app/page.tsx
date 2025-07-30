@@ -1,14 +1,27 @@
-import React from 'react'
-import Tests from './Test';
+import React from 'react';
+import Tests from './Test'; 
 
-export default async function page() {
-  const data = await fetch('http://localhost:3000/api/users', {
-    cache: 'no-store'
+type Props = {
+  params: {
+    category: string;
+  };
+};
+
+export default async function Page({ params }: Props) {
+  const { category } = params;
+
+  
+
+  const res = await fetch(`http://localhost:3000/api/${category}`, {
+    cache: 'no-store',
   });
-  
-  const posts = await data.json();
-  
-  return (
-   <Tests posts={posts}/>
-  )
+  console.log(res);
+
+  if (!res.ok) {
+    return <div>Erreur lors du chargement des données</div>;
+  }
+
+  const posts = await res.json();
+
+  return <Tests posts={posts} />;
 }
