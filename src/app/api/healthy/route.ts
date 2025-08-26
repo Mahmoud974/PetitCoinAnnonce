@@ -1,8 +1,8 @@
-// https://localhost:3000/api/users
-import { itemsElements } from "@/app/db/items/locomotions";
+// https://localhost:3000/api/healthy
+import { healthyElements } from "@/app/db/items/healthy";
 
 export async function GET() {
-  return new Response(JSON.stringify(itemsElements), {
+  return new Response(JSON.stringify(healthyElements), {
     status: 200,
     headers: { 'Content-Type': 'application/json' }
   });

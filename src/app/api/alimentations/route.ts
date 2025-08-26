@@ -1,8 +1,8 @@
-// https://localhost:3000/api/users
-import { itemsElements } from "@/app/db/items/locomotions";
+// https://localhost:3000/api/alimentations
+import { alimentationElements } from "@/app/db/items/alimentations";
 
 export async function GET() {
-  return new Response(JSON.stringify(itemsElements), {
+  return new Response(JSON.stringify(alimentationElements), {
     status: 200,
     headers: { 'Content-Type': 'application/json' }
   });

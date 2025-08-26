@@ -27,13 +27,13 @@ import { usePathname } from "next/navigation";
  
 const categories = [
   { slug: "immobiliers", label: "Immobilier", icon: <Building2 size={24} /> },
-  { slug: "emploi", label: "Emploi", icon: <BriefcaseBusiness size={24} /> },
+  { slug: "emplois", label: "Emploi", icon: <BriefcaseBusiness size={24} /> },
   { slug: "cars", label: "Locomotion", icon: <Car size={24} /> },
-  { slug: "seconde-main", label: "Seconde main", icon: <Shirt size={24} /> },
-  { slug: "animaux", label: "Animaux", icon: <Dog size={24} /> },
+  { slug: "cloths", label: "Seconde main", icon: <Shirt size={24} /> },
+  { slug: "animals", label: "Animaux", icon: <Dog size={24} /> },
   { slug: "services", label: "Services", icon: <HandPlatter size={24} /> },
   { slug: "vacances", label: "Vacances", icon: <Caravan size={24} /> },
-  { slug: "activites", label: "Activites", icon: <Volleyball size={24} /> },
+  { slug: "activities", label: "Activites", icon: <Volleyball size={24} /> },
 ];
 
 export default function Navbar() {
@@ -74,7 +74,7 @@ export default function Navbar() {
         <div className="border border-t my-6 border-white"></div>
 
        
-        <ul className="flex justify-between items-center text-white font-bold gap-3 overflow-x-auto">
+        <ul className="flex justify-between items-center text-white font-bold gap-3 flex-wrap">
           {categories.map((cat) => {
             const isActive = pathname === `/lists/${cat.slug}`;
             return (
