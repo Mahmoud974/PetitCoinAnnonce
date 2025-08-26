@@ -20,6 +20,8 @@ export default function ListsLocomotion({ posts }: any) {
   const params = useParams();
   const slug = params?.slug as string;
   const title = TITLES[slug] || "Catégorie";
+  console.log(title);
+  
 
   return (
     <div className='my-12 max-w-7xl container mx-auto'>

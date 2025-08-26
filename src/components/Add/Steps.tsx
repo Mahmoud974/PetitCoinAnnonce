@@ -39,7 +39,7 @@ export default function Steps() {
         <div className="w-2 bg-red-600 h-auto mr-3"></div>
         <div>
           <h1 className="text-2xl font-bold">
-            Déposer une annonce gratuite en 4 étapes !
+            Vends tes articles gratuite en 4 étapes !
           </h1>
           <p>
             Publier une annonce sur ParuVendu.fr est rapide et facile. Suivez

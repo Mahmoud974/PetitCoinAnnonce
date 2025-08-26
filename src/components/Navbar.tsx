@@ -12,6 +12,9 @@ import {
   Dog,
   HandPlatter,
   Heart,
+  Newspaper,
+  Settings,
+ 
   Shirt,
   Volleyball,
 } from "lucide-react";
@@ -19,14 +22,7 @@ import { InputWithButton } from "@/components/ui/Search";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+ 
 
  
 const categories = [
@@ -47,14 +43,14 @@ export default function Navbar() {
   return (
     <nav className="py-8 bg-red-600 text-white">
       <div className="container mx-auto flex flex-col justify-between max-w-7xl">
-        {/* Barre du haut */}
+      
         <div className="flex justify-between items-center cursor-pointer">
           <Link href="/">
             <p className="font-bold text-xl">Project-online</p>
           </Link>
           <Link href="/add">
             <Button className="bg-[#181a1b]">
-              Déposer une annonce <CirclePlus className="ml-2" />
+              Vends tes articles <CirclePlus className="ml-2" />
             </Button>
           </Link>
           <InputWithButton />
@@ -62,25 +58,16 @@ export default function Navbar() {
             <Link href="/favorites">
               <Heart />
             </Link>
-            
-            <DropdownMenu>
-              <DropdownMenuTrigger>
-                <CircleUserRound />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuLabel>Mon compte</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <Link href="/annonces">Mes annonces</Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Link href="/settings">Paramètres</Link>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <Link href="/account">
-                <DropdownMenuItem>Login</DropdownMenuItem></Link>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <Link href="/settings">
+              <Settings/>
+            </Link>
+            <Link href="/favorites">
+            <Newspaper />
+            </Link>
+            <Link href="/account">
+            <CircleUserRound/>
+            </Link>
+   
           </div>
         </div>
 
