@@ -1,7 +1,7 @@
+import ScrollRow from '@/components/ScrollRow';
 
-import CardPrincipal from '@/components/CardPrincipal';
-
-type Informations = {
+ 
+export type Informations = {
   version: string;
   annee: string;
   kilometrage: string;
@@ -14,7 +14,7 @@ type Informations = {
   nombre_de_places: string;
 };
 
-type Post = {
+export type Post = {
   id: number;
   title: string;
   price: number;
@@ -25,73 +25,58 @@ type Post = {
   date: string | Date;
   informations: Informations;
 };
+ 
+const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? 'http://localhost:3000/api';
+
+const CATEGORY_CONFIG = [
+  { key: 'voitures', title: 'Locomotion', slug: 'locomotion', path: 'cars' },
+  { key: 'immobiliers', title: 'Immobilier', slug: 'immobilier', path: 'immobiliers' },
+  { key: 'animaux', title: 'Animaux', slug: 'animaux', path: 'animals' },
+  { key: 'services', title: 'Services', slug: 'services', path: 'services' },
+  { key: 'emplois', title: 'Emploi', slug: 'emploi', path: 'emplois' },
+  { key: 'voyages', title: 'Vacances', slug: 'vacances', path: 'voyage' },
+  { key: 'sante', title: 'Santé', slug: 'healthy', path: 'healthy' },
+  { key: 'activites', title: 'Activités', slug: 'activities', path: 'activities' },
+  { key: 'alimentations', title: 'Alimentations', slug: 'alimentations', path: 'alimentations' },
+  { key: 'vetements', title: 'Vêtements', slug: 'cloths', path: 'cloths' },
+  { key: 'maisonJardin', title: 'Maison & Jardin', slug: 'house-garden', path: 'house-garden' },
+] as const;
+
+ 
+function buildUrl(path: string) {
+  const base = BASE_URL.replace(/\/$/, '');
+  const cleanPath = path.replace(/^\//, '');
+  return `${base}/${cleanPath}`;
+}
+
+async function fetchJson<T>(url: string): Promise<T[]> {
+  try {
+    const res = await fetch(url, { cache: 'no-store' });
+    if (!res.ok) return [] as T[];
+    const data = await res.json();
+    return Array.isArray(data) ? (data as T[]) : [];
+  } catch {
+    return [] as T[];
+  }
+}
 
 export default async function Page() {
-  const endpoints = {
-    voitures: 'http://localhost:3000/api/cars',
-    immobiliers: 'http://localhost:3000/api/immobiliers',
-    animaux: 'http://localhost:3000/api/animals',
-    services: 'http://localhost:3000/api/services',
-    emplois: 'http://localhost:3000/api/emplois',
-    voyages: 'http://localhost:3000/api/voyage',
-    sante: 'http://localhost:3000/api/healthy',
-    activites: 'http://localhost:3000/api/activities',
-    alimentations: 'http://localhost:3000/api/alimentations',
-    vetements: 'http://localhost:3000/api/cloths',
-    maisonJardin: 'http://localhost:3000/api/house-garden',
-  } as const;
-
-  const fetchCategory = async (url: string): Promise<Post[]> => {
-    const res = await fetch(url, { cache: 'no-store' });
-    if (!res.ok) return [] as Post[];
-    return res.json();
-  };
-
-  const [
-    cars,
-    immobiliers,
-    animals,
-    services,
-    emplois,
-    voyage,
-    healthy,
-    activities,
-    alimentations,
-    cloths,
-    houseGarden,
-  ] = await Promise.all([
-    fetchCategory(endpoints.voitures),
-    fetchCategory(endpoints.immobiliers),
-    fetchCategory(endpoints.animaux),
-    fetchCategory(endpoints.services),
-    fetchCategory(endpoints.emplois),
-    fetchCategory(endpoints.voyages),
-    fetchCategory(endpoints.sante),
-    fetchCategory(endpoints.activites),
-    fetchCategory(endpoints.alimentations),
-    fetchCategory(endpoints.vetements),
-    fetchCategory(endpoints.maisonJardin),
-  ]);
-
-  const sections: { title: string; slug: string; items: Post[] }[] = [
-    { title: 'Locomotion', slug: 'locomotion', items: cars || [] },
-    { title: 'Immobilier', slug: 'immobilier', items: immobiliers || [] },
-    { title: 'Animaux', slug: 'animaux', items: animals || [] },
-    { title: 'Services', slug: 'services', items: services || [] },
-    { title: 'Emploi', slug: 'emploi', items: emplois || [] },
-    { title: 'Vacances', slug: 'vacances', items: voyage || [] },
-    { title: 'Santé', slug: 'healthy', items: healthy || [] },
-    { title: 'Activités', slug: 'activities', items: activities || [] },
-    { title: 'Alimentations', slug: 'alimentations', items: alimentations || [] },
-    { title: 'Vêtements', slug: 'cloths', items: cloths || [] },
-    { title: 'Maison & Jardin', slug: 'house-garden', items: houseGarden || [] },
-  ];
+   
+  const results = await Promise.all(
+    CATEGORY_CONFIG.map(({ path }) => fetchJson<Post>(buildUrl(path)))
+  );
+ 
+  const sections = CATEGORY_CONFIG.map((cfg, idx) => ({
+    title: cfg.title,
+    slug: cfg.slug,
+    items: results[idx] ?? [],
+  }));
 
   return (
     <div className="min-h-screen">
       <div className="container mt-16 mx-auto max-w-7xl">
         <div className="flex mb-8">
-          <div className="w-2 bg-red-600 h-auto mr-3"></div>
+          <div className="w-2 bg-red-600 h-auto mr-3" />
           <div>
             <h1 className="text-2xl font-bold">Toutes les catégories</h1>
             <p>Parcourez les annonces par catégories</p>
@@ -99,15 +84,10 @@ export default async function Page() {
         </div>
 
         {sections.map(({ title, slug, items }) => (
-          <div key={slug} className="mb-12">
+          <section key={slug} className="mb-12">
             <h2 className="text-xl font-bold mb-4">{title}</h2>
-            <div className="grid grid-cols-4 gap-4">
-              {(items || []).slice(0, 8).map((post: Post) => (
-                <CardPrincipal key={post.id} posts={post} />
-              ))}
-            </div>
-            <hr className="border-gray-300 my-8" />
-          </div>
+            <ScrollRow items={(items || []).slice(0, 12)} />
+          </section>
         ))}
       </div>
     </div>

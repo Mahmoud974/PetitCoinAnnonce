@@ -36,9 +36,7 @@ export default function CardPrincipal({ posts }: { posts: Post }) {
     title,
     price,
     category,
-    images,
     likes,
-    description,
     date,
   } = posts;
 

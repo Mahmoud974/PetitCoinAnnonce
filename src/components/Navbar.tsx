@@ -61,7 +61,7 @@ export default function Navbar() {
             <Link href="/settings">
               <Settings/>
             </Link>
-            <Link href="/favorites">
+            <Link href="/annonces">
             <Newspaper />
             </Link>
             <Link href="/account">
