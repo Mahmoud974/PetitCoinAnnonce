@@ -6,17 +6,20 @@ import { useParams } from 'next/navigation';
 import Back from '@/components/Back';
 
 const TITLES: Record<string, string> = {
-  immobilier: "Immobilier",
-  emploi: "Emploi",
-  'seconde-main': "Seconde main",
-  locomotion: "Locomotion",
-  animaux: "Animaux",
+  immobiliers: "Immobilier",
+  emplois: "Emploi",
+  cars: "Locomotion",
+  animals: "Animaux",
   services: "Services",
-  vacances: "Vacances",
-  'affaires-pro': "Affaires pro",
+  voyage: "Vacances",
+  'house-garden': "Maison & Jardin",
+  healthy: "Santé",
+  alimentations: "Alimentation",
+  activities: "Activités",
+  cloths: "Vêtements",
 };
 
-export default function ListsLocomotion({ posts }: any) {
+export default function ListsLocomotion({ posts }: { posts: any[] }) {
   const params = useParams();
   const slug = params?.slug as string;
   const title = TITLES[slug] || "Catégorie";

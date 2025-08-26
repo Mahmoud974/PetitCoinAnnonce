@@ -101,10 +101,9 @@ export default function CardPrincipal({ posts }: { posts: Post }) {
             <h3 className="font-bold text-lg text-white group-hover:text-red-600 transition-colors duration-200 truncate">
               {title}
             </h3>
-            <Link href={`/lists/${category ? category.toLowerCase() : 'autre'}`}>
-  <p className="text-sm text-white mt-1 hover:text-red-600">{category || "Autre"}</p>
-</Link>
-
+            <span className="text-sm text-white mt-1 hover:text-red-600 cursor-pointer">
+              {category || "Autre"}
+            </span>
           </div>
 
           <div className="flex items-center justify-between pt-2 border-t border-gray-100">

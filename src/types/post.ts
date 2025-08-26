@@ -21,6 +21,7 @@ export type Post = {
   description: string;
   date: string | Date;
   informations: Informations;
+  ref?: number | string;
 };
 
 

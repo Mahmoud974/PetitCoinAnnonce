@@ -1,55 +1,48 @@
 'use client';
 
-import { HandCoins, Clock4, MoveLeft, Link } from "lucide-react";
+import { HandCoins, Clock4 } from "lucide-react";
 import React from "react";
 import Icons from "./Icons";
 import { useParams } from 'next/navigation';
-import { useRouter } from 'next/navigation';
 import ContactForm from "./Form";
 import { FaStar } from "react-icons/fa";
 import { Button } from "../ui/button";
 import ImgItem from "./ImgItem";
 import Back from "../Back";
+import type { Post } from "@/types/post";
+import type { InfoItem } from "../../app/db/categories/icons";
 
-export default function Product({ posts }) {
+export default function Product({ posts }: { posts: Post[] }) {
   const params = useParams();
   const slug = params?.slug as string;
 
-  const filterCard = posts.filter((p) => p.id === Number(slug));
+  const filterCard = posts.filter((p: Post) => p.id === Number(slug));
   if (!filterCard.length) return <p>Annonce introuvable</p>;
 
   const {
-    id,
     title,
     ref,
-    price,
-    category,
-    images,
-    likes,
     description,
     informations,
   } = filterCard[0];
+  const refValue = String(ref ?? '');
 
   // transformation de l’objet `informations` en tableau pour Icons
-  const vehicule = Object.entries(informations).map(([key, value]) => ({
+  const vehicule: InfoItem[] = Object.entries(informations).map(([key, value]) => ({
     label: key.charAt(0).toUpperCase() + key.slice(1).replace(/_/g, " "),
-    value: value,
-    icon: <span className="text-lg">🚗</span>, // tu peux mettre des icônes spécifiques
+    value: String(value ?? ""),
+    icon: <span className="text-lg">🚗</span>,
   }));
 
   return (
     <div className="mx-auto">
-     
-    <Back/>
-
+      <Back/>
       <main className="mx-auto gap-5 flex container max-w-7xl mt-6 ">
         <ImgItem />
         <div>
           <div className="flex justify-between items-start">
             <div>
-              <small className="text-gray-400">
-                Réf. annonce : Mouss {ref}
-              </small>
+              <small className="text-gray-400">Réf. annonce : Mouss {refValue}</small>
               <h1 className="text-3xl font-bold mb-2">{title}</h1>
             </div>
           </div>

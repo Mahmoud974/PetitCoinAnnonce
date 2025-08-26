@@ -5,15 +5,15 @@ import ListsLocomotion from '../../ListsLocomotion';
 
 interface Props {
   params: {
-    category: string;
+    slug: string;
   };
 }
 
 export default async function Page({ params }: Props) {
-  const { category } = params;
-
-  console.log('Category:', category); 
-  const res = await fetch('http://localhost:3000/api/cars', {
+  const { slug } = params;
+  
+  console.log('URL slug:', slug); 
+  const res = await fetch(`http://localhost:3000/api/${slug}`, {
     cache: 'no-store'
   });
 
