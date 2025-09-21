@@ -166,9 +166,9 @@ export default function Footer() {
         {showButton && (
           <button
             onClick={scrollToTop}
-            className="fixed bottom-6 right-6  text-white p-3 rounded-full   hover:bg-[#0A2A3D] transition transform hover:scale-110"
+            className="fixed bottom-6 right-6  text-white p-3 rounded-full  transition transform hover:scale-110"
           >
-            <CircleArrowUp className="w-14 h-14 text-red-600" />
+            <CircleArrowUp className="w-14 h-14 text-white   shadow-xl" />
           </button>
         )}
       </footer>
