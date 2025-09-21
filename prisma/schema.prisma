@@ -25,7 +25,7 @@ enum Role {
 
 
 }
-
+//npx prisma migrate dev --name init
 model Articles {
   id Int @id @default(autoincrement())
   title String
@@ -40,6 +40,8 @@ model Articles {
   ref Int @default(0)
   informations Json?
 
+  userId  Int
+  user    User  @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model User {
