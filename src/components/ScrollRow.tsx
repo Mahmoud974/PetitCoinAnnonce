@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useRef } from "react";
-import CardPrincipal from "@/components/CardPrincipal";
+import CardPrincipal from "./CardPrincipal";
+
 
 type Informations = {
   version: string;

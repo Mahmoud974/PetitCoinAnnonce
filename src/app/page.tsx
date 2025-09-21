@@ -1,4 +1,6 @@
-import ScrollRow from '@/components/ScrollRow';
+import ScrollRow from "../components/ScrollRow";
+
+
 
  
 export type Informations = {

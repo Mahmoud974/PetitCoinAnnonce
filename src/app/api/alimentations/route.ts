@@ -1,5 +1,7 @@
+import { alimentationElements } from "../../db/items/alimentations";
+
 // https://localhost:3000/api/alimentations
-import { alimentationElements } from "@/app/db/items/alimentations";
+
 
 export async function GET() {
   return new Response(JSON.stringify(alimentationElements), {
