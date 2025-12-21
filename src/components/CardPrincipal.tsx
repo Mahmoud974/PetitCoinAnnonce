@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import Image from 'next/image';
 import { MapPin, Clock, Heart } from 'lucide-react';
 import Link from 'next/link';
@@ -28,6 +27,7 @@ interface Post {
   description: string;
   date: string | Date;
   informations: Informations;
+  createdAt: string
 }
 
 export default function CardPrincipal({ posts }: { posts: Post }) {
@@ -37,7 +37,7 @@ export default function CardPrincipal({ posts }: { posts: Post }) {
     price,
     category,
     likes,
-    date,
+    date,createdAt
   } = posts;
 
  
@@ -49,17 +49,17 @@ export default function CardPrincipal({ posts }: { posts: Post }) {
 
     const minutes = Math.floor(diff / (1000 * 60));
     const hours = Math.floor(diff / (1000 * 60 * 60));
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  
 
     if (minutes < 1) return "Publié à l'instant";
     if (minutes < 60) return `Publié il y a ${minutes} min`;
     if (hours < 24) return `Publié il y a ${hours}h`;
-    return `Publié il y a ${days}j`;
+    return `Publié il y a `;
   };
 
   return (
     
-    <div className="group max-w-xs rounded-2xl text-white shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden    hover:border-gray-200">
+    <div className="group max-w-xs rounded-2xl text-black shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden    hover:border-gray-200">
       <Link href={`/item/${id}`} className="cursor-pointer">
         <div className="relative overflow-hidden">
           <Image
@@ -72,8 +72,8 @@ export default function CardPrincipal({ posts }: { posts: Post }) {
           <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
           <div className="absolute top-3 right-3 flex space-x-2">
             <button className="p-2 flex items-center bg-red-500 hover:bg-white rounded-full shadow-md transition-all duration-200 hover:scale-110">
-              <Heart className="w-5 h-5 text-white hover:text-red-500 transition-colors duration-200" />
-              <p className="ml-1 text-white">{likes}</p>
+              <Heart className="w-5 h-5 text-black hover:text-red-500 transition-colors duration-200" />
+              <p className="ml-1 text-black">{likes}</p>
             </button>
           </div>
         </div>
@@ -81,12 +81,12 @@ export default function CardPrincipal({ posts }: { posts: Post }) {
         <div className="p-4 space-y-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
-              <div className="bg-gradient-to-r from-green-400 to-green-600 w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm shadow-md">
+              <div className="bg-gradient-to-r from-green-400 to-green-600 w-8 h-8 rounded-full flex items-center justify-center text-black font-bold text-sm shadow-md">
                 D
               </div>
               <div>
-                <p className="font-semibold text-white text-sm">Baba62</p>
-                <div className="flex items-center text-xs text-white">
+                <p className="font-semibold text-black text-sm">Baba62</p>
+                <div className="flex items-center text-xs text-black">
                   <MapPin className="w-3 h-3 mr-1" />
                   <span>Paris, France</span>
                 </div>
@@ -98,18 +98,18 @@ export default function CardPrincipal({ posts }: { posts: Post }) {
           </div>
 
           <div>
-            <h3 className="font-bold text-lg text-white group-hover:text-red-600 transition-colors duration-200 truncate">
+            <h3 className="font-bold text-lg text-black group-hover:text-red-600 transition-colors duration-200 truncate">
               {title}
             </h3>
-            <span className="text-sm text-white mt-1 hover:text-red-600 cursor-pointer">
+            <span className="text-sm text-black mt-1 hover:text-red-600 cursor-pointer">
               {category || "Autre"}
             </span>
           </div>
 
           <div className="flex items-center justify-between pt-2 border-t border-gray-100">
             <div className="flex items-center space-x-4">
-              <div className="flex items-center text-sm text-white">
-                <Clock className="w-3 h-3 mr-1 text-white" />
+              <div className="flex items-center text-sm text-black">
+                <Clock className="w-3 h-3 mr-1 text-black" />
                 <p>{getTimeAgo(date)}</p>
               </div>
             </div>

@@ -1,7 +1,6 @@
 'use client';
 
 import { HandCoins, Clock4 } from "lucide-react";
-import React from "react";
 import Icons from "./Icons";
 import { useParams } from 'next/navigation';
 import ContactForm from "./Form";
@@ -26,8 +25,7 @@ export default function Product({ posts }: { posts: Post[] }) {
     informations,
   } = filterCard[0];
   const refValue = String(ref ?? '');
-
-  // transformation de l’objet `informations` en tableau pour Icons
+ 
   const vehicule: InfoItem[] = Object.entries(informations).map(([key, value]) => ({
     label: key.charAt(0).toUpperCase() + key.slice(1).replace(/_/g, " "),
     value: String(value ?? ""),
@@ -42,8 +40,8 @@ export default function Product({ posts }: { posts: Post[] }) {
         <div>
           <div className="flex justify-between items-start">
             <div>
-              <small className="text-gray-400">Réf. annonce : Mouss {refValue}</small>
-              <h1 className="text-3xl font-bold mb-2">{title}</h1>
+              <small className="text-black">Réf. annonce : Mouss {refValue}</small>
+              <h1 className="text-3xl font-bold text-black mb-2">{title}</h1>
             </div>
           </div>
 
@@ -67,7 +65,7 @@ export default function Product({ posts }: { posts: Post[] }) {
               <h2 className="text-xl font-bold mb-2">Moyen de paiement</h2>
               <div className="flex gap-4">
                 <div className="bg-gray-700 w-12 h-12 flex items-center justify-center rounded-full">
-                  <HandCoins className="text-white w-6 h-6" />
+                  <HandCoins className=" text-black w-6 h-6" />
                 </div>
                 <p className="w-2/3">
                   Pour votre sécurité, privilégiez le paiement en espèces uniquement sur place.

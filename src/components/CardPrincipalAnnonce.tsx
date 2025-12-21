@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 export default function CardPrincipalAnnonce() {
   return (
-    <div className="group max-w-xs  rounded-2xl border-none text-white shadow-xl  hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 hover:border-gray-200">
+    <div className="group max-w-xs  rounded-2xl border-none text-black shadow-xl  hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 hover:border-gray-200">
      
       <div className="relative overflow-hidden">
         <Image

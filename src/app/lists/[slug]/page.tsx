@@ -1,7 +1,9 @@
 // /app/locomotion/[category]/page.tsx
 
+
+import ElementCategory from '@/app/ListsLocomotion';
 import React from 'react';
-import ListsLocomotion from '../../ListsLocomotion';
+
 
 interface Props {
   params: {
@@ -11,15 +13,26 @@ interface Props {
 
 export default async function Page({ params }: Props) {
   const { slug } = params;
-  
-  console.log('URL slug:', slug); 
-  const res = await fetch(`http://localhost:3000/api/${slug}`, {
+  //http://localhost:3000/api/product/ok
+ 
+  const res = await fetch(`http://localhost:3000/api/product/${slug}`, {
     cache: 'no-store'
   });
 
+  if (!res.ok) {
+    return (
+      <div className='my-12 max-w-7xl container mx-auto'>
+        <p>Erreur lors du chargement des données</p>
+      </div>
+    );
+  }
+
   const posts = await res.json();
 
+  // S'assurer que posts est un tableau
+  const postsArray = Array.isArray(posts) ? posts : [];
+
   return (
-    <ListsLocomotion posts={posts} />
+    <ElementCategory posts={postsArray} />
   );
 }

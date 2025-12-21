@@ -1,9 +1,9 @@
 
-import React from "react";
-import Product from "../../../components/ProductCard/Product";
+import Product from "@/components/ProductCard/Product";
+
 
 export default async function page() {
-  const data = await fetch('http://localhost:3000/api/product', {
+  const data = await fetch('http://localhost:3000/api/activities', {
     cache: 'no-store'
   });
   

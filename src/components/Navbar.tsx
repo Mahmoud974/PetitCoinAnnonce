@@ -1,6 +1,6 @@
 'use client'
 
-import React from "react";
+
 import {
  
   BriefcaseBusiness,
@@ -23,8 +23,9 @@ import {
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { InputWithButton } from "./ui/Search";
+
 import { Button } from "./ui/button";
+import InputWithButton from "./ui/Search";
  
 
  
@@ -52,7 +53,7 @@ export default function Navbar() {
             <p className="font-bold text-xl">Project-online</p>
           </Link>
           <Link href="/add">
-            <Button className="bg-[#181a1b]">
+            <Button className="bg-black p-6">
               Vends tes articles <CirclePlus className="ml-2" />
             </Button>
           </Link>
