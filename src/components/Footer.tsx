@@ -1,174 +1,208 @@
 "use client";
+
 import { useEffect, useState } from "react";
-import { Clock10, Mail, MapPinned, Phone, CircleArrowUp } from "lucide-react";
 import Link from "next/link";
+import { CircleArrowUp } from "lucide-react";
 
 export default function Footer() {
   const [showButton, setShowButton] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setShowButton(window.scrollY > 300);
-    };
-
+    const handleScroll = () => setShowButton(window.scrollY > 300);
     window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
   return (
     <>
-      <div className="bg-red-600 w-auto h-6"></div>
-      <footer className="bg-black text-white py-10 px-6 lg:px-20 relative mt-auto">
-        <div className="container mx-auto grid grid-cols-1 lg:grid-cols-4 gap-10 text-center lg:text-left max-w-7xl">
-          {/* SERVICES */}
-          <div>
-            <h3 className="text-red-600 font-semibold mb-4">NOS SERVICES</h3>
-            <ul className="space-y-2 text-gray-300">
-              {[
-                "Installation de plomberie",
-                "Réparation de fuites",
-                "Chauffage central & chaudières",
-                "Entretien et dépannage",
-                "Installation de climatisation",
-                "Pompes à chaleur",
-                "Débouchage et assainissement",
-                "Installation de sanitaires",
-                "Ventilation & VMC",
-                "Traitement de l’eau",
-              ].map((item) => (
-                <li
-                  key={item}
-                  className="hover:text-white cursor-pointer transition"
+      {/* petite barre colorée comme souvent en haut du footer */}
+      <div className="h-2 w-full bg-red-600 mt-12" />
+
+      <footer className="bg-[#2f343b] text-white">
+        <div className="mx-auto max-w-7xl px-6 py-12 lg:px-8">
+          {/* GRID */}
+          <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-4">
+            {/* COL 1 : Logo + stores */}
+            <div className="space-y-5">
+              <div className="flex items-center justify-center gap-3 md:justify-start">
+                <div className="grid h-10 w-10 place-items-center rounded-full bg-white/10">
+                  {/* Remplace par ton logo */}
+                  <span className="text-sm font-bold">SVB</span>
+                </div>
+
+                <div className="leading-tight">
+                  <p className="text-xl font-semibold tracking-tight">
+                    SVB<span className="text-white/70">PRESTA</span>
+                  </p>
+                </div>
+              </div>
+
+              <p className="text-center text-sm text-white/70 md:text-left">
+                Téléchargez gratuitement l’application SVB PRESTA disponible sur
+                Android et iOS.
+              </p>
+
+              <div className="flex flex-col items-center gap-3 md:items-start">
+                {/* Bouton App Store (placeholder) */}
+                <a
+                  href="#"
+                  className="inline-flex w-[220px] items-center justify-center rounded-xl border border-white/15 bg-black/35 px-4 py-3 text-sm font-medium hover:bg-black/45 transition"
                 >
-                  {item}
+                  Télécharger sur l’App Store
+                </a>
+
+                {/* Bouton Google Play (placeholder) */}
+                <a
+                  href="#"
+                  className="inline-flex w-[220px] items-center justify-center rounded-xl border border-white/15 bg-black/35 px-4 py-3 text-sm font-medium hover:bg-black/45 transition"
+                >
+                  Disponible sur Google Play
+                </a>
+              </div>
+            </div>
+
+            {/* COL 2 : Informations */}
+            <div className="text-center md:text-left">
+              <h3 className="mb-4 text-lg font-semibold tracking-wide text-white/80">
+                INFORMATIONS
+              </h3>
+
+              <ul className="space-y-3 text-sm text-white/60">
+                <li>
+                  <Link className="hover:text-white transition" href="/a-propos">
+                    À propos de nous
+                  </Link>
                 </li>
-              ))}
-            </ul>
+                <li>
+                  <Link
+                    className="hover:text-white transition"
+                    href="/conditions"
+                  >
+                    Conditions d’utilisation
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    className="hover:text-white transition"
+                    href="/vie-privee"
+                  >
+                    Politique de confidentialité
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    className="hover:text-white transition"
+                    href="/contact"
+                  >
+                    Nous contacter
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            {/* COL 3 : Ressources */}
+            <div className="text-center md:text-left">
+              <h3 className="mb-4 text-lg font-semibold tracking-wide text-white/80">
+                RESSOURCES
+              </h3>
+
+              <ul className="space-y-3 text-sm text-white/60">
+                <li>
+                  <Link className="hover:text-white transition" href="/blog">
+                    Blog
+                  </Link>
+                </li>
+                <li>
+                  <Link className="hover:text-white transition" href="/faq">
+                    Questions-réponses
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    className="hover:text-white transition"
+                    href="/comment-deposer-une-annonce"
+                  >
+                    Comment déposer une annonce ?
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    className="hover:text-white transition"
+                    href="/comment-contacter-un-vendeur"
+                  >
+                    Comment contacter un vendeur ?
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    className="hover:text-white transition"
+                    href="/centre-aide"
+                  >
+                    Centre d’aide
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            {/* COL 4 : Newsletter */}
+            <div className="text-center md:text-left">
+              <h3 className="mb-4 text-lg font-semibold tracking-wide text-white/80">
+                NEWSLETTER
+              </h3>
+
+              <p className="mb-5 text-sm text-white/60">
+                Restez informé des actualités et des meilleures annonces en vous
+                inscrivant à la newsletter !
+              </p>
+
+              <form
+                onSubmit={(e) => e.preventDefault()}
+                className="mx-auto flex max-w-md flex-col gap-3 md:mx-0"
+              >
+                <div className="flex flex-col gap-3 sm:flex-row">
+                  <input
+                    type="email"
+                    placeholder="Votre email"
+                    className="h-12 w-full rounded-xl border border-white/15 bg-[#3a4048] px-4 text-sm text-white placeholder:text-white/45 outline-none focus:border-orange-400"
+                  />
+                  <button
+                    type="submit"
+                    className="h-12 shrink-0 rounded-xl bg-orange-500 px-6 text-sm font-semibold text-white hover:bg-orange-600 transition"
+                  >
+                    S’abonner
+                  </button>
+                </div>
+
+                <p className="text-xs text-white/45">
+                  Pas de spam. Vous pouvez vous désinscrire à tout moment.
+                </p>
+              </form>
+            </div>
           </div>
 
-          {/* SECTEURS D’ACTIVITÉ */}
-          <div>
-            <h3 className="text-red-600 font-semibold mb-4">
-              SECTEURS D’ACTIVITÉ
-            </h3>
-            <ul className="space-y-2 text-gray-300">
-              {[
-                "Résidentiel & Particuliers",
-                "Commerces & Bureaux",
-                "Industrie & Usines",
-                "Hôpitaux & Cliniques",
-                "Écoles & Universités",
-                "Restaurants & Hôtels",
-                "Bâtiments publics",
-                "Centres commerciaux",
-              ].map((item) => (
-                <li
-                  key={item}
-                  className="hover:text-white cursor-pointer transition"
-                >
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* CONTACT & LIENS UTILES */}
-          <div>
-            <h3 className="text-red-600 font-semibold mb-4">CONTACT</h3>
-            <ul className="space-y-2 text-gray-300">
-              <li className="flex justify-center lg:justify-start items-center">
-                <MapPinned className="mr-2" />
-                <p>123 rue des Artisans, 26000 Valence</p>
-              </li>
-              <li className="flex justify-center lg:justify-start items-center">
-                <Phone className="mr-2" />
-                <p>01 23 45 67 89</p>
-              </li>
-              <li className="flex justify-center lg:justify-start items-center">
-                <Mail className="mr-2" />
-                <p>contact@svb-presta.fr</p>
-              </li>
-              <li className="flex justify-center lg:justify-start items-center">
-                <Clock10 className="mr-2" />
-                <p>Lundi - Vendredi : 8h - 18h</p>
-              </li>
-            </ul>
-
-            <h3 className="text-red-600 font-semibold mt-6 mb-4">
-              LIENS UTILES
-            </h3>
-            <ul className="space-y-2 text-gray-300">
-              {[
-                "Demande de devis",
-                "Nos réalisations",
-                "Certifications & Garanties",
-                "FAQ - Questions fréquentes",
-              ].map((item) => (
-                <li
-                  key={item}
-                  className="hover:text-white cursor-pointer transition"
-                >
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* NEWSLETTER */}
-          <div className="text-center lg:text-left">
-            <h3 className="text-red-600 font-semibold mb-4">
-              RECEVEZ NOS CONSEILS
-            </h3>
-            <p className="text-gray-400 text-sm mb-3">
-              Inscrivez-vous pour recevoir nos astuces, offres et nouveautés.
-            </p>
-            <input
-              type="text"
-              placeholder="Nom complet"
-              className="w-full p-2 mb-3 bg-gray-800 text-white border border-gray-600 focus:border-yellow-500 outline-none text-center lg:text-left"
-            />
-            <input
-              type="email"
-              placeholder="Email"
-              className="w-full p-2 mb-3 bg-gray-800 text-white border border-gray-600 focus:border-yellow-500 outline-none text-center lg:text-left"
-            />
-            <button className="w-full bg-red-600 text-black font-semibold py-2 hover:bg-yellow-600 transition">
-              {`S'INSCRIRE`}
-            </button>
+          {/* bottom bar */}
+          <div className="mt-10 border-t border-white/10 pt-6 text-center text-sm text-white/50">
+            © 2025 SVB PRESTA — Tous droits réservés.{" "}
+            <Link className="text-white/70 hover:text-white" href="/mentions-legals">
+              Mentions légales
+            </Link>{" "}
+            ·{" "}
+            <Link className="text-white/70 hover:text-white" href="/vie-privee">
+              Vie privée
+            </Link>
           </div>
         </div>
 
-        {/* COPYRIGHT */}
-        <div className="border-t border-gray-600 mt-10 pt-6 text-center text-gray-400 text-sm">
-          &copy; 2025 SVB PRESTA - Plomberie, Chauffage & Climatisation. Tous
-          droits réservés.
-          <br />
-          <Link
-            href="/mentions-legals"
-            className="text-red-600 hover:underline"
-          >
-            Mentions légales
-          </Link>{" "}
-          |
-          <Link href="/vie-privee" className="text-red-600 hover:underline">
-            {" "}
-            Vie privée
-          </Link>
-        </div>
-
-        {/* BOUTON RETOUR EN HAUT */}
+        {/* bouton retour en haut */}
         {showButton && (
           <button
             onClick={scrollToTop}
-            className="fixed bottom-6 right-6  text-white p-3 rounded-full  transition transform hover:scale-110"
+            aria-label="Retour en haut"
+            className="fixed bottom-6 right-6 grid h-12 w-12 place-items-center rounded-full bg-black/40 backdrop-blur border border-white/10 hover:bg-black/55 transition"
           >
-            <CircleArrowUp className="w-14 h-14 text-white   shadow-xl" />
+            <CircleArrowUp className="h-6 w-6 text-white" />
           </button>
         )}
       </footer>

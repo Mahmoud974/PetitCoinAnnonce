@@ -51,7 +51,8 @@ export const activitiesElements = [
     images: ["cuisine.jpg"],
     date: new Date(),
     likes: 18,
-    description: "Atelier pâtisserie, fabrication de macarons, matériel et ingrédients inclus.",
+    description: `Participez à un atelier gourmand dédié à la réalisation de macarons, emblèmes de la pâtisserie française. Vous apprendrez les techniques essentielles pour réussir les coques, les ganaches et l’assemblage, pas à pas, dans une ambiance conviviale.
+    Tout le matériel et les ingrédients sont fournis : il ne vous reste plus qu’à mettre la main à la pâte et repartir avec vos créations.`,
     ref: 1080000003,
     informations: {
       type_activite: "Créatif",

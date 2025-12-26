@@ -85,7 +85,7 @@ export default async function Page() {
           </div>
         </div>
 
-        {sections.map(({ title, slug, items }) => (
+        {sections.splice(0,3).map(({ title, slug, items }) => (
           <section key={slug} className="mb-12">
             <h2 className="text-xl font-bold mb-4">{title}</h2>
             <ScrollRow items={(items || []).slice(0, 12)} />

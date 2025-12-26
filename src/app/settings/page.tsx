@@ -6,7 +6,7 @@ export default function Page() {
   const [form, setForm] = useState({
     civilite: "",
     nomComplet: "Mahamoud Moussa",
-    genre: "Homme", // "Femme" | "Non spécifié"
+    genre: "Homme",  
     naissance: "1992-05-28",
     adresse: "",
     vacances: false,

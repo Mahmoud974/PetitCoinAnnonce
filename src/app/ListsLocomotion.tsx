@@ -50,8 +50,7 @@ export default function ElementCategory({ posts }: { posts: Article[] }) {
   const title = TITLES[slug] || "Catégorie";
   console.log(title);
   //http://localhost:3000/api/product/ok
-
-  // S'assurer que posts est un tableau
+ 
   const postsArray = Array.isArray(posts) ? posts : [];
 
   return (

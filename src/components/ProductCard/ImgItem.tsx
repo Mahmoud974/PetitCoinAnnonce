@@ -5,11 +5,12 @@ import {
   ArrowLeft,
   ArrowRight,
   Clock10,
-  FlagTriangleRight,
+  Flag,
   Heart,
   Phone,
   Pin,
   Share2,
+  Eye,
 } from "lucide-react";
 import Image from "next/image";
 
@@ -17,8 +18,9 @@ const items = [
   {
     src: "/4.jpg",
     alt: "Kellian",
-    location: "64110 Mazères-Lezons",
+    location: "Hahaya",
     time: "03/06/2025",
+    views: 30,
     price: "490€",
   },
   {
@@ -26,6 +28,7 @@ const items = [
     alt: "Example 2",
     location: "75001 Paris",
     time: "03/06/2025",
+    views: 30,
     price: "550€",
   },
   {
@@ -33,6 +36,7 @@ const items = [
     alt: "Example 3",
     location: "69002 Lyon",
     time: "03/06/2025",
+    views: 30,
     price: "620€",
   },
 ];
@@ -62,7 +66,7 @@ export default function ImgCarousel() {
     });
   };
 
-  const { src, alt, location, time, price } = items[currentIndex];
+  const { src, alt, location, time, price,views } = items[currentIndex];
   const likeCount = likeCounts[currentIndex];
   const slideNumber = currentIndex + 1;
 
@@ -128,9 +132,16 @@ export default function ImgCarousel() {
             </div>
           </div>
 
+          <div className="flex justify-between">
           <div className="flex gap-2 mt-3">
             <Phone className="text-red-500 w-5 h-5" />
             <p>08.90.12.12.12</p>
+          </div>
+
+          <div className="flex items-center gap-2 mt-3">
+            <Eye className="text-red-500 w-5 h-5" />
+            <p>{views} vues</p>
+          </div>
           </div>
 
           <div className="flex mt-3 justify-between items-center">
@@ -140,14 +151,14 @@ export default function ImgCarousel() {
             </div>
             <div>
               <button className="px-3 bg-red-700 text-white font-semibold py-2 rounded-lg hover:bg-red-800 transition">
-                Prendre contact
+                Faire une offre
               </button>
             </div>
           </div>
         </div>
       </div>
       <div className="flex mt-3">
-            <FlagTriangleRight className="w-5" />
+            <Flag className="w-5" />
             <p className="underline text-base">Signaler l’annonce</p>
           </div>
     </div>

@@ -37,8 +37,9 @@ export default function CardPrincipal({ posts }: { posts: Post }) {
     price,
     category,
     likes,
-    date,createdAt
+    date 
   } = posts;
+
 
  
 
@@ -58,9 +59,9 @@ export default function CardPrincipal({ posts }: { posts: Post }) {
   };
 
   return (
-    
+
     <div className="group max-w-xs rounded-2xl text-black shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden    hover:border-gray-200">
-      <Link href={`/item/${id}`} className="cursor-pointer">
+      <Link href={`/item/${id}/${category}`} className="cursor-pointer">
         <div className="relative overflow-hidden">
           <Image
             src={`/2.jpg`}

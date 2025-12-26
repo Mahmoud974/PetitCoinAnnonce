@@ -1,4 +1,4 @@
-//https://localhost:3000/account
+//http://localhost:3000/api/account
 
 export async function GET(){
     return new Response(JSON.stringify({hell:"okko"}),{

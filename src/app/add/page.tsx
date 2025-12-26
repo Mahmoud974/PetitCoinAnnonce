@@ -1,217 +1,241 @@
-"use client";
+"use client"
+import { useState } from 'react';
+import { Upload, CheckCircle, AlertCircle } from 'lucide-react';
 
-import Image from "next/image";
-import { useState } from "react";
-
-const categories = [
-  { label: "Immobilier", icon: "🏢" },
-  { label: "Emploi", icon: "💼" },
-  { label: "Seconde main", icon: "👕" },
-  { label: "Animaux", icon: "🐶" },
-  { label: "Services", icon: "🧰" },
-  { label: "Vacances", icon: "🚐" },
-  { label: "Affaires pro", icon: "📊" },
-];
-
-export default function FormulaireAnnonce() {
-  const [form, setForm] = useState({
-    title: "",
-    price: "",
-    description: "",
-    spot: "",
-    phone: "",
-    version: "",
-    year: "",
-    kilometrage: "",
-    energie: "",
-    transmission: "",
-    category: "",
+export default function AnnonceForm() {
+  const [formData, setFormData] = useState({
+    nom: '',
+    professionnel: '',
+    contact: '',
+    clientContact: '',
+    prix: '',
+    description: '',
+    lieu: '',
+    infosSupp: '',
+    photo: null
   });
 
-  const [images, setImages] = useState<File[]>([]);
+  const [submitted, setSubmitted] = useState(false);
+  const [fileName, setFileName] = useState('');
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-  ) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
   };
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files) return;
-    const files = Array.from(e.target.files).slice(0, 4);
-    setImages(files);
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setFormData(prev => ({ ...prev, photo: file }));
+      setFileName(file.name);
+    }
   };
 
-  const handleCategoryClick = (cat: string) => {
-    setForm((prev) => ({ ...prev, category: cat }));
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log({ ...form, images });
-    alert("Annonce envoyée !");
+  const handleSubmit = () => {
+    if (!formData.nom || !formData.contact) {
+      alert('Veuillez remplir les champs obligatoires');
+      return;
+    }
+    setSubmitted(true);
+    setTimeout(() => setSubmitted(false), 3000);
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-black px-4 py-10">
-      <form
-        onSubmit={handleSubmit}
-        className="w-full max-w-md p-8 rounded-lg text-white"
-      >
-        <h2 className="text-2xl font-semibold mb-6 text-center">Déposer une annonce</h2>
+    <div className="min-h-screen   py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-4xl mx-auto">
+        <div className="  overflow-hidden">
+        <h1 className='text-2xl ml-8 text-black font-black'>Déposez une annonce</h1>
+        
 
-        {/* Sélection de catégorie */}
-        <div className="grid grid-cols-3 gap-4 mb-8 text-center">
-          {categories.map((cat) => (
-            <div
-              key={cat.label}
-              onClick={() => handleCategoryClick(cat.label)}
-              className={`cursor-pointer flex flex-col items-center p-3 rounded ${
-                form.category === cat.label ? "bg-white text-black" : "text-white hover:bg-white/20"
-              } transition`}
-            >
-              <span className="text-2xl">{cat.icon}</span>
-              <span className="text-sm mt-2 font-semibold">{cat.label}</span>
-            </div>
-          ))}
-        </div>
-
-        {/* Champs principaux */}
-        <input
-          type="text"
-          name="title"
-          placeholder="Titre de l’annonce"
-          value={form.title}
-          onChange={handleChange}
-          required
-          className="w-full mb-4 bg-transparent text-white placeholder-gray-400 border-b border-white focus:border-blue-400 outline-none py-2"
-        />
-
-        <input
-          type="number"
-          name="price"
-          placeholder="Prix (€)"
-          value={form.price}
-          onChange={handleChange}
-          required
-          className="w-full mb-4 bg-transparent text-white placeholder-gray-400 border-b border-white focus:border-blue-400 outline-none py-2"
-        />
-
-        <input
-          type="text"
-          name="spot"
-          placeholder="Ville / Lieu"
-          value={form.spot}
-          onChange={handleChange}
-          required
-          className="w-full mb-4 bg-transparent text-white placeholder-gray-400 border-b border-white focus:border-blue-400 outline-none py-2"
-        />
-
-        <input
-          type="text"
-          name="phone"
-          placeholder="Téléphone"
-          value={form.phone}
-          onChange={handleChange}
-          required
-          className="w-full mb-4 bg-transparent text-white placeholder-gray-400 border-b border-white focus:border-blue-400 outline-none py-2"
-        />
-
-        <textarea
-          name="description"
-          placeholder="Description de l’annonce"
-          value={form.description}
-          onChange={handleChange}
-          required
-          rows={4}
-          className="w-full mb-6 bg-transparent text-white placeholder-gray-400 border-b border-white focus:border-blue-400 outline-none py-2 resize-none"
-        />
-
-        {/* Upload d'images */}
-        <div className="mb-6">
-          <label className="block mb-2 text-sm text-gray-400">Ajouter jusqu'à 4 images</label>
-          <input
-            type="file"
-            accept="image/*"
-            multiple
-            onChange={handleImageChange}
-            className="block w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-white file:text-black hover:file:bg-gray-200"
-          />
-          <div className="flex flex-wrap gap-2 mt-4">
-            {images.map((img, index) => (
-              <Image
-                key={index}
-                src={URL.createObjectURL(img)}
-                alt={`image-${index}`}
-                width={80}
-                height={80}
-                className="rounded object-cover"
+          {/* Form */}
+          <div className="px-8 py-10 space-y-6">
+            {/* Nom */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                {`Nom et prénom ou Nom de l'entreprise `}<span className="text-red-500">*</span>
+              </label>
+              <input
+                type="text"
+                name="nom"
+                value={formData.nom}
+                onChange={handleChange}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition duration-200 outline-none"
+                placeholder="Votre nom complet ou entreprise"
               />
-            ))}
+            </div>
+
+ 
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-3">
+                Êtes vous professionnel ?
+              </label>
+              <div className="flex gap-6">
+                <label className="flex items-center gap-3 cursor-pointer">
+                  <input
+                    type="radio"
+                    name="professionnel"
+                    value="oui"
+                    checked={formData.professionnel === 'oui'}
+                    onChange={handleChange}
+                    className="w-5 h-5 text-purple-600 focus:ring-purple-500"
+                  />
+                  <span className="text-gray-700 select-none">Oui</span>
+                </label>
+                <label className="flex items-center gap-3 cursor-pointer">
+                  <input
+                    type="radio"
+                    name="professionnel"
+                    value="non"
+                    checked={formData.professionnel === 'non'}
+                    onChange={handleChange}
+                    className="w-5 h-5 text-purple-600 focus:ring-purple-500"
+                  />
+                  <span className="text-gray-700 select-none">Non</span>
+                </label>
+              </div>
+            </div>
+
+            {/* Lieu */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Lieu
+              </label>
+              <input
+                type="text"
+                name="lieu"
+                value={formData.lieu}
+                onChange={handleChange}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition duration-200 outline-none"
+                placeholder="Ville, région..."
+              />
+            </div>
+
+            {/* Contact */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Contact <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="text"
+                name="contact"
+                value={formData.contact}
+                onChange={handleChange}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition duration-200 outline-none"
+                placeholder="Téléphone, mail, réseau social"
+              />
+            </div>
+
+            {/* Comment contacter */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Comment voulez-vous que les clients vous contactent?
+              </label>
+              <input
+                type="text"
+                name="clientContact"
+                value={formData.clientContact}
+                onChange={handleChange}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition duration-200 outline-none"
+                placeholder="Par téléphone, mail, WhatsApp..."
+              />
+            </div>
+
+            {/* Prix */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Prix demandé
+              </label>
+              <input
+                type="text"
+                name="prix"
+                value={formData.prix}
+                onChange={handleChange}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition duration-200 outline-none"
+                placeholder="Ex: 50€, Gratuit, À négocier..."
+              />
+            </div>
+
+            {/* Description */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Quelle est votre annonce ? Décrivez-la ici.
+              </label>
+              <textarea
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+                rows={5}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition duration-200 resize-none outline-none"
+                placeholder="Décrivez votre annonce en détail..."
+              />
+            </div>
+
+
+            {/* Infos supplémentaires */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Informations complémentaires
+              </label>
+              <textarea
+                name="infosSupp"
+                value={formData.infosSupp}
+                onChange={handleChange}
+                rows={4}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition duration-200 resize-none outline-none"
+                placeholder="Ajoutez des informations supplémentaires si nécessaire..."
+              />
+            </div>
+
+            {/* Upload photo */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Ajoutez une photo
+              </label>
+              <div className="mt-2">
+                <label className="flex flex-col items-center justify-center w-full h-40 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-purple-500 hover:bg-purple-50 transition duration-200">
+                  <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                    <Upload className="w-10 h-10 text-gray-400 mb-3" />
+                    <p className="mb-2 text-sm text-gray-500">
+                      <span className="font-semibold">Cliquez pour télécharger</span> ou glissez-déposez
+                    </p>
+                    <p className="text-xs text-gray-500">PNG, JPG, JPEG (MAX. 5MB)</p>
+                    {fileName && (
+                      <p className="mt-2 text-sm text-purple-600 font-medium">{fileName}</p>
+                    )}
+                  </div>
+                  <input
+                    type="file"
+                    className="hidden"
+                    accept="image/*"
+                    onChange={handleFileChange}
+                  />
+                </label>
+              </div>
+            </div>
+
+           
+            <div className="pt-6">
+              <button
+                onClick={handleSubmit}
+                className="w-full bg-red-600 text-white py-4 px-6 rounded-lg font-semibold text-lg hover:from-purple-700 hover:to-indigo-700 transform hover:scale-[1.02] transition duration-200 shadow-lg"
+              >
+                {`Publier l'annonce`}
+              </button>
+            </div>
+
+    
+            {submitted && (
+              <div className="flex items-center gap-3 p-4 bg-green-50 border border-green-200 rounded-lg animate-pulse">
+                <CheckCircle className="text-green-600" size={24} />
+                <p className="text-green-800 font-medium">Votre annonce a été soumise avec succès !</p>
+              </div>
+            )}
           </div>
         </div>
-
-        {/* Informations clés */}
-        <div className="mb-6 space-y-4">
-          <h3 className="text-lg font-semibold text-white mb-2">Informations clés</h3>
-
-          <input
-            type="text"
-            name="version"
-            placeholder="Version"
-            value={form.version}
-            onChange={handleChange}
-            className="w-full bg-transparent text-white placeholder-gray-400 border-b border-white focus:border-blue-400 outline-none py-2"
-          />
-
-          <input
-            type="text"
-            name="year"
-            placeholder="Année (ex: 2012)"
-            value={form.year}
-            onChange={handleChange}
-            className="w-full bg-transparent text-white placeholder-gray-400 border-b border-white focus:border-blue-400 outline-none py-2"
-          />
-
-          <input
-            type="number"
-            name="kilometrage"
-            placeholder="Kilométrage"
-            value={form.kilometrage}
-            onChange={handleChange}
-            className="w-full bg-transparent text-white placeholder-gray-400 border-b border-white focus:border-blue-400 outline-none py-2"
-          />
-
-          <select
-            name="energie"
-            value={form.energie}
-            onChange={handleChange}
-            className="w-full bg-transparent text-white border-b border-white focus:border-blue-400 outline-none py-2"
-          >
-            <option value="">Énergie</option>
-            <option value="Diesel">Diesel</option>
-            <option value="Essence">Essence</option>
-            <option value="Hybride">Hybride</option>
-            <option value="Électrique">Électrique</option>
-          </select>
-
-          <input
-            type="text"
-            name="transmission"
-            placeholder="Transmission (ex: Manuelle)"
-            value={form.transmission}
-            onChange={handleChange}
-            className="w-full bg-transparent text-white placeholder-gray-400 border-b border-white focus:border-blue-400 outline-none py-2"
-          />
-        </div>
-
-        <button
-          type="submit"
-          className="w-full border border-white text-white px-4 py-2 rounded-md hover:bg-white hover:text-black transition"
-        >
-          Publier l’annonce
-        </button>
-      </form>
+      </div>
     </div>
   );
 }

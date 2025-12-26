@@ -6,15 +6,15 @@ import { InfoItem } from "../../app/db/categories/icons";
 export default function Icons({ vehicule }: { vehicule: InfoItem[] }) {
   return (
     <div className="my-6">
-      <h2 className="text-xl font-bold mb-4 text-white">Informations clés</h2>
+      <h2 className="text-xl font-bold mb-4 text-black">Informations clés</h2>
 
-      <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 text-white">
+      <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 text-black">
         {vehicule.map((item, idx) => (
           <li key={idx} className="flex items-start">
             <div className="mt-1">{item.icon}</div>
             <div className="ml-3">
               <p className="font-semibold text-sm capitalize">{item.label}</p>
-              <p className="text-sm text-gray-300 leading-snug">
+              <p className="text-sm text-black leading-snug">
                 {item.value?.toString().split("\n").map((line, i) => (
                   <React.Fragment key={i}>
                     {line}

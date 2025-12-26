@@ -32,12 +32,12 @@ export default function CardPrincipalAnnonce() {
         
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <div className="bg-gradient-to-r from-green-400 to-green-600 w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm shadow-md">
+            <div className="bg-gradient-to-r from-green-400 to-green-600 w-8 h-8 rounded-full flex items-center justify-center   font-bold text-sm shadow-md">
               D
             </div>
             <div>
-              <p className="font-semibold text-white text-sm">Baba62</p>
-              <div className="flex items-center text-xs text-white">
+              <p className="font-semibold  text-sm">Baba62</p>
+              <div className="flex items-center text-xs ">
                 <MapPin className="w-3 h-3 mr-1" />
                 <span>Paris, France</span>
               </div>
@@ -51,11 +51,11 @@ export default function CardPrincipalAnnonce() {
 
         
         <div>
-          <h3 className="font-bold text-lg text-white group-hover:text-red-600 transition-colors duration-200">
+          <h3 className="font-bold text-lg  group-hover:text-red-600 transition-colors duration-200">
             Pièce seat ibiza
           </h3>
         <Link href="/lists/immobilier">
-        <p className="text-sm text-white mt-1 hover:text-red-600">
+        <p className="text-sm  mt-1 hover:text-red-600">
             Immobilier
           </p>
         </Link>
@@ -64,14 +64,14 @@ export default function CardPrincipalAnnonce() {
         
         <div className="flex items-center justify-between pt-2 border-t border-gray-100">
           <div className="flex items-center  space-x-4">
-            <div className="flex items-center text-xs text-white">
-              <Clock className="w-3 h-3 mr-1 text-white" />
+            <div className="flex items-center text-xs ">
+              <Clock className="w-3 h-3 mr-1 " />
               <span>Publier il y a 2h</span>
             </div>
              
-            <div className="flex items-center text-xs text-white">
+            <div className="flex items-center text-xs ">
               <HeartIcon className="w-3 h-3 mr-1" />
-              <span className='text-white'>14 {`j'aimes`}</span>
+              <span className=''>14 {`j'aimes`}</span>
             </div>
           </div>
         
@@ -79,7 +79,7 @@ export default function CardPrincipalAnnonce() {
 
         
         <div className="flex space-x-2 pt-2">
-          <button className="flex-1 bg-orange-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg font-semibold transition-colors duration-200 text-sm">
+          <button className="flex-1 bg-orange-600 hover:bg-red-700  py-2 px-4 rounded-lg font-semibold transition-colors duration-200 text-sm">
            Modifier
           </button>
          
