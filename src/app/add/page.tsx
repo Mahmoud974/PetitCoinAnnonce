@@ -2,8 +2,7 @@
 import { useMemo, useState } from "react";
 import { Upload, CheckCircle } from "lucide-react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { CATEGORIES, CATEGORY_FIELDS, CategoryValue, FieldDef, FormValues } from '../config/categories';
-
+import { CATEGORIES, CATEGORY_FIELDS, CategoryValue, FieldDef, FormValues } from "../config/categories";
 
 function ListingType({
   value,
@@ -18,7 +17,8 @@ function ListingType({
         Type d’annonce <span className="text-red-500">*</span>
       </label>
 
-      <div className="flex items-center space-x-7">
+      {/* Mobile only: empilé (pas de layout desktop) */}
+      <div className="flex flex-col gap-4">
         <label className="flex items-start gap-4 cursor-pointer">
           <input
             type="radio"
@@ -92,7 +92,6 @@ function DynamicField({
             placeholder={fieldDef.placeholder ?? ""}
             onChange={(e) => {
               if (fieldDef.type === "number") {
-                // garder vide si vide, sinon convertir en nombre
                 const v = e.target.value;
                 field.onChange(v === "" ? "" : Number(v));
               } else {
@@ -138,18 +137,18 @@ export default function AnnonceForm() {
   const categoryFields = useMemo(() => CATEGORY_FIELDS[categorie] || [], [categorie]);
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
-  
     console.log("FORM DATA:", data);
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="min-h-screen py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
+ 
+    <form onSubmit={handleSubmit(onSubmit)} className="min-h-screen py-8 px-4">
+      <div className="mx-auto lg:max-w-5xl max-w-md">
         <div className="overflow-hidden">
-          <h1 className="text-2xl ml-8 text-black font-black">Déposez une annonce</h1>
+          <h1 className="text-2xl text-black font-black">Déposez une annonce</h1>
 
-          <div className="px-8 py-10 space-y-6">
-            {/* Type d'annonce */}
+          <div className="pt-6 space-y-6">
+        
             <Controller
               control={control}
               name="typeAnnonce"
@@ -187,7 +186,6 @@ export default function AnnonceForm() {
                     onChange={(e) => {
                       const v = e.target.value as CategoryValue;
                       field.onChange(v);
-                      // reset dynamique quand on change de catégorie
                       setValue("caracteristiques", {});
                     }}
                   >
@@ -204,10 +202,11 @@ export default function AnnonceForm() {
 
             {/* Champs dynamiques */}
             {categorie && categoryFields.length > 0 && (
-              <div className="rounded-lg border border-gray-200 p-5 space-y-4">
+              <div className="rounded-lg border border-gray-200 p-4 space-y-4">
                 <p className="font-semibold text-gray-800">Caractéristiques</p>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {/* Mobile only: 1 colonne, pas de sm:grid-cols-2 */}
+                <div className="grid grid-cols-1 gap-4">
                   {categoryFields.map((fd) => (
                     <div key={fd.name}>
                       <label className="block text-sm font-medium text-gray-700 mb-2">{fd.label}</label>
@@ -221,7 +220,9 @@ export default function AnnonceForm() {
             {/* Pro */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-3">Êtes vous professionnel ?</label>
-              <div className="flex gap-6">
+
+              {/* Mobile only: empilé */}
+              <div className="flex flex-col gap-3">
                 <label className="flex items-center gap-3 cursor-pointer">
                   <input
                     type="radio"
@@ -322,16 +323,15 @@ export default function AnnonceForm() {
               <label className="block text-sm font-medium text-gray-700 mb-2">Ajoutez une photo</label>
               <div className="mt-2">
                 <label className="flex flex-col items-center justify-center w-full h-40 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-purple-500 hover:bg-purple-50 transition duration-200">
-                  <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                  <div className="flex flex-col items-center justify-center pt-5 pb-6 text-center px-4">
                     <Upload className="w-10 h-10 text-gray-400 mb-3" />
                     <p className="mb-2 text-sm text-gray-500">
                       <span className="font-semibold">Cliquez pour télécharger</span> ou glissez-déposez
                     </p>
                     <p className="text-xs text-gray-500">PNG, JPG, JPEG (MAX. 5MB)</p>
-                    {fileName && <p className="mt-2 text-sm text-purple-600 font-medium">{fileName}</p>}
+                    {fileName && <p className="mt-2 text-sm text-purple-600 font-medium break-all">{fileName}</p>}
                   </div>
 
-                  {/* IMPORTANT: input file doit rester un vrai input */}
                   <input
                     type="file"
                     className="hidden"
@@ -346,13 +346,13 @@ export default function AnnonceForm() {
               </div>
             </div>
 
- 
-            <div className="pt-6">
+            {/* Submit */}
+            <div className="pt-2">
               <input
                 type="submit"
                 value={isSubmitting ? "Publication..." : "Publier l'annonce"}
                 disabled={isSubmitting}
-                className="w-full bg-red-600 cursor-pointer text-white py-4 px-6 rounded-lg font-semibold text-lg transform hover:scale-[1.02] transition duration-200 shadow-lg disabled:opacity-60 disabled:cursor-not-allowed"
+                className="w-full bg-red-600 cursor-pointer text-white py-4 px-6 rounded-lg font-semibold text-lg transform active:scale-[0.99] transition duration-200 shadow-lg disabled:opacity-60 disabled:cursor-not-allowed"
               />
             </div>
 

@@ -17,10 +17,10 @@ const TITLES: Record<string, string> = {
 export default function Page() {
   const params = useParams()
   const slug = params?.slug as string
-  const title = TITLES[slug] || 'Annonce(s)'
+  const title = TITLES[slug] || 'Mes Annonce(s)'
 
   return (
-    <div className="mt-[100px] container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div className="mt-8 container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <h1 className="text-2xl font-bold">{title}</h1>
       <hr className="border-gray-300 my-4" />
 

@@ -10,7 +10,7 @@ export default function Page() {
 
   useEffect(() => {
     const cat = String(category || "").toLowerCase();
-    if (!cat) return;
+    if (!cat) return ;
 
     fetch(`/api/${cat}`, { cache: "no-store" })
       .then(async (res) => {

@@ -5,7 +5,7 @@ import React from 'react'
 
 export default function page() {
   return (
-    <div className="mt-12 container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div className="mt-8 container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div className="flex items-center justify-between gap-3 flex-wrap">
         <h1 className="text-2xl font-bold">Mes favorites (12)</h1>
       </div>

@@ -17,18 +17,15 @@ export default function Footer() {
 
   return (
     <>
-     
-      <div className="no-print h-2 w-full bg-red-600 mt-12" />
+      <div className="no-print h-2 w-full bg-red-600" />
 
       <footer className="bg-neutral-950 text-white">
         <div className="mx-auto max-w-7xl px-6 py-12 lg:px-8">
-       
           <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-4">
-            {/* COL 1 : Logo + stores */}
+            {/* COL 1 : Marque */}
             <div className="space-y-5">
               <div className="flex items-center justify-center gap-3 md:justify-start">
-                <div className="  place-items-center  ">
-               
+                <div className="place-items-center">
                   <span className="text-3xl font-bold">Project-online</span>
                 </div>
 
@@ -39,24 +36,23 @@ export default function Footer() {
                 </div>
               </div>
 
+              {/* ✅ Texte plus cohérent si tes boutons sont placeholders */}
               <p className="text-center text-sm text-white/70 md:text-left">
-                Téléchargez gratuitement l’application Project-online disponible sur
-                Android et iOS.
+                Achetez et vendez facilement près de chez vous. Application mobile :
+                bientôt disponible sur iOS et Android.
               </p>
 
               <div className="flex flex-col items-center gap-3 md:items-start">
-                {/* Bouton App Store (placeholder) */}
                 <a
                   href="#"
-                  className="inline-flex w-[220px] items-center justify-center -xl border border-white/15 bg-black/35 px-4 py-3 text-sm font-medium hover:bg-black/45 transition"
+                  className="inline-flex w-[220px] items-center justify-center rounded-xl border border-white/15 bg-black/35 px-4 py-3 text-sm font-medium hover:bg-black/45 transition"
                 >
                   Télécharger sur l’App Store
                 </a>
 
-                {/* Bouton Google Play (placeholder) */}
                 <a
                   href="#"
-                  className="inline-flex w-[220px] items-center justify-center -xl border border-white/15 bg-black/35 px-4 py-3 text-sm font-medium hover:bg-black/45 transition"
+                  className="inline-flex w-[220px] items-center justify-center rounded-xl border border-white/15 bg-black/35 px-4 py-3 text-sm font-medium hover:bg-black/45 transition"
                 >
                   Disponible sur Google Play
                 </a>
@@ -71,76 +67,72 @@ export default function Footer() {
 
               <ul className="space-y-3 text-sm text-white/60">
                 <li>
-                  <Link className="hover:text-white transition" href="/a-propos">
+                  <Link className="cursor-pointer hover:text-white transition" href="/a-propos">
                     À propos de nous
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    className="hover:text-white transition"
-                    href="/conditions"
-                  >
+                  <Link className="cursor-pointer hover:text-white transition" href="/applications-mobile">
+                    Applications
+                  </Link>
+                </li>
+                <li>
+                  <Link className="cursor-pointer hover:text-white transition" href="/conditions">
                     Conditions d’utilisation
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    className="hover:text-white transition"
-                    href="/vie-privee"
-                  >
+                  <Link className="cursor-pointer hover:text-white transition" href="/vie-privee">
                     Politique de confidentialité
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    className="hover:text-white transition"
-                    href="/contact"
-                  >
+                  <Link className="cursor-pointer hover:text-white transition" href="/contact-support">
                     Nous contacter
+                  </Link>
+                </li>
+
+                {/* ✅ Ajout important */}
+                <li>
+                  <Link className="cursor-pointer hover:text-white transition" href="/mentions-legales">
+                    Mentions légales
                   </Link>
                 </li>
               </ul>
             </div>
 
-            {/* COL 3 : Ressources */}
+            {/* COL 3 : Sécurité (plus pertinent pour une marketplace) */}
             <div className="text-center md:text-left">
               <h3 className="mb-4 text-lg font-semibold tracking-wide text-white/80">
-                RESSOURCES
+                SÉCURITÉ
               </h3>
 
               <ul className="space-y-3 text-sm text-white/60">
                 <li>
-                  <Link className="hover:text-white transition" href="/blog">
-                    Blog
-                  </Link>
-                </li>
-                <li>
                   <Link className="hover:text-white transition" href="/faq">
-                    Questions-réponses
+                    Questions fréquentes
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    className="hover:text-white transition"
-                    href="/comment-deposer-une-annonce"
-                  >
-                    Comment déposer une annonce ?
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    className="hover:text-white transition"
-                    href="/comment-contacter-un-vendeur"
-                  >
-                    Comment contacter un vendeur ?
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    className="hover:text-white transition"
-                    href="/centre-aide"
-                  >
+                  <Link className="hover:text-white transition" href="/centre-aide">
                     Centre d’aide
+                  </Link>
+                </li>
+
+                {/* ✅ Ajouts “confiance” */}
+                <li>
+                  <Link className="hover:text-white transition" href="/conseils-anti-arnaques">
+                    Conseils anti-arnaques
+                  </Link>
+                </li>
+                <li>
+                  <Link className="hover:text-white transition" href="/regles-de-publication">
+                    Règles de publication
+                  </Link>
+                </li>
+                <li>
+                  <Link className="hover:text-white transition" href="/signaler-une-annonce">
+                    Signaler une annonce
                   </Link>
                 </li>
               </ul>
@@ -152,9 +144,9 @@ export default function Footer() {
                 NEWSLETTER
               </h3>
 
+              {/* ✅ Promesse plus claire */}
               <p className="mb-5 text-sm text-white/60">
-                Restez informé des actualités et des meilleures annonces en vous
-                inscrivant à la newsletter !
+                1 email par semaine max : nouveautés, actus et meilleures annonces.
               </p>
 
               <form
@@ -165,18 +157,23 @@ export default function Footer() {
                   <input
                     type="email"
                     placeholder="Votre email"
-                    className="h-12 w-full -xl border border-white/15 bg-[#3a4048] px-4 text-sm text-white placeholder:text-white/45 outline-none focus:border-orange-400"
+                    className="h-12 w-full rounded-xl border border-white/15 bg-[#3a4048] px-4 text-sm text-white placeholder:text-white/45 outline-none focus:border-orange-400"
                   />
                   <button
                     type="submit"
-                    className="h-12 shrink-0 -xl bg-red-700 px-6 text-sm font-semibold text-white hover:bg-orange-600 transition"
+                    className="h-12 shrink-0 rounded-xl bg-red-700 px-6 text-sm font-semibold text-white hover:bg-orange-600 transition"
                   >
                     S’abonner
                   </button>
                 </div>
 
+                {/* ✅ Mini mention “privacy” */}
                 <p className="text-xs text-white/45">
-                  Pas de spam. Vous pouvez vous désinscrire à tout moment.
+                  Pas de spam. Désinscription à tout moment. Voir notre{" "}
+                  <Link className="underline hover:text-white" href="/vie-privee">
+                    politique de confidentialité
+                  </Link>
+                  .
                 </p>
               </form>
             </div>
@@ -185,22 +182,25 @@ export default function Footer() {
           {/* bottom bar */}
           <div className="mt-10 border-t border-white/10 pt-6 text-center text-sm text-white/50">
             © 2025 Project-online — Tous droits réservés.{" "}
-            <Link className="text-white/70 hover:text-white" href="/mentions-legals">
+            <Link className="text-white/70 hover:text-white" href="/mentions-legales">
               Mentions légales
             </Link>{" "}
             ·{" "}
             <Link className="text-white/70 hover:text-white" href="/vie-privee">
               Vie privée
+            </Link>{" "}
+            ·{" "}
+            <Link className="text-white/70 hover:text-white" href="/contact-support">
+              Contact
             </Link>
           </div>
         </div>
 
-    
         {showButton && (
           <button
             onClick={scrollToTop}
             aria-label="Retour en haut"
-            className="fixed bottom-6 right-6 grid h-12 w-12 place-items-center  bg-black/40 backdrop-blur border border-white/10 hover:bg-black/55 transition"
+            className="fixed bottom-6 right-6 grid h-12 w-12 place-items-center bg-black/40 backdrop-blur border border-white/10 hover:bg-black/55 transition"
           >
             <CircleArrowUp className="h-6 w-6 text-white" />
           </button>
