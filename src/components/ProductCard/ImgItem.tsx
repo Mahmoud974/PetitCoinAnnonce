@@ -11,6 +11,7 @@ import {
   Pin,
   Share2,
   Eye,
+  Printer,
 } from "lucide-react";
 import Image from "next/image";
 
@@ -157,10 +158,7 @@ export default function ImgCarousel() {
           </div>
         </div>
       </div>
-      <div className="flex mt-3">
-            <Flag className="w-5" />
-            <p className="underline text-base">Signaler l’annonce</p>
-          </div>
+      
     </div>
   );
 }

@@ -4,9 +4,32 @@
 @tailwind utilities;
 body {
   font-family: "Open Sans", serif;
-  /* background-color: #181a1b; */
+  
   color: black;
 }
+@media print {
+  
+
+  /* Affiche UNIQUEMENT la zone à imprimer */
+  #print-zone,
+  #print-zone * {
+    visibility: visible;
+  }
+
+  /* Place l’annonce en haut de la page */
+  #print-zone {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+
+  /* Cache les éléments inutiles à l'impression */
+  .no-print {
+    display: none !important;
+  }
+}
+
 
 @layer base {
   :root {

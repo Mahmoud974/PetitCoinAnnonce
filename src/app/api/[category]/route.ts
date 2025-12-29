@@ -11,6 +11,8 @@ import { servicesElements } from "@/app/db/items/services";
 import { immobilierElements } from "@/app/db/items/immobiliers";
 import { houseGardenElements } from "@/app/db/items/house-garden";
 
+
+
 const dataByCategory = {
   cloths: clothsElements,
   cars: carsElements,
@@ -26,6 +28,7 @@ const dataByCategory = {
 } as const;
 
 type Category = keyof typeof dataByCategory;
+ 
 
 export async function GET(
   _req: Request,
@@ -36,7 +39,6 @@ export async function GET(
   if (!(category in dataByCategory)) {
     return NextResponse.json({ error: "Category not found" }, { status: 404 });
   }
-
   const data = dataByCategory[category as Category];
   return NextResponse.json(data, { status: 200 });
 }

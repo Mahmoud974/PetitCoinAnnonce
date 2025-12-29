@@ -22,9 +22,7 @@ export const immobilierElements = [
       piscine: false,
       jardin: false,
       parking: false,
-      box: false,
-      dpe: "D",
-      ges: "C"
+      box: false
     }
   },
   {
@@ -50,9 +48,7 @@ export const immobilierElements = [
       piscine: false,
       jardin: false,
       parking: false,
-      box: false,
-      dpe: "Non concerné",
-      ges: "Non concerné"
+      box: false
     }
   },
   {
@@ -69,7 +65,7 @@ export const immobilierElements = [
       transaction: "location",
       type: "Local commercial",
       surface: "90 m²",
-      pieces: "3 pièces",
+      pieces: "3",
       chambres: "-",
       etage: "RDC",
       chauffage: "Climatisation",
@@ -78,9 +74,7 @@ export const immobilierElements = [
       piscine: false,
       jardin: false,
       parking: true,
-      box: false,
-      dpe: "C",
-      ges: "B"
+      box: false
     }
   },
   {
@@ -106,9 +100,7 @@ export const immobilierElements = [
       piscine: false,
       jardin: false,
       parking: true,
-      box: true,
-      dpe: "Non concerné",
-      ges: "Non concerné"
+      box: true
     }
   },
   {
@@ -125,7 +117,7 @@ export const immobilierElements = [
       transaction: "location",
       type: "Appartement",
       surface: "70 m²",
-      pieces: "3 pièces",
+      pieces: "3",
       chambres: "2",
       etage: "3e étage",
       chauffage: "Gaz",
@@ -134,9 +126,7 @@ export const immobilierElements = [
       piscine: false,
       jardin: false,
       parking: true,
-      box: false,
-      dpe: "B",
-      ges: "C"
+      box: false
     }
   },
   {
@@ -162,9 +152,7 @@ export const immobilierElements = [
       piscine: false,
       jardin: true,
       parking: true,
-      box: true,
-      dpe: "C",
-      ges: "C"
+      box: true
     }
   },
   {
@@ -190,9 +178,7 @@ export const immobilierElements = [
       piscine: false,
       jardin: false,
       parking: true,
-      box: false,
-      dpe: "D",
-      ges: "B"
+      box: false
     }
   },
   {
@@ -218,9 +204,7 @@ export const immobilierElements = [
       piscine: false,
       jardin: true,
       parking: true,
-      box: false,
-      dpe: "E",
-      ges: "D"
+      box: false
     }
   },
   {
@@ -246,9 +230,7 @@ export const immobilierElements = [
       piscine: false,
       jardin: false,
       parking: true,
-      box: false,
-      dpe: "C",
-      ges: "C"
+      box: false
     }
   }
 ];

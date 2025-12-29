@@ -32,10 +32,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
          <Navbar />
-      {/* <Banner
-        name="/home.jpg"
-        title={"Annonces locales, opportunités globales"}
-      /> */}
+   
         {children}
         <Footer />
       </body>

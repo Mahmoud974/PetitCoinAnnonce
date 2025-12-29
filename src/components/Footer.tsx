@@ -17,30 +17,30 @@ export default function Footer() {
 
   return (
     <>
-      {/* petite barre colorée comme souvent en haut du footer */}
-      <div className="h-2 w-full bg-red-600 mt-12" />
+     
+      <div className="no-print h-2 w-full bg-red-600 mt-12" />
 
-      <footer className="bg-[#2f343b] text-white">
+      <footer className="bg-neutral-950 text-white">
         <div className="mx-auto max-w-7xl px-6 py-12 lg:px-8">
-          {/* GRID */}
+       
           <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-4">
             {/* COL 1 : Logo + stores */}
             <div className="space-y-5">
               <div className="flex items-center justify-center gap-3 md:justify-start">
-                <div className="grid h-10 w-10 place-items-center rounded-full bg-white/10">
-                  {/* Remplace par ton logo */}
-                  <span className="text-sm font-bold">SVB</span>
+                <div className="  place-items-center  ">
+               
+                  <span className="text-3xl font-bold">Project-online</span>
                 </div>
 
                 <div className="leading-tight">
                   <p className="text-xl font-semibold tracking-tight">
-                    SVB<span className="text-white/70">PRESTA</span>
+                    <span className="text-white/70"> </span>
                   </p>
                 </div>
               </div>
 
               <p className="text-center text-sm text-white/70 md:text-left">
-                Téléchargez gratuitement l’application SVB PRESTA disponible sur
+                Téléchargez gratuitement l’application Project-online disponible sur
                 Android et iOS.
               </p>
 
@@ -48,7 +48,7 @@ export default function Footer() {
                 {/* Bouton App Store (placeholder) */}
                 <a
                   href="#"
-                  className="inline-flex w-[220px] items-center justify-center rounded-xl border border-white/15 bg-black/35 px-4 py-3 text-sm font-medium hover:bg-black/45 transition"
+                  className="inline-flex w-[220px] items-center justify-center -xl border border-white/15 bg-black/35 px-4 py-3 text-sm font-medium hover:bg-black/45 transition"
                 >
                   Télécharger sur l’App Store
                 </a>
@@ -56,7 +56,7 @@ export default function Footer() {
                 {/* Bouton Google Play (placeholder) */}
                 <a
                   href="#"
-                  className="inline-flex w-[220px] items-center justify-center rounded-xl border border-white/15 bg-black/35 px-4 py-3 text-sm font-medium hover:bg-black/45 transition"
+                  className="inline-flex w-[220px] items-center justify-center -xl border border-white/15 bg-black/35 px-4 py-3 text-sm font-medium hover:bg-black/45 transition"
                 >
                   Disponible sur Google Play
                 </a>
@@ -165,11 +165,11 @@ export default function Footer() {
                   <input
                     type="email"
                     placeholder="Votre email"
-                    className="h-12 w-full rounded-xl border border-white/15 bg-[#3a4048] px-4 text-sm text-white placeholder:text-white/45 outline-none focus:border-orange-400"
+                    className="h-12 w-full -xl border border-white/15 bg-[#3a4048] px-4 text-sm text-white placeholder:text-white/45 outline-none focus:border-orange-400"
                   />
                   <button
                     type="submit"
-                    className="h-12 shrink-0 rounded-xl bg-orange-500 px-6 text-sm font-semibold text-white hover:bg-orange-600 transition"
+                    className="h-12 shrink-0 -xl bg-red-700 px-6 text-sm font-semibold text-white hover:bg-orange-600 transition"
                   >
                     S’abonner
                   </button>
@@ -184,7 +184,7 @@ export default function Footer() {
 
           {/* bottom bar */}
           <div className="mt-10 border-t border-white/10 pt-6 text-center text-sm text-white/50">
-            © 2025 SVB PRESTA — Tous droits réservés.{" "}
+            © 2025 Project-online — Tous droits réservés.{" "}
             <Link className="text-white/70 hover:text-white" href="/mentions-legals">
               Mentions légales
             </Link>{" "}
@@ -195,12 +195,12 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* bouton retour en haut */}
+    
         {showButton && (
           <button
             onClick={scrollToTop}
             aria-label="Retour en haut"
-            className="fixed bottom-6 right-6 grid h-12 w-12 place-items-center rounded-full bg-black/40 backdrop-blur border border-white/10 hover:bg-black/55 transition"
+            className="fixed bottom-6 right-6 grid h-12 w-12 place-items-center  bg-black/40 backdrop-blur border border-white/10 hover:bg-black/55 transition"
           >
             <CircleArrowUp className="h-6 w-6 text-white" />
           </button>

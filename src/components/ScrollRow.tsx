@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
+import { useRef } from "react";
 import CardPrincipal from "./CardPrincipal";
 
 
@@ -75,11 +75,11 @@ export default function ScrollRow({ items }: { items: Post[] }) {
       </div>
       <style jsx>{`
         .row {
-          -ms-overflow-style: none; /* IE and Edge */
-          scrollbar-width: none; /* Firefox */
+          -ms-overflow-style: none; 
+          scrollbar-width: none;  
         }
         .row::-webkit-scrollbar {
-          display: none; /* Chrome, Safari and Opera */
+          display: none; 
         }
       `}</style>
     </div>

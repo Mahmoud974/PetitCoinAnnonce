@@ -29,60 +29,75 @@ export default function SearchWithCategories() {
   };
 
   return (
-    <div className="w-full max-w-2xl p-8">
+    <div className="w-full max-w-2xl lg:p-4 md:p-8">
       <div className="flex items-stretch bg-white rounded-lg shadow-lg overflow-hidden">
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button 
-              variant="outline" 
-              className="h-full px-4 py-3 bg-gray-50 hover:bg-gray-100 border-r border-gray-200 rounded-none border-0 flex items-center gap-2 text-gray-700 font-medium min-w-[200px] justify-between"
-            >
-              <div className="flex items-center gap-2">
-                {selectedCategory.icon && (
-                  <span className="text-gray-500">{selectedCategory.icon}</span>
-                )}
-                <span>{selectedCategory.label}</span>
-              </div>
-              <ChevronDown size={16} className="text-gray-500" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-[200px]" align="start">
-            {categories.map((category) => (
-              <DropdownMenuItem
-                key={category.slug}
-                onClick={() => setSelectedCategory(category)}
-                className={`flex items-center gap-3 cursor-pointer ${
-                  selectedCategory.slug === category.slug ? 'bg-blue-50 text-blue-600' : ''
-                }`}
-              >
-                {category.icon && (
-                  <span className={selectedCategory.slug === category.slug ? 'text-blue-600' : 'text-gray-500'}>
-                    {category.icon}
-                  </span>
-                )}
-                <span className="text-sm font-medium">{category.label}</span>
-              </DropdownMenuItem>
-            ))}
-          </DropdownMenuContent>
-        </DropdownMenu>
 
+        {/* 🔹 Catégories : cachées en mobile */}
+        <div className="hidden md:block">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="outline"
+                className="h-full px-4 py-3 bg-gray-50 hover:bg-gray-100 border-r border-gray-200 rounded-none border-0 flex items-center gap-2 text-gray-700 font-medium min-w-[200px] justify-between"
+              >
+                <div className="flex items-center gap-2">
+                  {selectedCategory.icon && (
+                    <span className="text-gray-500">{selectedCategory.icon}</span>
+                  )}
+                  <span>{selectedCategory.label}</span>
+                </div>
+                <ChevronDown size={16} className="text-gray-500" />
+              </Button>
+            </DropdownMenuTrigger>
+
+            <DropdownMenuContent className="w-[200px]" align="start">
+              {categories.map((category) => (
+                <DropdownMenuItem
+                  key={category.slug}
+                  onClick={() => setSelectedCategory(category)}
+                  className={`flex items-center gap-3 cursor-pointer ${
+                    selectedCategory.slug === category.slug
+                      ? "bg-blue-50 text-blue-600"
+                      : ""
+                  }`}
+                >
+                  {category.icon && (
+                    <span className={
+                      selectedCategory.slug === category.slug
+                        ? "text-blue-600"
+                        : "text-gray-500"
+                    }>
+                      {category.icon}
+                    </span>
+                  )}
+                  <span className="text-sm font-medium">
+                    {category.label}
+                  </span>
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+
+        {/* 🔹 Input : toujours visible */}
         <input
           type="search"
           placeholder="Que recherchez-vous ?"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') {
-              handleSubmit(e);
-            }
-          }}
-          className="flex-1 px-4 py-3 text-gray-700 placeholder-gray-400 outline-none focus:ring-2 focus:ring-blue-500 focus:ring-inset"
+          onKeyDown={(e) => e.key === "Enter" && handleSubmit(e)}
+          className="
+            flex-1 px-4 py-3 text-gray-700 placeholder-gray-400 outline-none
+            focus:ring-2 focus:ring-blue-500 focus:ring-inset
+            md:border-l md:border-gray-200
+          "
         />
 
+        {/* 🔹 Bouton noir : toujours visible */}
         <button
           type="button"
           onClick={handleSubmit}
-          className="px-6 bg-black   text-white transition-colors flex items-center justify-center"
+          className="px-6 bg-black text-white transition-colors flex items-center justify-center"
         >
           <Search size={20} />
         </button>

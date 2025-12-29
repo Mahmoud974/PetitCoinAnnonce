@@ -1,8 +1,5 @@
 import ScrollRow from "../components/ScrollRow";
 
-
-
- 
 export type Informations = {
   version: string;
   annee: string;
@@ -76,18 +73,18 @@ export default async function Page() {
 
   return (
     <div className="min-h-screen">
-      <div className="container mt-16 mx-auto max-w-7xl">
-        <div className="flex mb-8">
+      <div className="container mt-16  mx-auto max-w-7xl">
+        <div className=" xl:ml-0 ml-4 flex mb-8">
           <div className="w-2 bg-red-600 h-auto mr-3" />
-          <div>
+          <div className="">
             <h1 className="text-2xl font-bold">Toutes les catégories</h1>
             <p>Parcourez les annonces par catégories</p>
           </div>
         </div>
 
         {sections.splice(0,3).map(({ title, slug, items }) => (
-          <section key={slug} className="mb-12">
-            <h2 className="text-xl font-bold mb-4">{title}</h2>
+          <section key={slug} className="xl:ml-0 ml-4 mb-12">
+            <h2 className=" text-xl font-bold mb-4">{title}</h2>
             <ScrollRow items={(items || []).slice(0, 12)} />
           </section>
         ))}
