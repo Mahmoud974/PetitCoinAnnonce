@@ -1,0 +1,68 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Utilisateur {
+  id              String     @id @default(cuid())
+  nom             String
+  email           String     @unique
+  motDePasse      String
+  telephone       String?
+  dateInscription DateTime   @default(now())
+  
+  // Relations
+  annonces        Annonce[]
+  favoris         Favori[]
+  messagesEnvoyes Message[]  @relation("Expediteur")
+  messagesRecus   Message[]  @relation("Destinataire")
+}
+
+model Annonce {
+  id           String   @id @default(cuid())
+  titre        String
+  description  String
+  prix         Float
+  categorie    String
+  ville        String
+  photos       String[]  
+  dateCreation DateTime @default(now())
+  statut       String   @default("active")  
+  
+  // Relations
+  utilisateurId String
+  utilisateur   Utilisateur @relation(fields: [utilisateurId], references: [id])
+  favoris       Favori[]
+  messages      Message[]
+}
+
+model Favori {
+  id         String   @id @default(cuid())
+  dateAjout  DateTime @default(now())
+  
+  // Relations
+  utilisateurId String
+  utilisateur   Utilisateur @relation(fields: [utilisateurId], references: [id])
+  annonceId     String
+  annonce       Annonce @relation(fields: [annonceId], references: [id])
+  
+  @@unique([utilisateurId, annonceId])  
+}
+
+model Message {
+  id          String   @id @default(cuid())
+  contenu     String
+  dateEnvoi   DateTime @default(now())
+  
+  // Relations
+  expediteurId    String
+  expediteur      Utilisateur @relation("Expediteur", fields: [expediteurId], references: [id])
+  destinataireId  String
+  destinataire    Utilisateur @relation("Destinataire", fields: [destinataireId], references: [id])
+  annonceId       String
+  annonce         Annonce @relation(fields: [annonceId], references: [id])
+}
