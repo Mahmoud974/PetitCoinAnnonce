@@ -12,6 +12,7 @@ import type { Post } from "@/types/post";
 import { MapContainer, TileLayer, Circle, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
+import Link from "next/link";
 
 const icon = L.icon({
   iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
@@ -22,6 +23,8 @@ const icon = L.icon({
 
 // Composant pour une annonce similaire
 function SimilarAd({ post }: { post: Post }) {
+   
+  
   return (
     <div className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow cursor-pointer">
       <div className="relative h-44 sm:h-48 bg-gray-200">
@@ -56,24 +59,32 @@ function SimilarAd({ post }: { post: Post }) {
 }
 
 export default function Product({ posts }: { posts: Post[] }) {
+ 
+  
   const params = useParams();
   const slug = params?.slug as string;
+  
 
   const filterCard = posts?.filter((p: Post) => p.id === Number(slug));
   if (!filterCard.length) return <p className="px-4">Annonce introuvable</p>;
 
-  const { title, ref, description, informations } = filterCard[0];
+  const { title, ref, description, informations,category } = filterCard[0];
   const refValue = String(ref ?? "");
   const position: [number, number] = [-11.7022, 43.2551];
 
   const similarPosts = posts.filter((p) => p.id !== filterCard[0].id).slice(0, 4);
+console.log(category);
 
   return (
     <div className="mx-auto">
       <div className="px-4 sm:px-6">
         <Back />
       </div>
-
+<ul className="px-4 sm:px-6 flex items-center gap-2">
+  <li><Link href="/"> Home {`>`} </Link></li>
+  <li><a href={`/lists/${category}`}>{category} {`>`} </a></li>
+  <li><a href="#">Annonce</a></li>
+</ul>
       <main
         className="
           container mx-auto max-w-6xl

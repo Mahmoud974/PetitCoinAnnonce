@@ -1,10 +1,11 @@
 generator client {
-  provider = "prisma-client-js"
+  provider = "prisma-client"
 }
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+ 
+ 
 }
 
 model Utilisateur {
@@ -33,7 +34,7 @@ model Annonce {
   dateCreation DateTime @default(now())
   statut       String   @default("active")  
   
-  // Relations
+ 
   utilisateurId String
   utilisateur   Utilisateur @relation(fields: [utilisateurId], references: [id])
   favoris       Favori[]

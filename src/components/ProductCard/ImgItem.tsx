@@ -5,13 +5,13 @@ import {
   ArrowLeft,
   ArrowRight,
   Clock10,
-  Flag,
+ 
   Heart,
   Phone,
   Pin,
   Share2,
   Eye,
-  Printer,
+  
 } from "lucide-react";
 import Image from "next/image";
 

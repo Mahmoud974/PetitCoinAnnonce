@@ -2,7 +2,6 @@
 
 import { useState, useCallback, useEffect } from "react";
 import CarCard from "@/components/CarCard";
-import EmptyCategory from "@/components/EmptyCategory";
 import { useParams } from "next/navigation";
 
 export default function ElementCategory() {

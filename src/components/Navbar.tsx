@@ -36,7 +36,7 @@ export default function Navbar() {
 
   return (
     <nav className="no-print py-4 md:py-6 lg:py-8 bg-red-600 text-white">
-      <div className="container mx-auto px-4 max-w-7xl">
+      <div className="container mx-auto md:px-0 px-4 max-w-7xl">
 
       <div className="flex flex-col lg:grid lg:grid-cols-[auto_1fr_auto] lg:items-center gap-4">
 
