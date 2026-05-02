@@ -6,7 +6,6 @@ import {
   Car,
   Fish,
   Heart,
-
   CirclePlus,
   CircleUserRound,
   Newspaper,
@@ -55,9 +54,7 @@ export default function Navbar() {
   return (
     <nav style={{ fontFamily: "'DM Sans', sans-serif", background: NAV_BG }}>
 
-      {/* ════════════════════════════════
-          TOP BAR
-      ════════════════════════════════ */}
+ 
       <div style={{ borderBottom: `1px solid ${BORDER}` }}>
         <div
           className="flex items-center gap-3 px-6 py-2.5 mx-auto w-full"
@@ -140,11 +137,7 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* ════════════════════════════════
-          CATEGORIES BAR
-          — même maxWidth que le top bar
-          — justify-between pour répartir uniformément
-      ════════════════════════════════ */}
+ 
       <div className="overflow-x-auto" style={{ borderBottom: `1px solid ${BORDER}` }}>
         <ul
           className="flex mx-auto px-6 w-full"
