@@ -138,7 +138,7 @@ export default function Navbar() {
       </div>
 
  
-      <div className="overflow-x-auto" style={{ borderBottom: `1px solid ${BORDER}` }}>
+      <div className="overflow-x-auto"  >
         <ul
           className="flex mx-auto px-6 w-full"
           style={{
