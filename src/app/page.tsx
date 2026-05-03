@@ -24,33 +24,32 @@ export type Post = {
   date: string | Date;
   informations: Informations;
 };
- 
-const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? 'http://localhost:3000/api';
+
+const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:3000/api";
 
 const CATEGORY_CONFIG = [
-  { key: 'voitures', title: 'Locomotion', slug: 'locomotion', path: 'cars' },
-  { key: 'immobiliers', title: 'Immobilier', slug: 'immobilier', path: 'immobiliers' },
-  { key: 'animaux', title: 'Animaux', slug: 'animaux', path: 'animals' },
-  { key: 'services', title: 'Services', slug: 'services', path: 'services' },
-  { key: 'emplois', title: 'Emploi', slug: 'emploi', path: 'emplois' },
-  { key: 'voyages', title: 'Vacances', slug: 'vacances', path: 'voyage' },
-  { key: 'sante', title: 'Santé', slug: 'healthy', path: 'healthy' },
-  { key: 'activites', title: 'Activités', slug: 'activities', path: 'activities' },
-  { key: 'alimentations', title: 'Alimentations', slug: 'alimentations', path: 'alimentations' },
-  { key: 'vetements', title: 'Vêtements', slug: 'cloths', path: 'cloths' },
-  { key: 'maisonJardin', title: 'Maison & Jardin', slug: 'house-garden', path: 'house-garden' },
+  { key: "voitures", title: "Locomotion", slug: "locomotion", path: "cars" },
+  { key: "immobiliers", title: "Immobilier", slug: "immobilier", path: "immobiliers" },
+  { key: "animaux", title: "Animaux", slug: "animaux", path: "animals" },
+  { key: "services", title: "Services", slug: "services", path: "services" },
+  { key: "emplois", title: "Emploi", slug: "emploi", path: "emplois" },
+  { key: "voyages", title: "Vacances", slug: "vacances", path: "voyage" },
+  { key: "sante", title: "Santé", slug: "healthy", path: "healthy" },
+  { key: "activites", title: "Activités", slug: "activities", path: "activities" },
+  { key: "alimentations", title: "Alimentations", slug: "alimentations", path: "alimentations" },
+  { key: "vetements", title: "Vêtements", slug: "cloths", path: "cloths" },
+  { key: "maisonJardin", title: "Maison & Jardin", slug: "house-garden", path: "house-garden" },
 ] as const;
 
- 
 function buildUrl(path: string) {
-  const base = BASE_URL.replace(/\/$/, '');
-  const cleanPath = path.replace(/^\//, '');
+  const base = BASE_URL.replace(/\/$/, "");
+  const cleanPath = path.replace(/^\//, "");
   return `${base}/${cleanPath}`;
 }
 
 async function fetchJson<T>(url: string): Promise<T[]> {
   try {
-    const res = await fetch(url, { cache: 'no-store' });
+    const res = await fetch(url, { cache: "no-store" });
     if (!res.ok) return [] as T[];
     const data = await res.json();
     return Array.isArray(data) ? (data as T[]) : [];
@@ -60,11 +59,10 @@ async function fetchJson<T>(url: string): Promise<T[]> {
 }
 
 export default async function Page() {
-   
   const results = await Promise.all(
     CATEGORY_CONFIG.map(({ path }) => fetchJson<Post>(buildUrl(path)))
   );
- 
+
   const sections = CATEGORY_CONFIG.map((cfg, idx) => ({
     title: cfg.title,
     slug: cfg.slug,
@@ -72,22 +70,34 @@ export default async function Page() {
   }));
 
   return (
-    <div className="min-h-screen">
-      <div className="container mt-16  mx-auto max-w-7xl">
-        <div className=" xl:ml-0 ml-4 flex mb-8">
-          <div className="w-2 bg-red-600 h-auto mr-3" />
-          <div className="">
-            <h1 className="text-2xl font-bold">Toutes les catégories</h1>
-            <p>Parcourez les annonces par catégories</p>
+    <div className="min-h-screen bg-[#F9F8F3]" style={{ fontFamily: "'Syne', sans-serif" }}>
+      <div className="container mt-16 mx-auto justify-center max-w-7xl px-4 xl:px-0">
+
+        {/* En-tête — barre jaune verticale, typographie Kisiwa */}
+        <div className="flex items-stretch gap-4 mb-14">
+        <div className="relative mb-2">
+        
+            <h2 className="text-5xl md:text-5xl font-bold text-center flex justify-center flex-col mx-auto text-[#1b3226] mt-4" style={{ fontFamily: "'Syne', sans-serif" }}>
+            Toutes les catégories <br /> <span className="italic font-serif font-light">Parcourez les annonces par catégories</span>
+            </h2>
           </div>
+           
         </div>
 
-        {sections.splice(0,3).map(({ title, slug, items }) => (
-          <section key={slug} className="xl:ml-0 ml-4 mb-12">
-            <h2 className=" text-xl font-bold mb-4">{title}</h2>
+        {/* Sections */}
+        {sections.slice(0, 3).map(({ title, slug, items }) => (
+          <section key={slug} className="mb-14">
+            {/* Titre de section avec tiret jaune */}
+            <div className="flex items-center gap-3 mb-5">
+              <span className="w-6 h-0.5 bg-[#D4E84A]" />
+              <h2 className="text-lg font-extrabold text-[#1b3226] uppercase tracking-widest">
+                {title}
+              </h2>
+            </div>
             <ScrollRow items={(items || []).slice(0, 12)} />
           </section>
         ))}
+
       </div>
     </div>
   );

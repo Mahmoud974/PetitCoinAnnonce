@@ -1,243 +1,160 @@
 "use client";
 
-import { HandCoins, Clock4, Maximize2, Printer, Flag, MapPin } from "lucide-react";
+import {   MapPin,  ShieldCheck, ChevronRight } from "lucide-react";
 import Icons from "./Icons";
 import { useParams } from "next/navigation";
 import { FaStar } from "react-icons/fa";
 import { Button } from "../ui/button";
 import ImgItem from "./ImgItem";
 import Back from "../Back";
-import Image from "next/image";
+ 
 import type { Post } from "@/types/post";
-import { MapContainer, TileLayer, Circle, Marker, Popup } from "react-leaflet";
+import { MapContainer, TileLayer, Circle  } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import L from "leaflet";
-import Link from "next/link";
-
-const icon = L.icon({
-  iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
-  shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-});
-
-// Composant pour une annonce similaire
-function SimilarAd({ post }: { post: Post }) {
-   
-  
-  return (
-    <div className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow cursor-pointer">
-      <div className="relative h-44 sm:h-48 bg-gray-200">
-        {post.images?.[0] ? (
-          <Image
-            src="/2.jpg"
-            alt={post.title}
-            fill
-            className="object-cover"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-          />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center text-gray-400">
-            Pas d&apos;image
-          </div>
-        )}
-      </div>
-      <div className="p-4">
-        <h3 className="font-semibold text-gray-900 mb-1 line-clamp-2">{post.title}</h3>
-        {post.price && (
-          <p className="text-lg font-bold text-orange-600 mb-2">
-            {post.price.toLocaleString()} KMF
-          </p>
-        )}
-        <div className="flex items-center text-sm text-gray-600">
-          <MapPin className="w-4 h-4 mr-1" />
-          <span>Moroni, Comores</span>
-        </div>
-      </div>
-    </div>
-  );
-}
+ 
 
 export default function Product({ posts }: { posts: Post[] }) {
- 
-  
   const params = useParams();
   const slug = params?.slug as string;
-  
-
   const filterCard = posts?.filter((p: Post) => p.id === Number(slug));
-  if (!filterCard.length) return <p className="px-4">Annonce introuvable</p>;
 
-  const { title, ref, description, informations,category } = filterCard[0];
-  const refValue = String(ref ?? "");
+  if (!filterCard.length) return <p className="text-center py-20 font-syne">Annonce introuvable</p>;
+
+  const { title, ref, description, informations, category, price } = filterCard[0];
   const position: [number, number] = [-11.7022, 43.2551];
 
-  const similarPosts = posts.filter((p) => p.id !== filterCard[0].id).slice(0, 4);
-console.log(category);
-
   return (
-    <div className="mx-auto">
-      <div className="px-4 sm:px-6">
+    <div className="min-h-screen mx-auto  text-[#1b3226] pb-20">
+      
+      {/* 1. HEADER MINIMALISTE (Style image_514f74.jpg) */}
+      <header className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
         <Back />
-      </div>
-<ul className="px-4 sm:px-6 flex items-center gap-2">
-  <li><Link href="/"> Home {`>`} </Link></li>
-  <li><a href={`/lists/${category}`}>{category} {`>`} </a></li>
-  <li><a href="#">Annonce</a></li>
-</ul>
-      <main
-        className="
-          container mx-auto max-w-6xl
-          px-4 sm:px-6
-          mt-6
-          grid grid-cols-1 lg:grid-cols-[minmax(0,420px)_minmax(0,1fr)]
-          gap-6 lg:gap-8
-        "
-      >
-        {/* Colonne images */}
-        <div className="w-full">
-          <ImgItem />
+         
+      </header>
+
+      <main className="max-w-7xl mx-auto px-4 mt-4 grid grid-cols-1 lg:grid-cols-12 gap-10">
+        
+        {/* COLONNE GAUCHE (8/12) */}
+        <div className="lg:col-span-8 space-y-10">
+          
+          {/* IMAGE PRINCIPALE (Inspiré image_514f74.jpg) */}
+          <div className="relative rounded-[1rem] overflow-hidden shadow-sm aspect-[16/10] bg-white">
+            <ImgItem />
+            <div className="absolute top-6 left-6 flex gap-2">
+               <span className="bg-white/90 backdrop-blur px-3 py-1 rounded-full text-[10px] font-bold">1 / 3</span>
+            </div>
+          </div>
+
+          {/* TITRE "SIGNATURE" (Style image_514f4e.png) */}
+          <section className="space-y-4 pt-4 border-t border-[#1b3226]/5">
+            <div className="flex items-center gap-4">
+              <span className="bg-[#D4E84A] px-2 py-0.5 rounded-sm text-[10px] font-black uppercase tracking-widest">
+                {category}
+              </span>
+              <span className="text-[10px] text-[#1b3226]/30 font-bold tracking-widest uppercase">
+                REF_{ref}
+              </span>
+            </div>
+
+            <h1 className="flex flex-col leading-[0.8] tracking-tighter uppercase italic">
+              <span className="text-5xl md:text-8xl font-black italic tracking-tighter" 
+                    style={{ fontFamily: "'Syne', sans-serif" }}>
+                {title.split(' ').slice(0, 2).join(' ')}
+              </span>
+              <span className="text-4xl md:text-7xl font-medium lowercase tracking-tight -mt-1 md:-mt-2" 
+                    style={{ fontFamily: "'Playfair Display', serif", fontStyle: 'italic', textTransform: 'none' }}>
+                {title.split(' ').slice(2).join(' ')}
+              </span>
+            </h1>
+
+            <div className="flex gap-12 pt-8">
+               <div className="flex flex-col gap-1">
+                 <span className="text-[10px] uppercase opacity-30 font-bold tracking-widest">Localisation</span>
+                 <div className="flex items-center gap-1 font-bold text-sm">
+                   <MapPin className="w-4 h-4 text-[#D4E84A]" /> Moroni, Comores
+                 </div>
+               </div>
+               <div className="flex flex-col gap-1">
+                 <span className="text-[10px] uppercase opacity-30 font-bold tracking-widest">Publication</span>
+                 <span className="font-bold text-sm">Il y a 3 jours</span>
+               </div>
+               <div className="flex flex-col gap-1">
+                 <span className="text-[10px] uppercase opacity-30 font-bold tracking-widest">État</span>
+                 <span className="bg-[#1b3226] text-[#D4E84A] px-2 py-0.5 rounded text-[10px] font-bold self-start">Excellent</span>
+               </div>
+            </div>
+          </section>
+
+          {/* DESCRIPTION */}
+          <div className="py-10 border-t border-[#1b3226]/5">
+            <h3 className="text-xs font-black uppercase tracking-[0.2em] mb-6 opacity-40">Description</h3>
+            <p className="text-xl leading-relaxed font-medium text-[#1b3226]/80 max-w-2xl">
+              {description}
+            </p>
+          </div>
+
+          <Icons informations={informations} />
         </div>
 
-        {/* Colonne contenu */}
-        <div className="min-w-0">
-          {/* Header */}
-          <div className="flex flex-col gap-2">
-            <small className="text-black">Réf. annonce : Mouss {refValue}</small>
-            <h1 className="text-2xl sm:text-3xl font-bold text-black">{title}</h1>
-          </div>
-
-          {/* Actions */}
-          <div className="mt-3 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6">
-            <button
-              type="button"
-              className="flex items-center text-base underline cursor-pointer w-fit"
-              onClick={() => window.print()}
-            >
-              <Printer className="w-5 mr-2" />
-              Imprimer l&apos;annonce
-            </button>
-
-            <button type="button" className="flex items-center text-base underline cursor-pointer w-fit">
-              <Flag className="w-5 mr-2" />
-              Signaler l&apos;annonce
-            </button>
-          </div>
-
-          <div className="border-t border-gray-300 my-5" />
-
-          {/* Détail */}
-          <div>
-            <h2 className="text-lg font-bold mb-2">Détail de l&apos;annonce</h2>
-            <p className="text-base text-gray-900 break-words">{description}</p>
-          </div>
-
-          <div className="border-t border-gray-300 my-5" />
-
-          {/* Icons */}
-          <Icons informations={informations} />
-
-          <div className="border-t border-gray-300 my-5" />
-
-          {/* Profil vendeur + bouton */}
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <div className="flex items-start">
-              <div className="bg-orange-500 text-white w-14 h-14 sm:w-16 sm:h-16 rounded-full text-2xl sm:text-3xl flex items-center justify-center shrink-0">
-                Z
+        {/* COLONNE DROITE (4/12) - STICKY (Inspiré image_514f74.jpg) */}
+        <div className="lg:col-span-4 space-y-6">
+          
+          {/* CARTE PRIX NOIRE */}
+          <div className="bg-[#1b3226] rounded-[2.5rem] p-8 text-white shadow-2xl sticky top-6">
+            <p className="text-[10px] uppercase tracking-[0.2em] opacity-40 mb-2">Prix souhaité</p>
+            <div className="text-6xl font-black text-[#D4E84A] mb-10 tracking-tighter italic" style={{ fontFamily: "'Syne', sans-serif" }}>
+              {price}€
+            </div>
+            
+            <div className="space-y-4">
+              <Button className="w-full h-16 rounded-2xl bg-[#D4E84A] text-[#1b3226] hover:scale-[1.02] transition-all font-black text-lg uppercase italic tracking-tighter">
+                Faire une offre
+              </Button>
+              <div className="w-full h-16 rounded-2xl border border-white/10 flex items-center justify-center font-bold uppercase italic text-sm tracking-widest hover:bg-white/5 cursor-pointer transition-all">
+                Contacter le vendeur
               </div>
+            </div>
 
-              <div className="ml-3">
-                <div className="flex flex-wrap items-center gap-x-2">
-                  <p className="font-medium">Moussa</p>
-                  <div className="flex items-center text-md">
-                    <FaStar className="text-yellow-400" />
-                    <p className="ml-1 text-base">5 (1)</p>
+            {/* VENDEUR INTEGRÉ (Style image_514f74.jpg) */}
+            <div className="mt-8 pt-8 border-t border-white/5">
+              <div className="bg-white rounded-3xl p-4 flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-full bg-[#1b3226] flex items-center justify-center font-black text-white">M</div>
+                  <div>
+                    <h4 className="font-bold text-[#1b3226] leading-none">Moussa. A</h4>
+                    <div className="flex items-center gap-1 mt-1">
+                      <FaStar className="text-[#D4E84A] w-2.5 h-2.5" />
+                      <span className="text-[10px] text-[#1b3226]/40">(12 avis)</span>
+                    </div>
                   </div>
                 </div>
-
-                <small className="block text-gray-600">Membre depuis aujourd&apos;hui</small>
-
-                <div className="mt-1 flex items-center text-gray-700">
-                  <Clock4 className="w-4 h-4" />
-                  <p className="ml-2 text-base">Dernière activité il y a 3 jours</p>
+                <div className="w-8 h-8 rounded-full border border-[#1b3226]/10 flex items-center justify-center text-[#1b3226]">
+                  <ChevronRight className="w-4 h-4" />
                 </div>
               </div>
             </div>
 
-            <Button className="w-full sm:w-auto">Suivre</Button>
-          </div>
-
-          <div className="border-t border-gray-300 my-5" />
-
-          {/* Paiement */}
-          <div>
-            <h2 className="text-xl font-bold mb-3">Moyen de paiement</h2>
-
-            <div className="flex flex-col sm:flex-row gap-4">
-              <div className="bg-gray-700 w-12 h-12 flex items-center justify-center rounded-full shrink-0">
-                <HandCoins className="text-white w-6 h-6" />
+            {/* SECURITÉ (Style image_514f74.jpg) */}
+            <div className="mt-6 p-6 bg-[#D4E84A]/5 border border-[#D4E84A]/10 rounded-3xl">
+              <div className="flex items-center gap-2 mb-3">
+                <ShieldCheck className="w-4 h-4 text-[#D4E84A]" />
+                <span className="text-[10px] font-black uppercase tracking-widest text-[#D4E84A]">Achat Sécurisé</span>
               </div>
-
-              <div className="min-w-0">
-                <p className="font-medium text-gray-900 mb-3">
-                  Paiement uniquement en espèces, sur place.
-                </p>
-                <div className="space-y-2 text-sm text-gray-600">
-                  <p>• Aucun paiement à distance ou à l&apos;avance.</p>
-                  <p>• Effectuez la transaction dans un lieu public.</p>
-                  <p>• Ne remettez l&apos;argent qu&apos;après vérification.</p>
-                </div>
-              </div>
+              <ul className="text-[10px] space-y-2 opacity-50 font-medium leading-tight">
+                <li>• Remise en main propre uniquement.</li>
+                <li>• Paiement en espèces après inspection.</li>
+                <li>• Ne jamais envoyer d'argent à distance.</li>
+              </ul>
             </div>
           </div>
 
-          <div className="border-t border-gray-300 my-5" />
-
-          {/* Localisation */}
-          <div className="mb-10">
-            <h2 className="text-xl font-bold mb-1">Localisation</h2>
-            <p className="text-gray-900 font-semibold mb-4">Moroni, Comores (KM)</p>
-
-            <div className="relative w-full h-[240px] sm:h-[300px] lg:h-[340px] overflow-hidden border border-gray-300 z-0 rounded-md">
-              <MapContainer
-                center={position}
-                zoom={13}
-                scrollWheelZoom={false}
-                style={{ height: "100%", width: "100%" }}
-              >
-                <TileLayer
-                  attribution="&copy; OpenStreetMap contributors"
-                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                />
-                <Circle
-                  center={position}
-                  pathOptions={{ fillColor: "#3b82f6", color: "#1d4ed8", weight: 2 }}
-                  radius={800}
-                />
-                <Marker position={position} icon={icon}>
-                  <Popup>Zone de vente : Moroni</Popup>
-                </Marker>
-              </MapContainer>
-
-              <div className="absolute top-3 right-3 z-[1000]">
-                <div className="bg-white p-2 rounded-lg shadow-md cursor-pointer">
-                  <Maximize2 className="w-5 h-5 text-gray-600" />
-                </div>
-              </div>
-            </div>
+          {/* MINI CARTE MAP */}
+          <div className="h-[200px] w-full rounded-[2rem] overflow-hidden grayscale border border-[#1b3226]/5 shadow-sm">
+            <MapContainer center={position} zoom={13} style={{ height: "100%", width: "100%" }} zoomControl={false}>
+              <TileLayer url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png" />
+              <Circle center={position} radius={800} pathOptions={{ color: '#1b3226', fillColor: '#D4E84A', fillOpacity: 0.3 }} />
+            </MapContainer>
           </div>
-
-          {/* Annonces similaires */}
-          {similarPosts.length > 0 && (
-            <div className="mb-10">
-              <h2 className="text-xl font-bold mb-4">Annonces similaires</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
-                {similarPosts.map((post) => (
-                  <SimilarAd key={post.id} post={post} />
-                ))}
-              </div>
-            </div>
-          )}
         </div>
       </main>
     </div>

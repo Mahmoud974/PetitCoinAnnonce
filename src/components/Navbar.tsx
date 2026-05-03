@@ -61,7 +61,7 @@ export default function Navbar() {
           style={{ maxWidth: MAX_W }}
         >
           {/* Logo */}
-          <Link href="/" className="flex-shrink-0 mr-1">
+          <Link href="/basepage" className="flex-shrink-0 mr-1">
             <span
               className="text-xl font-extrabold text-white"
               style={{ fontFamily: "'Syne', sans-serif", letterSpacing: "-0.5px" }}
@@ -70,7 +70,7 @@ export default function Navbar() {
             </span>
           </Link>
 
-          {/* Barre de recherche */}
+ 
           <div
             className="flex flex-1 overflow-hidden"
             style={{
