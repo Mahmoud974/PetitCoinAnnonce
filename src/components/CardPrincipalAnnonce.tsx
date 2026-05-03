@@ -1,91 +1,84 @@
+'use client'
+
 import React from 'react'
 import Image from 'next/image'
-import { MapPin, Clock, HeartIcon,  CircleX } from 'lucide-react';
+import { MapPin, Clock, Heart, ArrowUpRight, Trash2 } from 'lucide-react';
 import Link from 'next/link';
 
 export default function CardPrincipalAnnonce() {
   return (
-    <div className="group max-w-xs  rounded-2xl border-none text-black shadow-xl  hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 hover:border-gray-200">
-     
-      <div className="relative overflow-hidden">
+    <div className="group relative w-full aspect-[3/4] rounded-[2rem] overflow-hidden bg-[#1a2e26] text-white shadow-2xl transition-all duration-300 hover:-translate-y-1">
+      
+      {/* Image de fond avec overlay dégradé */}
+      <div className="absolute inset-0">
         <Image
           src="/1.jpg"
           alt="Pièce seat ibiza"
-          width={400}
-          height={300}
-          className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+          fill
+          className="object-cover transition-transform duration-500 group-hover:scale-110"
         />
-       
-        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
- 
-         <div className="absolute top-3 right-3 flex space-x-2">
-           <button className="p-2 flex items-center bg-red-500  hover:bg-white rounded-full shadow-md transition-all duration-200 hover:scale-110">
-           <CircleX  className="w-5 h-5  hover:text-red-500 transition-colors duration-200" onClick={()=> confirm(`Voulez-vous supprimer l'annonces`)}/>
-           
-           </button>
-        
-         </div>
+        {/* Dégradé pour rendre le texte lisible (du noir vers le transparent) */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#1a2e26] via-[#1a2e26]/40 to-transparent" />
       </div>
 
-     
-      <div className="p-4 space-y-3">
-        
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <div className="bg-gradient-to-r from-green-400 to-green-600 w-8 h-8 rounded-full flex items-center justify-center   font-bold text-sm shadow-md">
-              D
-            </div>
-            <div>
-              <p className="font-semibold  text-sm">Baba62</p>
-              <div className="flex items-center text-xs ">
-                <MapPin className="w-3 h-3 mr-1" />
-                <span>Paris, France</span>
-              </div>
-            </div>
-          </div>
-          <div className="text-right">
-            <p className="text-3xl font-bold text-red-600">10€</p>
-             
-          </div>
-        </div>
+      {/* Badges du haut (Catégorie et Favoris) */}
+      <div className="absolute top-4 left-4 right-4 flex justify-between items-start z-10">
+        <span className="bg-[#d4f45d] text-[#1a2e26] text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+          Auto
+        </span>
+        <button className="bg-white/10 backdrop-blur-md p-2 rounded-full hover:bg-white/20 transition-colors">
+          <Heart className="w-4 h-4 text-white" />
+        </button>
+      </div>
 
+      {/* Bouton Supprimer (Admin/User action) - Discret en haut */}
+      <div className="absolute top-16 right-4 z-10">
+         <button 
+            onClick={() => confirm(`Voulez-vous supprimer l'annonce ?`)}
+            className="p-2 bg-red-500/80 hover:bg-red-600 rounded-full transition-all scale-0 group-hover:scale-100"
+         >
+           <Trash2 className="w-4 h-4 text-white" />
+         </button>
+      </div>
+
+      {/* Contenu du bas */}
+      <div className="absolute bottom-0 left-0 right-0 p-6 space-y-2">
         
+        {/* Titre et Détails */}
         <div>
-          <h3 className="font-bold text-lg  group-hover:text-red-600 transition-colors duration-200">
-            Pièce seat ibiza
+          <h3 className="font-bold text-xl leading-tight">
+            Peugeot 208 - Essence - 2021
           </h3>
-        <Link href="/lists/immobilier">
-        <p className="text-sm  mt-1 hover:text-red-600">
-            Immobilier
-          </p>
-        </Link>
-        </div>
-
-        
-        <div className="flex items-center justify-between pt-2 border-t border-gray-100">
-          <div className="flex items-center  space-x-4">
-            <div className="flex items-center text-xs ">
-              <Clock className="w-3 h-3 mr-1 " />
-              <span>Publier il y a 2h</span>
-            </div>
-             
-            <div className="flex items-center text-xs ">
-              <HeartIcon className="w-3 h-3 mr-1" />
-              <span className=''>14 {`j'aimes`}</span>
-            </div>
+          <div className="flex items-center gap-4 mt-2 text-gray-300 text-xs">
+             <div className="flex items-center">
+                <MapPin className="w-3 h-3 mr-1 text-[#d4f45d]" />
+                <span>Paris 75</span>
+             </div>a
+             <div className="flex items-center">
+                <Clock className="w-3 h-3 mr-1" />
+                <span>18/03/2026</span>
+             </div>
           </div>
-        
         </div>
 
-        
-        <div className="flex space-x-2 pt-2">
-          <button className="flex-1 bg-orange-600 hover:bg-red-700  py-2 px-4 rounded-lg font-semibold transition-colors duration-200 text-sm">
-           Modifier
-          </button>
-         
+        {/* Prix et Action */}
+        <div className="flex items-center justify-between pt-2">
+          <p className="text-2xl font-bold text-[#d4f45d]">
+            18 500€
+          </p>
+          
+          <Link href="/lists/immobilier">
+            <div className="bg-[#d4f45d] p-3 rounded-xl text-[#1a2e26] hover:scale-110 transition-transform">
+              <ArrowUpRight className="w-6 h-6" />
+            </div>
+          </Link>
         </div>
+
+        {/* Bouton Modifier (Apparaît au hover) */}
+        <button className="w-full bg-white/10 backdrop-blur-md py-2 rounded-xl font-medium text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+           Modifier l'annonce
+        </button>
       </div>
-   
     </div>
   )
 }

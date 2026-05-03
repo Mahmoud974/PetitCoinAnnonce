@@ -4,114 +4,153 @@ import React, { useState } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { ArrowLeft } from 'lucide-react'
 
 export default function AuthPage() {
   const [isLogin, setIsLogin] = useState(true)
   const router = useRouter()
 
-  const toggleForm = () => setIsLogin(!isLogin)
-
   return (
-    <div className="flex h-screen">
-      <div className="w-1/2 bg-[#111] text-white flex flex-col justify-center px-20">
+    <div className="flex h-screen" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+
+      {/* ── Colonne formulaire ── */}
+      <div className="w-full lg:w-1/2 bg-[#FDFBF7] flex flex-col justify-center px-8 md:px-16 xl:px-24 relative">
+
+        {/* Retour */}
         <button
           onClick={() => router.push("/")}
-          className="text-sm text-gray-400 mb-6 flex hover:underline hover:text-red-600"
+          className="absolute top-8 left-8 flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#1b3226]/40 hover:text-[#1b3226] transition-colors"
         >
-          ← Retour
+          <ArrowLeft className="w-4 h-4" />
+          Retour
         </button>
 
-        <h1 className="text-3xl font-bold mb-2">
-          {isLogin ? 'Se connecter' : 'Créer un compte'}
-        </h1>
-        <p className="text-sm text-gray-400 mb-8">
-          {`Les champs obligatoires sont marqués d'un astérisque*`}
-        </p>
+        {/* Logo */}
+        <div className="mb-10">
+          <span
+            className="text-2xl font-extrabold text-[#1b3226]"
+            style={{ fontFamily: "'Syne', sans-serif", letterSpacing: "-0.5px" }}
+          >
+            kisiwa<span className="text-[#D4E84A]">.</span>
+          </span>
+        </div>
 
+        {/* Titre */}
+        <div className="mb-8">
+          <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-[#1b3226]/30">
+            {isLogin ? "Connexion" : "Inscription"}
+          </span>
+          <h1
+            className="text-4xl md:text-5xl font-bold text-[#1b3226] mt-2 leading-tight"
+            style={{ fontFamily: "'Syne', sans-serif" }}
+          >
+            {isLogin ? (
+              <>Bon retour <span className="italic font-serif font-light">sur l{"'"}île.</span></>
+            ) : (
+              <>Rejoignez <span className="italic font-serif font-light">la communauté.</span></>
+            )}
+          </h1>
+        </div>
+
+        {/* Formulaire */}
         <form className="flex flex-col gap-4">
           {!isLogin && (
             <div>
-              <label className="text-sm text-gray-300 block mb-1">* Nom</label>
+              <label className="block text-xs font-bold uppercase tracking-widest text-[#1b3226]/40 mb-2">
+                Nom <span className="text-red-400">*</span>
+              </label>
               <input
                 type="text"
-                placeholder="Votre nom"
-                className="w-full p-3 rounded bg-black border border-gray-600 text-white"
+                placeholder="Votre nom complet"
+                className="w-full px-4 py-3 bg-white border border-[#1b3226]/15 rounded-xl text-[#1b3226] placeholder:text-[#1b3226]/25 focus:outline-none focus:ring-2 focus:ring-[#D4E84A] focus:border-transparent transition"
                 required
               />
             </div>
           )}
 
           <div>
-            <label className="text-sm text-gray-300 block mb-1">
-              * Adresse courriel
+            <label className="block text-xs font-bold uppercase tracking-widest text-[#1b3226]/40 mb-2">
+              Adresse e-mail <span className="text-red-400">*</span>
             </label>
             <input
               type="email"
-              placeholder="Email"
-              className="w-full p-3 rounded bg-black border border-gray-600 text-white"
+              placeholder="vous@exemple.com"
+              className="w-full px-4 py-3 bg-white border border-[#1b3226]/15 rounded-xl text-[#1b3226] placeholder:text-[#1b3226]/25 focus:outline-none focus:ring-2 focus:ring-[#D4E84A] focus:border-transparent transition"
               required
             />
           </div>
 
           <div>
-            <label className="text-sm text-gray-300 block mb-1">
-              * Mot de passe
+            <label className="block text-xs font-bold uppercase tracking-widest text-[#1b3226]/40 mb-2">
+              Mot de passe <span className="text-red-400">*</span>
             </label>
             <input
               type="password"
-              placeholder="Mot de passe"
-              className="w-full p-3 rounded bg-black border border-gray-600 text-white"
+              placeholder="••••••••"
+              className="w-full px-4 py-3 bg-white border border-[#1b3226]/15 rounded-xl text-[#1b3226] placeholder:text-[#1b3226]/25 focus:outline-none focus:ring-2 focus:ring-[#D4E84A] focus:border-transparent transition"
               required
             />
           </div>
 
           {isLogin && (
-            <Link href="#" className="text-red-600 text-sm hover:underline mt-1">
-              Vous avez oublié votre mot de passe ?
+            <Link
+              href="#"
+              className="text-xs font-medium text-[#1b3226]/40 hover:text-[#1b3226] transition-colors self-end"
+            >
+              Mot de passe oublié ?
             </Link>
           )}
 
           <button
             type="submit"
-            className="mt-4 bg-red-600 hover:bg-red-800 text-white font-semibold py-3 rounded-full"
+            className="mt-2 w-full py-4 rounded-xl font-bold text-sm uppercase tracking-widest bg-[#1b3226] text-white hover:bg-[#D4E84A] hover:text-[#1b3226] transition-all duration-200 active:scale-[0.99]"
+            style={{ fontFamily: "'Syne', sans-serif" }}
           >
             {isLogin ? 'Se connecter' : "S'inscrire"}
           </button>
         </form>
 
-        <p className="text-sm text-gray-400 mt-6">
-          {isLogin ? (
-            <>
-              Vous êtes nouveau chez nous ?{' '}
-              <button
-                onClick={toggleForm}
-                className="text-red-600 hover:underline ml-1"
-              >
-                Créer un compte
-              </button>
-            </>
-          ) : (
-            <>
-              Vous avez déjà un compte ?{' '}
-              <button
-                onClick={toggleForm}
-                className="text-red-600 hover:underline ml-1"
-              >
-                Se connecter
-              </button>
-            </>
-          )}
+        {/* Toggle */}
+        <p className="text-sm text-[#1b3226]/40 mt-6">
+          {isLogin ? "Vous êtes nouveau ?" : "Déjà un compte ?"}
+          {' '}
+          <button
+            onClick={() => setIsLogin(!isLogin)}
+            className="font-bold text-[#1b3226] hover:underline underline-offset-2 transition-colors"
+          >
+            {isLogin ? 'Créer un compte' : 'Se connecter'}
+          </button>
         </p>
       </div>
 
-      <div className="w-1/2 relative -z-20">
+      {/* ── Colonne image ── */}
+      <div className="hidden lg:block w-1/2 relative">
         <Image
           src="/login.jpg"
-          alt="Image d'authentification"
+          alt="Kisiwa"
           fill
           className="object-cover"
+          priority
         />
+        {/* Overlay + citation */}
+        <div className="absolute inset-0 bg-[#1b3226]/40" />
+        <div className="absolute bottom-12 left-10 right-10">
+          <p
+            className="text-white text-3xl font-bold leading-tight"
+            style={{ fontFamily: "'Syne', sans-serif" }}
+          >
+            Tout se trouve{' '}
+            <span className="italic font-serif font-light text-[#D4E84A]">
+              sur l{"'"}île
+            </span>{' '}
+            et au-delà.
+          </p>
+          <p className="text-white/50 text-sm mt-3">
+            La plateforme de confiance pour la communauté comorienne.
+          </p>
+        </div>
       </div>
+
     </div>
   )
 }

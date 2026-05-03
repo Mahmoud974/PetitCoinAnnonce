@@ -70,19 +70,23 @@ export default async function Page() {
   }));
 
   return (
-    <div className="min-h-screen bg-[#F9F8F3]" style={{ fontFamily: "'Syne', sans-serif" }}>
+    <div className="min-h-screen " style={{ fontFamily: "'Syne', sans-serif" }}>
       <div className="container mt-16 mx-auto justify-center max-w-7xl px-4 xl:px-0">
-
-        {/* En-tête — barre jaune verticale, typographie Kisiwa */}
-        <div className="flex items-stretch gap-4 mb-14">
-        <div className="relative mb-2">
-        
-            <h2 className="text-5xl md:text-5xl font-bold text-center flex justify-center flex-col mx-auto text-[#1b3226] mt-4" style={{ fontFamily: "'Syne', sans-serif" }}>
-            Toutes les catégories <br /> <span className="italic font-serif font-light">Parcourez les annonces par catégories</span>
-            </h2>
-          </div>
-           
-        </div>
+{/* En-tête centré */}
+<div className="flex flex-col items-center text-center mb-14">
+  <h2
+    className="text-5xl font-bold text-[#1b3226]"
+    style={{ fontFamily: "'Syne', sans-serif" }}
+  >
+    Toutes les catégories
+  </h2>
+  <span
+    className="italic font-light text-4xl text-[#1b3226] mt-2"
+    style={{ fontFamily: "Georgia, serif" }}
+  >
+    Parcourez les annonces par catégories
+  </span>
+</div>
 
         {/* Sections */}
         {sections.slice(0, 3).map(({ title, slug, items }) => (

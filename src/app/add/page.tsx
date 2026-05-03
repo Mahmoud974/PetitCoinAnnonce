@@ -2,8 +2,21 @@
 import { useMemo, useState } from "react";
 import { Upload, CheckCircle } from "lucide-react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { CATEGORIES, CATEGORY_FIELDS, CategoryValue, FieldDef, FormValues } from "../config/categories";
+import {
+  CATEGORIES,
+  CATEGORY_FIELDS,
+  CategoryValue,
+  FieldDef,
+  FormValues,
+} from "../config/categories";
 
+/* ─── Styles partagés ─────────────────────────────────────── */
+const inputBase =
+  "w-full px-4 py-3 bg-white border border-[#1b3226]/15 rounded-xl text-[#1b3226] placeholder:text-[#1b3226]/30 focus:outline-none focus:ring-2 focus:ring-[#D4E84A] focus:border-transparent transition duration-200";
+
+const labelBase = "block text-sm font-medium text-[#1b3226]/70 mb-2";
+
+/* ─── ListingType ─────────────────────────────────────────── */
 function ListingType({
   value,
   onChange,
@@ -13,46 +26,33 @@ function ListingType({
 }) {
   return (
     <div className="space-y-3">
-      <label className="block text-sm font-medium text-gray-700">
-        Type d’annonce <span className="text-red-500">*</span>
+      <label className={labelBase}>
+        Type d'annonce <span className="text-red-400">*</span>
       </label>
-
-      {/* Mobile only: empilé (pas de layout desktop) */}
-      <div className="flex flex-col gap-4">
-        <label className="flex items-start gap-4 cursor-pointer">
-          <input
-            type="radio"
-            name="typeAnnonce"
-            value="offre"
-            checked={value === "offre"}
-            onChange={() => onChange("offre")}
-            className="mt-1 w-6 h-6 accent-blue-900"
-          />
-          <div>
-            <p className="text-lg font-semibold text-gray-900">Offre</p>
-            <p className="text-gray-500">Vous vendez</p>
-          </div>
-        </label>
-
-        <label className="flex items-start gap-4 cursor-pointer">
-          <input
-            type="radio"
-            name="typeAnnonce"
-            value="demande"
-            checked={value === "demande"}
-            onChange={() => onChange("demande")}
-            className="mt-1 w-6 h-6 accent-blue-900"
-          />
-          <div>
-            <p className="text-lg font-semibold text-gray-900">Demande</p>
-            <p className="text-gray-500">Vous recherchez</p>
-          </div>
-        </label>
+      <div className="grid grid-cols-2 gap-3">
+        {(["offre", "demande"] as const).map((type) => (
+          <button
+            key={type}
+            type="button"
+            onClick={() => onChange(type)}
+            className={`py-4 px-5 rounded-xl border-2 text-left transition-all duration-200 ${
+              value === type
+                ? "border-[#1b3226] bg-[#1b3226] text-white"
+                : "border-[#1b3226]/15 bg-white text-[#1b3226] hover:border-[#1b3226]/40"
+            }`}
+          >
+            <p className="font-bold text-base capitalize">{type}</p>
+            <p className={`text-sm mt-0.5 ${value === type ? "text-white/60" : "text-[#1b3226]/40"}`}>
+              {type === "offre" ? "Vous vendez" : "Vous recherchez"}
+            </p>
+          </button>
+        ))}
       </div>
     </div>
   );
 }
 
+/* ─── DynamicField ────────────────────────────────────────── */
 function DynamicField({
   fieldDef,
   control,
@@ -62,18 +62,19 @@ function DynamicField({
   control: any;
   name: `caracteristiques.${string}`;
 }) {
-  const base =
-    "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition duration-200 outline-none";
-
   return (
     <Controller
       control={control}
       name={name}
-      defaultValue={fieldDef.type === "number" ? "" : ""}
+      defaultValue=""
       render={({ field }) => {
         if (fieldDef.type === "select") {
           return (
-            <select className={base} value={(field.value as string) ?? ""} onChange={field.onChange}>
+            <select
+              className={inputBase}
+              value={(field.value as string) ?? ""}
+              onChange={field.onChange}
+            >
               <option value="">Sélectionner...</option>
               {fieldDef.options?.map((opt) => (
                 <option key={opt} value={opt}>
@@ -83,21 +84,19 @@ function DynamicField({
             </select>
           );
         }
-
         return (
           <input
-            className={base}
+            className={inputBase}
             type={fieldDef.type}
             value={(field.value as any) ?? ""}
             placeholder={fieldDef.placeholder ?? ""}
-            onChange={(e) => {
-              if (fieldDef.type === "number") {
-                const v = e.target.value;
-                field.onChange(v === "" ? "" : Number(v));
-              } else {
-                field.onChange(e.target.value);
-              }
-            }}
+            onChange={(e) =>
+              field.onChange(
+                fieldDef.type === "number" && e.target.value !== ""
+                  ? Number(e.target.value)
+                  : e.target.value
+              )
+            }
           />
         );
       }}
@@ -105,6 +104,52 @@ function DynamicField({
   );
 }
 
+/* ─── Section wrapper ─────────────────────────────────────── */
+function FormSection({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="bg-white rounded-2xl border border-[#1b3226]/10 p-6 space-y-5">
+      <p
+        className="text-xs font-bold tracking-[0.15em] uppercase text-[#1b3226]/40"
+        style={{ fontFamily: "'Syne', sans-serif" }}
+      >
+        {title}
+      </p>
+      {children}
+    </div>
+  );
+}
+
+/* ─── Field wrapper ───────────────────────────────────────── */
+function Field({
+  label,
+  required,
+  error,
+  children,
+}: {
+  label: string;
+  required?: boolean;
+  error?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div>
+      <label className={labelBase}>
+        {label}
+        {required && <span className="text-red-400 ml-1">*</span>}
+      </label>
+      {children}
+      {error && <p className="text-red-400 text-xs mt-1.5">{error}</p>}
+    </div>
+  );
+}
+
+/* ─── Main form ───────────────────────────────────────────── */
 export default function AnnonceForm() {
   const [fileName, setFileName] = useState("");
 
@@ -141,51 +186,59 @@ export default function AnnonceForm() {
   };
 
   return (
- 
-    <form onSubmit={handleSubmit(onSubmit)} className="min-h-screen py-8 px-4">
-      <div className="mx-auto lg:max-w-5xl max-w-md">
-        <div className="overflow-hidden">
-          <h1 className="text-2xl text-black font-black">Déposez une annonce</h1>
+    <div className="min-h-screen bg-[#FDFBF7] py-16 px-4" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+      <div className="mx-auto max-w-2xl">
 
-          <div className="pt-6 space-y-6">
-        
+        {/* Header */}
+        <div className="mb-10">
+          <span className="text-[#1b3226]/40 font-bold tracking-[0.3em] uppercase text-xs">
+            Kisiwa
+          </span>
+          <h1
+            className="text-4xl md:text-5xl font-bold text-[#1b3226] mt-3 leading-tight"
+            style={{ fontFamily: "'Syne', sans-serif" }}
+          >
+            Déposez une{" "}
+            <span className="italic font-serif font-light">annonce</span>
+          </h1>
+          <p className="text-[#1b3226]/50 mt-3 text-base">
+            Remplissez les informations ci-dessous pour publier votre annonce.
+          </p>
+        </div>
+
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+
+          {/* Bloc 1 — Type & Identité */}
+          <FormSection title="Votre annonce">
             <Controller
               control={control}
               name="typeAnnonce"
-              rules={{ required: true }}
-              render={({ field }) => <ListingType value={field.value} onChange={field.onChange} />}
+              render={({ field }) => (
+                <ListingType value={field.value} onChange={field.onChange} />
+              )}
             />
-
-            {/* Nom */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Nom ou Nom de l&apos;entreprise <span className="text-red-500">*</span>
-              </label>
+            <Field label="Nom ou nom de l'entreprise" required error={errors.nom?.message}>
               <input
                 {...register("nom", { required: "Le nom est obligatoire" })}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition duration-200 outline-none"
+                className={inputBase}
                 placeholder="Votre nom complet ou entreprise"
               />
-              {errors.nom && <p className="text-red-500 text-sm mt-1">{errors.nom.message}</p>}
-            </div>
+            </Field>
+          </FormSection>
 
-            {/* Catégorie */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Catégorie <span className="text-red-500">*</span>
-              </label>
-
+          {/* Bloc 2 — Catégorie */}
+          <FormSection title="Catégorie">
+            <Field label="Catégorie" required error={errors.categorie?.message}>
               <Controller
                 control={control}
                 name="categorie"
                 rules={{ required: "La catégorie est obligatoire" }}
                 render={({ field }) => (
                   <select
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition duration-200 outline-none"
+                    className={inputBase}
                     value={field.value}
                     onChange={(e) => {
-                      const v = e.target.value as CategoryValue;
-                      field.onChange(v);
+                      field.onChange(e.target.value as CategoryValue);
                       setValue("caracteristiques", {});
                     }}
                   >
@@ -197,175 +250,144 @@ export default function AnnonceForm() {
                   </select>
                 )}
               />
-              {errors.categorie && <p className="text-red-500 text-sm mt-1">{errors.categorie.message}</p>}
-            </div>
+            </Field>
 
             {/* Champs dynamiques */}
             {categorie && categoryFields.length > 0 && (
-              <div className="rounded-lg border border-gray-200 p-4 space-y-4">
-                <p className="font-semibold text-gray-800">Caractéristiques</p>
-
-                {/* Mobile only: 1 colonne, pas de sm:grid-cols-2 */}
-                <div className="grid grid-cols-1 gap-4">
-                  {categoryFields.map((fd) => (
-                    <div key={fd.name}>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">{fd.label}</label>
-                      <DynamicField control={control} fieldDef={fd} name={`caracteristiques.${fd.name}`} />
-                    </div>
-                  ))}
-                </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                {categoryFields.map((fd) => (
+                  <Field key={fd.name} label={fd.label}>
+                    <DynamicField
+                      control={control}
+                      fieldDef={fd}
+                      name={`caracteristiques.${fd.name}`}
+                    />
+                  </Field>
+                ))}
               </div>
             )}
+          </FormSection>
 
-            {/* Pro */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-3">Êtes vous professionnel ?</label>
-
-              {/* Mobile only: empilé */}
-              <div className="flex flex-col gap-3">
-                <label className="flex items-center gap-3 cursor-pointer">
-                  <input
-                    type="radio"
-                    value="oui"
-                    {...register("professionnel")}
-                    className="w-5 h-5 text-purple-600 focus:ring-purple-500"
-                  />
-                  <span className="text-gray-700 select-none">Oui</span>
-                </label>
-
-                <label className="flex items-center gap-3 cursor-pointer">
-                  <input
-                    type="radio"
-                    value="non"
-                    {...register("professionnel")}
-                    className="w-5 h-5 text-purple-600 focus:ring-purple-500"
-                  />
-                  <span className="text-gray-700 select-none">Non</span>
-                </label>
-              </div>
+          {/* Bloc 3 — Localisation & Contact */}
+          <FormSection title="Localisation & contact">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <Field label="Lieu">
+                <input
+                  type="text"
+                  {...register("lieu")}
+                  className={inputBase}
+                  placeholder="Ville, région…"
+                />
+              </Field>
+              <Field label="Êtes-vous professionnel ?">
+                <div className="flex gap-4 h-[50px] items-center">
+                  {["oui", "non"].map((v) => (
+                    <label key={v} className="flex items-center gap-2 cursor-pointer">
+                      <input
+                        type="radio"
+                        value={v}
+                        {...register("professionnel")}
+                        className="w-4 h-4 accent-[#1b3226]"
+                      />
+                      <span className="text-[#1b3226] capitalize text-sm">{v}</span>
+                    </label>
+                  ))}
+                </div>
+              </Field>
             </div>
-
-            {/* Lieu */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Lieu</label>
-              <input
-                type="text"
-                {...register("lieu")}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition duration-200 outline-none"
-                placeholder="Ville, région..."
-              />
-            </div>
-
-            {/* Contact */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Contact <span className="text-red-500">*</span>
-              </label>
+            <Field label="Contact" required error={errors.contact?.message}>
               <input
                 type="text"
                 {...register("contact", { required: "Le contact est obligatoire" })}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition duration-200 outline-none"
-                placeholder="Téléphone, mail, réseau social"
+                className={inputBase}
+                placeholder="Téléphone, email, réseau social…"
               />
-              {errors.contact && <p className="text-red-500 text-sm mt-1">{errors.contact.message}</p>}
-            </div>
-
-            {/* Comment contacter */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Comment voulez-vous que les clients vous contactent?
-              </label>
+            </Field>
+            <Field label="Comment souhaitez-vous être contacté ?">
               <input
                 type="text"
                 {...register("clientContact")}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition duration-200 outline-none"
-                placeholder="Par téléphone, mail, WhatsApp..."
+                className={inputBase}
+                placeholder="WhatsApp, appel, email…"
               />
-            </div>
+            </Field>
+          </FormSection>
 
-            {/* Prix */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Prix demandé</label>
+          {/* Bloc 4 — Annonce */}
+          <FormSection title="Détails de l'annonce">
+            <Field label="Prix demandé">
               <input
                 type="text"
                 {...register("prix")}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition duration-200 outline-none"
-                placeholder="Ex: 50€, Gratuit, À négocier..."
+                className={inputBase}
+                placeholder="Ex : 50 €, Gratuit, À négocier…"
               />
-            </div>
-
-            {/* Description */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Quelle est votre annonce ? Décrivez-la ici.
-              </label>
+            </Field>
+            <Field label="Description">
               <textarea
                 {...register("description")}
                 rows={5}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition duration-200 resize-none outline-none"
-                placeholder="Décrivez votre annonce en détail..."
+                className={`${inputBase} resize-none`}
+                placeholder="Décrivez votre annonce en détail…"
               />
-            </div>
-
-            {/* Infos supplémentaires */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Informations complémentaires</label>
+            </Field>
+            <Field label="Informations complémentaires">
               <textarea
                 {...register("infosSupp")}
-                rows={4}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition duration-200 resize-none outline-none"
-                placeholder="Ajoutez des informations supplémentaires si nécessaire..."
+                rows={3}
+                className={`${inputBase} resize-none`}
+                placeholder="Ajoutez des précisions si nécessaire…"
               />
-            </div>
+            </Field>
+          </FormSection>
 
-            {/* Upload photo */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Ajoutez une photo</label>
-              <div className="mt-2">
-                <label className="flex flex-col items-center justify-center w-full h-40 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-purple-500 hover:bg-purple-50 transition duration-200">
-                  <div className="flex flex-col items-center justify-center pt-5 pb-6 text-center px-4">
-                    <Upload className="w-10 h-10 text-gray-400 mb-3" />
-                    <p className="mb-2 text-sm text-gray-500">
-                      <span className="font-semibold">Cliquez pour télécharger</span> ou glissez-déposez
-                    </p>
-                    <p className="text-xs text-gray-500">PNG, JPG, JPEG (MAX. 5MB)</p>
-                    {fileName && <p className="mt-2 text-sm text-purple-600 font-medium break-all">{fileName}</p>}
-                  </div>
-
-                  <input
-                    type="file"
-                    className="hidden"
-                    accept="image/*"
-                    onChange={(e) => {
-                      const files = e.target.files;
-                      setValue("photo", files && files.length > 0 ? files : null, { shouldValidate: true });
-                      setFileName(files?.[0]?.name ?? "");
-                    }}
-                  />
-                </label>
-              </div>
-            </div>
-
-            {/* Submit */}
-            <div className="pt-2">
+          {/* Bloc 5 — Photo */}
+          <FormSection title="Photo">
+            <label className="flex flex-col items-center justify-center w-full h-40 border-2 border-dashed border-[#1b3226]/20 rounded-xl cursor-pointer hover:border-[#D4E84A] hover:bg-[#D4E84A]/5 transition duration-200 group">
+              <Upload className="w-8 h-8 text-[#1b3226]/30 group-hover:text-[#1b3226]/60 mb-3 transition-colors" />
+              <p className="text-sm text-[#1b3226]/50 group-hover:text-[#1b3226]/70 transition-colors">
+                <span className="font-semibold">Cliquez</span> ou glissez-déposez
+              </p>
+              <p className="text-xs text-[#1b3226]/30 mt-1">PNG, JPG, JPEG — max. 5 MB</p>
+              {fileName && (
+                <p className="mt-2 text-sm text-[#1b3226] font-medium break-all px-4 text-center">
+                  {fileName}
+                </p>
+              )}
               <input
-                type="submit"
-                value={isSubmitting ? "Publication..." : "Publier l'annonce"}
-                disabled={isSubmitting}
-                className="w-full bg-red-600 cursor-pointer text-white py-4 px-6 rounded-lg font-semibold text-lg transform active:scale-[0.99] transition duration-200 shadow-lg disabled:opacity-60 disabled:cursor-not-allowed"
+                type="file"
+                className="hidden"
+                accept="image/*"
+                onChange={(e) => {
+                  const files = e.target.files;
+                  setValue("photo", files?.length ? files : null, { shouldValidate: true });
+                  setFileName(files?.[0]?.name ?? "");
+                }}
               />
-            </div>
+            </label>
+          </FormSection>
 
-            {/* Success */}
-            {isSubmitSuccessful && (
-              <div className="flex items-center gap-3 p-4 bg-green-50 border border-green-200 rounded-lg">
-                <CheckCircle className="text-green-600" size={24} />
-                <p className="text-green-800 font-medium">Votre annonce a été soumise avec succès !</p>
-              </div>
-            )}
-          </div>
-        </div>
+          {/* Submit */}
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="w-full py-4 px-6 rounded-xl font-bold text-base bg-[#1b3226] text-white hover:bg-[#D4E84A] hover:text-[#1b3226] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.99]"
+            style={{ fontFamily: "'Syne', sans-serif" }}
+          >
+            {isSubmitting ? "Publication en cours…" : "Publier l'annonce →"}
+          </button>
+
+          {/* Success */}
+          {isSubmitSuccessful && (
+            <div className="flex items-center gap-3 p-4 bg-[#D4E84A]/20 border border-[#D4E84A] rounded-xl">
+              <CheckCircle className="text-[#1b3226] shrink-0" size={20} />
+              <p className="text-[#1b3226] font-medium text-sm">
+                Votre annonce a été soumise avec succès !
+              </p>
+            </div>
+          )}
+        </form>
       </div>
-    </form>
+    </div>
   );
 }

@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { 
   ArrowUpRight,  LayoutGrid, 
-  MessageCircle, Minus, Plus, ChevronDown 
+  MessageCircle, ChevronDown 
 } from "lucide-react";
 
 export default function KisiwaHomePage() {
@@ -46,7 +46,7 @@ export default function KisiwaHomePage() {
               La plateforme de confiance pour la communauté comorienne. 
               Vendez aux Comores, achetez depuis la France, restez connectés.
             </p>
-            <Link href="/how-it-works" className="inline-block">
+            <Link href="/" className="inline-block">
               <button className="text-[#D4E84A] font-medium flex items-center gap-3 hover:underline group text-lg">
                 Comment ça marche ? 
                 <ArrowUpRight size={22} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
