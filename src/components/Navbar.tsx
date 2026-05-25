@@ -82,7 +82,7 @@ export default function Navbar() {
             <input
               type="text"
               placeholder="Rechercher une annonce..."
-              className="flex-1 bg-transparent px-4 py-2 text-sm text-white outline-none placeholder:text-white/30 min-w-0"
+              className="flex-1 border bg-transparent px-4 py-2 text-sm text-white outline-none placeholder:text-white/30 min-w-0 "
             />
             <button
               className="flex items-center gap-1.5 px-4 py-2 text-xs font-bold flex-shrink-0"

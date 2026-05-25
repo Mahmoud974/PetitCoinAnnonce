@@ -6,7 +6,7 @@ import { useParams } from "next/navigation";
 
 export default function ElementCategory() {
   const { slug } = useParams();
-  const [dataElement, setDataElement] = useState<any[]>([]);
+  const [dataElement, setDataElement] = useState<any>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -47,12 +47,10 @@ export default function ElementCategory() {
       <div className="border-b border-gray-200 bg-white">
         <div className="mx-auto max-w-7xl px-4 py-6">
           <div className="flex flex-wrap items-end gap-3">
-            <h1 className="text-3xl font-bold text-gray-900">
-              {`Annonces ${slug ?? ""}`}
-            </h1>
-            <span className="text-2xl font-extrabold text-gray-800">
-              ({dataElement.length.toLocaleString("fr-FR")})
-            </span>
+          <h2 className="text-3xl font-bold text-gray-900" style={{ fontFamily: "'Syne', sans-serif" }}>
+              Sections <span className="italic font-serif font-light">{slug ?? ""} ({dataElement.length.toLocaleString("fr-FR")})</span>
+            </h2>
+           
           </div>
         </div>
       </div>
@@ -79,7 +77,7 @@ export default function ElementCategory() {
               </p>
               <a
                 href="/add"
-                className="inline-block rounded-xl bg-red-600 px-5 py-3 text-sm font-bold text-white transition hover:bg-red-700 active:scale-[0.99]"
+                className="inline-block rounded-xl bg-[#1b3226] px-5 py-3 text-sm font-bold text-white transition hover:bg-red-700 active:scale-[0.99]"
               >
                 Publier une annonce
               </a>

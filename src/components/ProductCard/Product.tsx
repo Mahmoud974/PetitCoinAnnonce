@@ -1,6 +1,6 @@
 "use client";
 
-import { MapPin, ShieldCheck, ChevronRight, Heart, Share2 } from "lucide-react";
+import { MapPin, ChevronRight, Heart, Share2 } from "lucide-react";
 import Icons from "./Icons";
 import { useParams } from "next/navigation";
 import { FaStar } from "react-icons/fa";
@@ -10,7 +10,7 @@ import Back from "../Back";
 import type { Post } from "@/types/post";
 import { MapContainer, TileLayer, Circle } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-
+const MAX_W   = "1280px"
 export default function Product({ posts }: { posts: Post[] }) {
   const params = useParams();
   const slug = params?.slug as string;
@@ -23,13 +23,16 @@ export default function Product({ posts }: { posts: Post[] }) {
   const position: [number, number] = [-11.7022, 43.2551];
 
   return (
-    <div className="min-h-screen mx-auto text-[#1b3226] pb-20">
+    <div className="flex items-center gap-3 px-6 pb-12 py-2.5 mx-auto w-full"
+    style={{ maxWidth: MAX_W }}>
 
-      <header className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+{/*       
+<header className="max-w-screen-xl mx-auto px-6 py-4 flex items-center justify-between">
         <Back />
-      </header>
+      </header> */}
 
-      <main className="max-w-7xl mx-auto px-4 mt-4 grid grid-cols-1 lg:grid-cols-12 gap-10">
+      {/* ── MAIN aligné sur la navbar ── */}
+      <main className="max-w-screen-xl mx-auto px-6 mt-4 grid grid-cols-1 lg:grid-cols-12 gap-10">
 
         {/* ── COLONNE GAUCHE ── */}
         <div className="lg:col-span-8 space-y-10">
@@ -196,8 +199,6 @@ export default function Product({ posts }: { posts: Post[] }) {
                 />
               </MapContainer>
             </div>
-
-           
 
           </div>
         </div>

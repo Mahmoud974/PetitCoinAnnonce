@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { 
@@ -55,7 +55,7 @@ export default function KisiwaHomePage() {
           </div>
           <div className="relative">
             <div className="relative z-10 rounded-tl-[150px] rounded-br-[60px] overflow-hidden border-[12px] border-white/5 shadow-2xl aspect-[4/5] md:aspect-square">
-              <Image src="/images/hero-kisiwa.jpg" alt="Kisiwa Life" fill className="object-cover" priority />
+              <Image src="/island.jpg" alt="Kisiwa Life" fill className="object-cover" priority />
             </div>
           </div>
         </div>
@@ -81,8 +81,8 @@ export default function KisiwaHomePage() {
             <div className="lg:col-span-7 relative order-2 lg:order-1">
               <div className="grid grid-cols-2 gap-6">
                 <div className="space-y-6 pt-12">
-                  <div className="relative h-80 rounded-[2rem] overflow-hidden shadow-2xl rotate-[-3deg] hover:rotate-0 transition-all duration-500">
-                    <Image src="/images/varied-products.jpg" alt="Produits" fill className="object-cover" />
+                <div className="relative h-96 rounded-[2rem] overflow-hidden shadow-2xl rotate-[3deg] hover:rotate-0 transition-all duration-500">
+                    <Image src="/phone.jpg" alt="Vente" fill className="object-cover scale-125  0" />
                   </div>
                   <div className="bg-[#1b3226] p-10 rounded-[2rem] text-[#D4E84A] shadow-xl rotate-[2deg]">
                      <LayoutGrid size={32} className="mb-4" />
@@ -94,9 +94,10 @@ export default function KisiwaHomePage() {
                      <MessageCircle size={32} className="mb-4" />
                      <p className="font-bold text-2xl leading-tight tracking-tighter">Échanges directs et sécurisés.</p>
                   </div>
-                  <div className="relative h-96 rounded-[2rem] overflow-hidden shadow-2xl rotate-[3deg] hover:rotate-0 transition-all duration-500">
-                    <Image src="/images/direct-exchange.jpg" alt="Vente" fill className="object-cover" />
+                  <div className="relative h-80 rounded-[2rem] overflow-hidden shadow-2xl rotate-[-3deg] hover:rotate-0 transition-all duration-500">
+                    <Image src="/colis.png"  alt="Produits" fill className="object-cover scale-125  0" />
                   </div>
+                  
                 </div>
               </div>
             </div>
@@ -239,7 +240,7 @@ export default function KisiwaHomePage() {
               review.featured ? "text-[#1b3226]" : "text-white/80"
             }`}
           >
-            "{review.text}"
+          {review.text}
           </p>
 
           {/* Auteur */}
@@ -300,7 +301,7 @@ export default function KisiwaHomePage() {
                   onClick={() => setOpenIndex(openIndex === index ? null : index)}
                   className="flex items-center justify-between w-full py-6 text-left group"
                 >
-                  <span className={`text-xl md:text-2xl font-medium transition-all ${openIndex === index ? 'text-[#D4E84A] pl-2' : 'text-[#1b3226] group-hover:text-white'}`}>
+                  <span className={`text-xl md:text-2xl font-medium transition-all ${openIndex === index ? 'text-[#D4E84A] pl-2' : 'text-[#1b3226] group-hover:text-[#9baa3f]'}`}>
                     {faq.question}
                   </span>
                   <div className={`transition-transform duration-500 ${openIndex === index ? 'rotate-180 text-[#D4E84A]' : 'text-white/20'}`}>
@@ -324,7 +325,7 @@ export default function KisiwaHomePage() {
           <div className="mt-20 p-8 rounded-[2rem] border border-white/5 bg-white/[0.02] text-center">
              <p className="text-[#1b3226] ">
                Vous avez une autre question ? 
-               <Link href="/contact" className="text-[#D4E84A] font-bold ml-2 hover:underline">
+               <Link href="contact-support" className="text-[#D4E84A] font-bold ml-2 hover:underline">
                  Contactez notre support →
                </Link>
              </p>

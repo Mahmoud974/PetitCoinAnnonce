@@ -29,7 +29,7 @@ export default function ImgItem() {
   const likeCount = likeCounts[currentIndex];
 
   return (
-    <div className="relative w-full h-[360px] sm:h-[480px] rounded-[1.5rem] overflow-hidden shadow-2xl">
+    <div className="relative    h-[360px] sm:h-[480px] rounded-[1.5rem] overflow-hidden shadow-2xl">
       <Image src={src} alt={alt} fill className="object-cover" priority />
 
       {/* Gradient bas */}

@@ -191,9 +191,7 @@ export default function AnnonceForm() {
 
         {/* Header */}
         <div className="mb-10">
-          <span className="text-[#1b3226]/40 font-bold tracking-[0.3em] uppercase text-xs">
-            Kisiwa
-          </span>
+      
           <h1
             className="text-4xl md:text-5xl font-bold text-[#1b3226] mt-3 leading-tight"
             style={{ fontFamily: "'Syne', sans-serif" }}
