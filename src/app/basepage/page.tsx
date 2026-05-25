@@ -1,15 +1,23 @@
 'use client';
 
-import  { useState } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { 
-  ArrowUpRight,  LayoutGrid, 
-  MessageCircle, ChevronDown 
+  ArrowUpRight, LayoutGrid, 
+  MessageCircle, ChevronDown,
+  ChevronLeft, ChevronRight, Heart
 } from "lucide-react";
 
 export default function KisiwaHomePage() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  const carCategories = [
+    { name: "Peugeot 208 - Essence - 2021", price: "18 500€", stats: "8 personnes adorent ça" },
+    { name: "Renault Clio - Diesel - 2019", price: "12 500€", stats: "12 personnes adorent ça" },
+    { name: "Volkswagen Golf - Essence - 2020", price: "22 500€", stats: "15 personnes adorent ça" },
+    { name: "Citroën C3 - Essence - 2018", price: "9 800€", stats: "6 personnes adorent ça" },
+  ];
 
   const faqs = [
     {
@@ -66,6 +74,102 @@ export default function KisiwaHomePage() {
           </svg>
         </div>
       </section>
+      {/* NOUVELLE SECTION : TOUTES LES CATÉGORIES (CAROUSEL LOCOMOTION) */}
+      <section className="pt-24 px-6 max-w-7xl mx-auto relative overflow-hidden">
+        <div className="text-center mb-12">
+          <h2 className="text-5xl font-bold text-[#1b3226] mb-2" style={{ fontFamily: "'Syne', sans-serif" }}>
+            Toutes les catégories
+          </h2>
+          <p className="text-2xl italic font-serif font-light text-[#1b3226]/80">
+            Parcourez les annonces par catégories
+          </p>
+        </div>
+
+        <div className="mb-6">
+          <div className="flex items-center gap-2 mb-6">
+            <span className="w-6 h-[2px] bg-[#D4E84A]"></span>
+            <span className="font-bold tracking-[0.2em] uppercase text-sm text-[#1b3226]">
+              LOCOMOTION
+            </span>
+          </div>
+
+          {/* Conteneur du Slider relatif pour positionner les flèches absolues */}
+          <div className="relative">
+            {/* Flèches de navigation du Slider */}
+            <div className="absolute right-4 top-1/2 -translate-y-1/2 z-30 flex flex-col gap-2">
+              <button className="w-10 h-10 rounded-full bg-white text-[#1b3226] flex items-center justify-center shadow-lg border border-gray-100 hover:bg-gray-50 transition-colors">
+                <ChevronLeft size={20} />
+              </button>
+              <button className="w-10 h-10 rounded-full bg-white text-[#1b3226] flex items-center justify-center shadow-lg border border-gray-100 hover:bg-gray-50 transition-colors">
+                <ChevronRight size={20} />
+              </button>
+            </div>
+
+    
+            <div className="flex gap-6 overflow-x-auto pb-4 scrollbar-none snap-x pr-16">
+              {carCategories.map((car, index) => (
+                <div 
+                  key={index} 
+                  className="min-w-[280px] md:min-w-[320px] aspect-[3/4] relative rounded-[2rem] overflow-hidden shadow-xl snap-start group"
+                >
+                  
+                  <Image 
+                    src="/2.jpg" 
+                    alt={car.name} 
+                    fill 
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  
+                  {/* Overlay dégradé sombre en bas pour la lisibilité */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent z-10" />
+
+                  {/* Badge de catégorie supérieur */}
+                  <div className="absolute top-6 left-6 z-20">
+                    <span className="bg-[#D4E84A] text-[#1b3226] text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full">
+                      CARS
+                    </span>
+                  </div>
+
+                  {/* Bouton Favoris supérieur droit */}
+                  <button className="absolute top-6 right-6 z-20 text-white/80 hover:text-white transition-colors">
+                    <Heart size={20} />
+                  </button>
+
+                  {/* Contenu textuel inférieur */}
+                  <div className="absolute bottom-0 inset-x-0 p-6 z-20 text-white flex flex-col justify-end min-h-[50%]">
+                    {/* Infos géoloc & temps simulés */}
+                    <div className="flex items-center gap-4 text-xs text-gray-300 mb-2 font-light">
+                      <span className="flex items-center gap-1">📍 Paris</span>
+                      <span>🕒 2 heures</span>
+                    </div>
+
+                    <h3 className="text-xl font-bold leading-tight mb-4 line-clamp-2">
+                      {car.name}
+                    </h3>
+
+                    <div className="flex items-center justify-between mt-auto">
+                      <div>
+                        <p className="text-3xl font-extrabold text-[#D4E84A] tracking-tight">
+                          {car.price}
+                        </p>
+                        <p className="text-[10px] text-gray-400 mt-1 italic">
+                          {car.stats}
+                        </p>
+                      </div>
+                      
+                      {/* Bouton d'action CTA fléché */}
+                      <button className="w-12 h-12 rounded-2xl bg-[#D4E84A] text-[#1b3226] flex items-center justify-center hover:scale-105 transition-transform shadow-lg">
+                        <ArrowUpRight size={22} strokeWidth={2.5} />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
 
       {/* 2. SECTION PRÉSENTATION INNOVANTE (COLLAGE) */}
       <section className="py-32 px-6 overflow-hidden">
@@ -81,8 +185,8 @@ export default function KisiwaHomePage() {
             <div className="lg:col-span-7 relative order-2 lg:order-1">
               <div className="grid grid-cols-2 gap-6">
                 <div className="space-y-6 pt-12">
-                <div className="relative h-96 rounded-[2rem] overflow-hidden shadow-2xl rotate-[3deg] hover:rotate-0 transition-all duration-500">
-                    <Image src="/phone.jpg" alt="Vente" fill className="object-cover scale-125  0" />
+                  <div className="relative h-96 rounded-[2rem] overflow-hidden shadow-2xl rotate-[3deg] hover:rotate-0 transition-all duration-500">
+                    <Image src="/phone.jpg" alt="Vente" fill className="object-cover scale-125" />
                   </div>
                   <div className="bg-[#1b3226] p-10 rounded-[2rem] text-[#D4E84A] shadow-xl rotate-[2deg]">
                      <LayoutGrid size={32} className="mb-4" />
@@ -95,15 +199,14 @@ export default function KisiwaHomePage() {
                      <p className="font-bold text-2xl leading-tight tracking-tighter">Échanges directs et sécurisés.</p>
                   </div>
                   <div className="relative h-80 rounded-[2rem] overflow-hidden shadow-2xl rotate-[-3deg] hover:rotate-0 transition-all duration-500">
-                    <Image src="/colis.png"  alt="Produits" fill className="object-cover scale-125  0" />
+                    <Image src="/colis.png"  alt="Produits" fill className="object-cover scale-125" />
                   </div>
-                  
                 </div>
               </div>
             </div>
             <div className="lg:col-span-5 space-y-12 order-1 lg:order-2">
               {[
-                { title: "Découverte variée", text: "Parcourez des milliers d'annonces : emploi, logement, véhicules ou objets du quotidien.", num: "01" },
+                { title: "Découverte variée", text: "Parcourez des thousands d'annonces : emploi, logement, véhicules ou objets du quotidien.", num: "01" },
                 { title: "Direct & Humain", text: "Discutez directement avec les vendeurs et organisez vos rencontres en toute simplicité.", num: "02" },
                 { title: "Spécial Diaspora", text: "Un pont unique entre la France et les Comores pour vos envois de fret et investissements.", num: "03" }
               ].map((item, i) => (
@@ -122,169 +225,169 @@ export default function KisiwaHomePage() {
         </div>
       </section>
 
-{/* SECTION AVIS UTILISATEURS */}
-<section className="py-32 px-6 bg-[#1b3226] relative overflow-hidden">
-  {/* Cercles décoratifs en arrière-plan */}
-  <div className="absolute top-[-80px] right-[-80px] w-[400px] h-[400px] rounded-full border border-white/5 pointer-events-none" />
-  <div className="absolute bottom-[-120px] left-[-60px] w-[500px] h-[500px] rounded-full border border-white/5 pointer-events-none" />
+      
+      {/* SECTION AVIS UTILISATEURS */}
+      <section className="py-32 px-6 bg-[#1b3226] relative overflow-hidden">
+        {/* Cercles décoratifs en arrière-plan */}
+        <div className="absolute top-[-80px] right-[-80px] w-[400px] h-[400px] rounded-full border border-white/5 pointer-events-none" />
+        <div className="absolute bottom-[-120px] left-[-60px] w-[500px] h-[500px] rounded-full border border-white/5 pointer-events-none" />
 
-  <div className="max-w-7xl mx-auto">
-    {/* Header */}
-    <div className="text-center mb-20">
-      <span className="text-[#D4E84A]/60 font-bold tracking-[0.4em] uppercase text-xs">
-        Témoignages
-      </span>
-      <h2
-        className="text-4xl md:text-6xl font-bold text-white mt-4"
-        style={{ fontFamily: "'Syne', sans-serif" }}
-      >
-        Ce qu{`'`}ils{" "}
-        <span className="italic font-serif font-light text-[#D4E84A]">
-          en disent.
-        </span>
-      </h2>
-    </div>
+        <div className="max-w-7xl mx-auto">
+          {/* Header */}
+          <div className="text-center mb-20">
+            <span className="text-[#D4E84A]/60 font-bold tracking-[0.4em] uppercase text-xs">
+              Témoignages
+            </span>
+            <h2
+              className="text-4xl md:text-6xl font-bold text-white mt-4"
+              style={{ fontFamily: "'Syne', sans-serif" }}
+            >
+              Ce qu{`'`}ils{" "}
+              <span className="italic font-serif font-light text-[#D4E84A]">
+                en disent.
+              </span>
+            </h2>
+          </div>
 
-    {/* Grille d'avis */}
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-      {[
-        {
-          name: "Fatima A.",
-          location: "Moroni, Grande Comore",
-          avatar: "FA",
-          rating: 5,
-          text: "J'ai vendu mon scooter en moins de 48h ! La plateforme est simple, les acheteurs sérieux. Je ne passe plus par autre chose.",
-          tag: "Vente rapide",
-        },
-        {
-          name: "Youssouf M.",
-          location: "Paris, France",
-          avatar: "YM",
-          rating: 5,
-          text: "Enfin un site qui comprend nos besoins. J'envoie du fret depuis la France régulièrement, et kisiwa m'a mis en contact avec le bon prestataire en quelques minutes.",
-          tag: "Diaspora",
-          featured: true,
-        },
-        {
-          name: "Raïssa H.",
-          location: "Marseille, France",
-          avatar: "RH",
-          rating: 5,
-          text: "Le système de messagerie est top, on se sent protégé. J'ai trouvé un logement pour mes vacances aux Comores sans stress.",
-          tag: "Immobilier",
-        },
-        {
-          name: "Ibrahim S.",
-          location: "Mutsamudu, Anjouan",
-          avatar: "IS",
-          rating: 5,
-          text: "Les annonces d'emploi sont vraiment localisées. J'ai décroché un entretien en une semaine. Très bonne expérience.",
-          tag: "Emploi",
-        },
-        {
-          name: "Nassur D.",
-          location: "Lyon, France",
-          avatar: "ND",
-          rating: 5,
-          text: "Interface propre, rapide. On sent que c'est fait pour nous. J'ai recommandé à toute ma famille restée aux Comores.",
-          tag: "Communauté",
-        },
-        {
-          name: "Zalia O.",
-          location: "Fomboni, Mohéli",
-          avatar: "ZO",
-          rating: 4,
-          text: "Très pratique pour acheter et vendre localement. J'espère voir encore plus de catégories à l'avenir, mais déjà très satisfaite !",
-          tag: "Achats",
-        },
-      ].map((review, i) => (
-        <div
-          key={i}
-          className={`relative rounded-[2rem] p-8 flex flex-col gap-6 transition-all duration-300 hover:-translate-y-1 ${
-            review.featured
-              ? "bg-[#D4E84A] text-[#1b3226]"
-              : "bg-white/5 border border-white/10 text-white"
-          }`}
-        >
-          {/* Tag */}
-          <span
-            className={`text-xs font-bold tracking-widest uppercase px-3 py-1 rounded-full w-fit ${
-              review.featured
-                ? "bg-[#1b3226]/15 text-[#1b3226]"
-                : "bg-white/10 text-[#D4E84A]"
-            }`}
-          >
-            {review.tag}
-          </span>
-
-          {/* Étoiles */}
-          <div className="flex gap-1">
-            {Array.from({ length: 5 }).map((_, s) => (
-              <svg
-                key={s}
-                width="16"
-                height="16"
-                viewBox="0 0 16 16"
-                fill={s < review.rating ? (review.featured ? "#1b3226" : "#D4E84A") : "transparent"}
-                stroke={s < review.rating ? (review.featured ? "#1b3226" : "#D4E84A") : (review.featured ? "#1b3226/40" : "rgba(255,255,255,0.2)")}
-                strokeWidth="1.5"
+          {/* Grille d'avis */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              {
+                name: "Fatima A.",
+                location: "Moroni, Grande Comore",
+                avatar: "FA",
+                rating: 5,
+                text: "J'ai vendu mon scooter en moins de 48h ! La plateforme est simple, les acheteurs sérieux. Je ne passe plus par autre chose.",
+                tag: "Vente rapide",
+              },
+              {
+                name: "Youssouf M.",
+                location: "Paris, France",
+                avatar: "YM",
+                rating: 5,
+                text: "Enfin un site qui comprend nos besoins. J'envoie du fret depuis la France régulièrement, et kisiwa m'a mis en contact avec le bon prestataire en quelques minutes.",
+                tag: "Diaspora",
+                featured: true,
+              },
+              {
+                name: "Raïssa H.",
+                location: "Marseille, France",
+                avatar: "RH",
+                rating: 5,
+                text: "Le système de messagerie est top, on se sent protégé. J'ai trouvé un logement pour mes vacances aux Comores sans stress.",
+                tag: "Immobilier",
+              },
+              {
+                name: "Ibrahim S.",
+                location: "Mutsamudu, Anjouan",
+                avatar: "IS",
+                rating: 5,
+                text: "Les annonces d'emploi sont vraiment localisées. J'ai décroché un entretien en une semaine. Très bonne expérience.",
+                tag: "Emploi",
+              },
+              {
+                name: "Nassur D.",
+                location: "Lyon, France",
+                avatar: "ND",
+                rating: 5,
+                text: "Interface propre, rapide. On sent que c'est fait pour nous. J'ai recommandé à toute ma famille restée aux Comores.",
+                tag: "Communauté",
+              },
+              {
+                name: "Zalia O.",
+                location: "Fomboni, Mohéli",
+                avatar: "ZO",
+                rating: 4,
+                text: "Très pratique pour acheter et vendre localement. J'espère voir encore plus de catégories à l'avenir, mais déjà très satisfaite !",
+                tag: "Achats",
+              },
+            ].map((review, i) => (
+              <div
+                key={i}
+                className={`relative rounded-[2rem] p-8 flex flex-col gap-6 transition-all duration-300 hover:-translate-y-1 ${
+                  review.featured
+                    ? "bg-[#D4E84A] text-[#1b3226]"
+                    : "bg-white/5 border border-white/10 text-white"
+                }`}
               >
-                <polygon points="8,1 10,6 15,6 11,9.5 12.5,15 8,12 3.5,15 5,9.5 1,6 6,6" />
-              </svg>
+                {/* Tag */}
+                <span
+                  className={`text-xs font-bold tracking-widest uppercase px-3 py-1 rounded-full w-fit ${
+                    review.featured
+                      ? "bg-[#1b3226]/15 text-[#1b3226]"
+                      : "bg-white/10 text-[#D4E84A]"
+                  }`}
+                >
+                  {review.tag}
+                </span>
+
+                {/* Étoiles */}
+                <div className="flex gap-1">
+                  {Array.from({ length: 5 }).map((_, s) => (
+                    <svg
+                      key={s}
+                      width="16"
+                      height="16"
+                      viewBox="0 0 16 16"
+                      fill={s < review.rating ? (review.featured ? "#1b3226" : "#D4E84A") : "transparent"}
+                      stroke={s < review.rating ? (review.featured ? "#1b3226" : "#D4E84A") : (review.featured ? "#1b3226/40" : "rgba(255,255,255,0.2)")}
+                      strokeWidth="1.5"
+                    >
+                      <polygon points="8,1 10,6 15,6 11,9.5 12.5,15 8,12 3.5,15 5,9.5 1,6 6,6" />
+                    </svg>
+                  ))}
+                </div>
+
+                {/* Citation */}
+                <p
+                  className={`text-lg leading-relaxed flex-1 ${
+                    review.featured ? "text-[#1b3226]" : "text-white/80"
+                  }`}
+                >
+                {review.text}
+                </p>
+
+                {/* Auteur */}
+                <div className="flex items-center gap-4 pt-2 border-t border-white/10">
+                  <div
+                    className={`w-11 h-11 rounded-full flex items-center justify-center font-bold text-sm shrink-0 ${
+                      review.featured
+                        ? "bg-[#1b3226] text-[#D4E84A]"
+                        : "bg-[#D4E84A]/20 text-[#D4E84A]"
+                    }`}
+                  >
+                    {review.avatar}
+                  </div>
+                  <div>
+                    <p className={`font-bold text-sm ${review.featured ? "text-[#1b3226]" : "text-white"}`}>
+                      {review.name}
+                    </p>
+                    <p className={`text-xs ${review.featured ? "text-[#1b3226]/60" : "text-white/40"}`}>
+                      {review.location}
+                    </p>
+                  </div>
+                </div>
+              </div>
             ))}
           </div>
 
-          {/* Citation */}
-          <p
-            className={`text-lg leading-relaxed flex-1 ${
-              review.featured ? "text-[#1b3226]" : "text-white/80"
-            }`}
-          >
-          {review.text}
-          </p>
-
-          {/* Auteur */}
-          <div className="flex items-center gap-4 pt-2 border-t border-white/10">
-            <div
-              className={`w-11 h-11 rounded-full flex items-center justify-center font-bold text-sm shrink-0 ${
-                review.featured
-                  ? "bg-[#1b3226] text-[#D4E84A]"
-                  : "bg-[#D4E84A]/20 text-[#D4E84A]"
-              }`}
-            >
-              {review.avatar}
+          {/* Score global */}
+          <div className="mt-16 flex flex-col md:flex-row items-center justify-center gap-6 text-center">
+            <div className="flex items-baseline gap-3">
+              <span className="text-6xl font-bold text-[#D4E84A]" style={{ fontFamily: "'Syne', sans-serif" }}>4.9</span>
+              <span className="text-white/40 text-lg">/5</span>
             </div>
+            <div className="hidden md:block w-px h-12 bg-white/10" />
             <div>
-              <p className={`font-bold text-sm ${review.featured ? "text-[#1b3226]" : "text-white"}`}>
-                {review.name}
-              </p>
-              <p className={`text-xs ${review.featured ? "text-[#1b3226]/60" : "text-white/40"}`}>
-                {review.location}
-              </p>
+              <p className="text-white font-medium text-lg">Note moyenne</p>
+              <p className="text-white/40 text-sm mt-1">Basée sur +2 400 avis vérifiés</p>
             </div>
           </div>
         </div>
-      ))}
-    </div>
-
-    {/* Score global */}
-    <div className="mt-16 flex flex-col md:flex-row items-center justify-center gap-6 text-center">
-      <div className="flex items-baseline gap-3">
-        <span className="text-6xl font-bold text-[#D4E84A]" style={{ fontFamily: "'Syne', sans-serif" }}>4.9</span>
-        <span className="text-white/40 text-lg">/5</span>
-      </div>
-      <div className="hidden md:block w-px h-12 bg-white/10" />
-      <div>
-        <p className="text-white font-medium text-lg">Note moyenne</p>
-        <p className="text-white/40 text-sm mt-1">Basée sur +2 400 avis vérifiés</p>
-      </div>
-    </div>
-  </div>
-</section>
-
+      </section>
 
       {/* 3. SECTION FAQ SIMPLE & MODERNE */}
-      <section className="  text-[#1b3226] py-32 px-6">
+      <section className="text-[#1b3226] py-32 px-6">
         <div className="max-w-3xl mx-auto">
           
           <div className="text-center mb-20">
@@ -314,7 +417,7 @@ export default function KisiwaHomePage() {
                     openIndex === index ? 'max-h-[200px] opacity-100' : 'max-h-0 opacity-0'
                   }`}
                 >
-                  <p className="text-[#1b3226]  text-lg leading-relaxed pb-8 pl-2 max-w-2xl">
+                  <p className="text-[#1b3226] text-lg leading-relaxed pb-8 pl-2 max-w-2xl">
                     {faq.answer}
                   </p>
                 </div>
@@ -323,7 +426,7 @@ export default function KisiwaHomePage() {
           </div>
 
           <div className="mt-20 p-8 rounded-[2rem] border border-white/5 bg-white/[0.02] text-center">
-             <p className="text-[#1b3226] ">
+             <p className="text-[#1b3226]">
                Vous avez une autre question ? 
                <Link href="contact-support" className="text-[#D4E84A] font-bold ml-2 hover:underline">
                  Contactez notre support →
@@ -333,8 +436,6 @@ export default function KisiwaHomePage() {
         </div>
       </section>
 
-    
-      
     </div>
   );
 }
