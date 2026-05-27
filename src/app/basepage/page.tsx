@@ -177,7 +177,7 @@ export default function KisiwaHomePage() {
           <div className="relative mb-24">
             <span className="text-[#1b3226]/40 font-bold tracking-[0.4em] uppercase text-xs text-center mx-auto">Innovation & Proximité</span>
             <h2 className="text-5xl md:text-7xl font-bold text-center mx-auto text-[#1b3226] mt-4" style={{ fontFamily: "'Syne', sans-serif" }}>
-              La plateforme <br /> <span className="italic font-serif font-light">qu{`'`}il vous faut.</span>
+              La plateforme   <span className="italic font-serif font-light">qu{`'`}il vous faut.</span>
             </h2>
           </div>
 
@@ -425,7 +425,7 @@ export default function KisiwaHomePage() {
             ))}
           </div>
 
-          <div className="mt-20 p-8 rounded-[2rem] border border-white/5 bg-white/[0.02] text-center">
+          <div className=" mt-12 rounded-[2rem] border border-white/5 bg-white/[0.02] text-center">
              <p className="text-[#1b3226]">
                Vous avez une autre question ? 
                <Link href="contact-support" className="text-[#D4E84A] font-bold ml-2 hover:underline">

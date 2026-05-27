@@ -77,7 +77,7 @@ export default function ElementCategory() {
               </p>
               <a
                 href="/add"
-                className="inline-block rounded-xl bg-[#1b3226] px-5 py-3 text-sm font-bold text-white transition hover:bg-red-700 active:scale-[0.99]"
+                className="inline-block rounded-xl bg-[#1b3226] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#0e1e16] active:scale-[0.99]"
               >
                 Publier une annonce
               </a>
