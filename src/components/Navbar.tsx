@@ -16,7 +16,7 @@ import {
   Smartphone,
   Sofa,
   Palmtree,
-  Bike,
+  
   Baby,
   Utensils,
   BookOpen,
@@ -28,8 +28,8 @@ import { usePathname } from "next/navigation"
 
 const categories = [
   { slug: "immobiliers", label: "Immobilier",  icon: <Building2 size={17} />     },
-  { slug: "cars",        label: "Véhicules",   icon: <Car size={17} />           },
-  { slug: "motos",       label: "Motos",       icon: <Bike size={17} />          },
+  { slug: "cars",        label: "Transports",   icon: <Car size={17} />           },
+   
   { slug: "hightech",    label: "High-Tech",   icon: <Smartphone size={17} />    },
   { slug: "cloths",      label: "Mode",        icon: <Shirt size={17} />         },
   { slug: "maison",      label: "Maison",      icon: <Sofa size={17} />          },
