@@ -138,17 +138,9 @@ export default function ElementCategory() {
 
         {status === "error" && (
           <div className="rounded-2xl border border-[#14211a]/10 bg-white p-8">
-            <p className="mb-1 text-lg font-bold">Le chargement a échoué</p>
-            <p className="mb-5 text-[#14211a]/70">
-              Vérifiez votre connexion, puis réessayez.
-            </p>
-            <button
-              type="button"
-              onClick={() => setReloadKey((k) => k + 1)}
-              className="rounded-xl bg-[#1b3226] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#0e1e16] active:scale-[0.99]"
-            >
-              Réessayer
-            </button>
+            <p className="mb-1 text-lg font-bold">Aucun article trouvé</p>
+             
+           
           </div>
         )}
 

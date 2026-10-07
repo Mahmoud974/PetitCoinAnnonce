@@ -1,183 +1,259 @@
 "use client";
 
-import { MapPin, ChevronRight, Heart, Share2 } from "lucide-react";
-import Icons from "./Icons";
+import { useState } from "react";
+import Link from "next/link";
 import { useParams } from "next/navigation";
+import {
+  MapPin,
+  Heart,
+  Share2,
+  ChevronRight,
+  Check,
+  ShieldAlert,
+  Flag,
+  MessageCircle,
+} from "lucide-react";
 import { FaStar } from "react-icons/fa";
-import { Button } from "../ui/button";
-import ImgItem from "./ImgItem";
-import Back from "../Back";
-import type { Post } from "@/types/post";
 import { MapContainer, TileLayer, Circle } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-const MAX_W   = "1280px"
+import Icons from "./Icons";
+import ImgItem from "./ImgItem";
+import { Button } from "../ui/button";
+import type { Post } from "@/types/post";
+
+const MAX_W = "1280px";
+
 export default function Product({ posts }: { posts: Post[] }) {
   const params = useParams();
   const slug = params?.slug as string;
-  const filterCard = posts?.filter((p: Post) => p.id === Number(slug));
+  const [liked, setLiked] = useState(false);
+  const [copied, setCopied] = useState(false);
 
-  if (!filterCard.length)
-    return <p className="text-center py-20 font-syne">Annonce introuvable</p>;
+  const found = (posts ?? []).filter((p: Post) => p.id === Number(slug));
 
-  const { title, ref, description, informations, category, price } = filterCard[0];
-  const position: [number, number] = [-11.7022, 43.2551];
+  if (!found.length) {
+    return (
+      <div
+        className="mx-auto w-full px-6 py-20 text-center"
+        style={{ maxWidth: MAX_W }}
+      >
+        <p className="mb-2 text-2xl font-bold text-[#1b3226]">Annonce introuvable</p>
+        <p className="mb-6 font-serif italic text-[#1b3226]/70">
+          Elle a peut-être été vendue ou supprimée.
+        </p>
+        <Link
+          href="/"
+          className="inline-block rounded-xl bg-[#D4E84A] px-5 py-3 text-sm font-bold text-[#1b3226] transition hover:brightness-95"
+        >
+          Retour à l'accueil
+        </Link>
+      </div>
+    );
+  }
+
+  // Champs optionnels : s'affichent seulement s'ils existent dans vos données
+  const post = found[0] as Post & Record<string, any>;
+  const { title = "", ref, description, informations, category, price } = post;
+
+  const words = String(title).split(" ");
+  const titleStrong = words.length > 2 ? words.slice(0, 2).join(" ") : title;
+  const titleSerif = words.length > 2 ? words.slice(2).join(" ") : "";
+
+  const priceText =
+    price !== undefined && price !== null && price !== "" && !isNaN(Number(price))
+      ? Number(price).toLocaleString("fr-FR") + "€"
+      : String(price ?? "Prix sur demande");
+
+  const position: [number, number] = [post.lat ?? -11.7022, post.lng ?? 43.2551];
+  const location: string = post.location ?? "Moroni, Comores";
+  const published = post.createdAt ? new Date(post.createdAt) : null;
+  const phone = String(post.whatsapp ?? post.phone ?? "").replace(/[^\d]/g, "");
+  const sellerName: string = post.dealerName ?? "Vendeur";
+
+  const share = async () => {
+    const url = window.location.href;
+    try {
+      if (navigator.share) await navigator.share({ title, url });
+      else {
+        await navigator.clipboard.writeText(url);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      }
+    } catch {}
+  };
 
   return (
-    <div className="flex items-center gap-3 px-6 pb-12 py-2.5 mx-auto w-full"
-    style={{ maxWidth: MAX_W }}>
-
-{/*       
-<header className="max-w-screen-xl mx-auto px-6 py-4 flex items-center justify-between">
-        <Back />
-      </header> */}
-
-      {/* ── MAIN aligné sur la navbar ── */}
-      <main className="max-w-screen-xl mx-auto px-6 mt-4 grid grid-cols-1 lg:grid-cols-12 gap-10">
-
+    <div className="mx-auto w-full px-6 pb-16" style={{ maxWidth: MAX_W }}>
+      <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-[minmax(0,1fr)_380px]">
         {/* ── COLONNE GAUCHE ── */}
-        <div className="lg:col-span-8 space-y-10">
-
-          <div className="relative rounded-[1rem] overflow-hidden shadow-sm aspect-[16/10] bg-white">
+        <div className="min-w-0 space-y-10">
+          {/* Galerie */}
+          <div className="    ">
             <ImgItem />
-            <div className="absolute top-6 left-6 flex gap-2">
-              <span className="bg-white/90 backdrop-blur px-3 py-1 rounded-full text-[10px] font-bold">
-                1 / 3
-              </span>
-            </div>
           </div>
 
-          <section className="space-y-4 pt-4 border-t border-[#1b3226]/5">
-            <div className="flex items-center gap-4">
-              <span className="bg-[#D4E84A] px-2 py-0.5 rounded-sm text-[10px] font-black uppercase tracking-widest">
+          {/* En-tête de l'annonce */}
+          <section>
+            <div className="mb-4 flex items-center gap-3">
+              <span className="rounded-full bg-[#D4E84A] px-2.5 py-[3px] text-[10px] font-bold uppercase tracking-wider text-[#1b3226]">
                 {category}
               </span>
-              <span className="text-[10px] text-[#1b3226]/30 font-bold tracking-widest uppercase">
-                REF_{ref}
-              </span>
+              {ref && <span className="text-xs text-[#1b3226]/50">Réf. {ref}</span>}
             </div>
 
-            <h1 className="flex flex-col leading-[0.8] tracking-tighter uppercase italic">
-              <span
-                className="text-5xl md:text-8xl font-black italic tracking-tighter"
-                style={{ fontFamily: "'Syne', sans-serif" }}
-              >
-                {title.split(" ").slice(0, 2).join(" ")}
-              </span>
-              <span
-                className="text-4xl md:text-7xl font-medium tracking-tight -mt-1 md:-mt-2"
-                style={{
-                  fontFamily: "'Playfair Display', serif",
-                  fontStyle: "italic",
-                  textTransform: "none",
-                }}
-              >
-                {title.split(" ").slice(2).join(" ")}
-              </span>
+            <h1
+              className="text-3xl font-bold leading-tight tracking-tight text-[#1b3226] md:text-5xl"
+              style={{ fontFamily: "'Syne', sans-serif" }}
+            >
+              {titleStrong}
+              {titleSerif && (
+                <>
+                  {" "}
+                  <span className="font-serif font-normal italic">{titleSerif}</span>
+                </>
+              )}
             </h1>
 
-            <div className="flex gap-12 pt-8">
-              <div className="flex flex-col gap-1">
-                <span className="text-[10px] uppercase opacity-30 font-bold tracking-widest">
-                  Localisation
-                </span>
-                <div className="flex items-center gap-1 font-bold text-sm">
-                  <MapPin className="w-4 h-4 text-[#D4E84A]" /> Moroni, Comores
+            <dl className="mt-6 flex flex-wrap gap-3">
+              <div className="flex items-center gap-2 rounded-2xl bg-white px-4 py-3 ring-1 ring-[#1b3226]/10">
+                <MapPin className="h-4 w-4 text-[#1b3226]" aria-hidden />
+                <dt className="sr-only">Localisation</dt>
+                <dd className="text-sm font-semibold">{location}</dd>
+              </div>
+              {published && !isNaN(published.getTime()) && (
+                <div className="rounded-2xl bg-white px-4 py-3 ring-1 ring-[#1b3226]/10">
+                  <dt className="sr-only">Publication</dt>
+                  <dd className="text-sm font-semibold">
+                    Publiée le{" "}
+                    {published.toLocaleDateString("fr-FR", {
+                      day: "numeric",
+                      month: "short",
+                      year: "numeric",
+                    })}
+                  </dd>
                 </div>
-              </div>
-              <div className="flex flex-col gap-1">
-                <span className="text-[10px] uppercase opacity-30 font-bold tracking-widest">
-                  Publication
-                </span>
-                <span className="font-bold text-sm">Il y a 3 jours</span>
-              </div>
-              <div className="flex flex-col gap-1">
-                <span className="text-[10px] uppercase opacity-30 font-bold tracking-widest">
-                  État
-                </span>
-                <span className="bg-[#1b3226] text-[#D4E84A] px-2 py-0.5 rounded text-[10px] font-bold self-start">
-                  Excellent
-                </span>
-              </div>
-            </div>
+              )}
+              {post.condition && (
+                <div className="rounded-2xl bg-[#1b3226] px-4 py-3 text-[#D4E84A]">
+                  <dt className="sr-only">État</dt>
+                  <dd className="flex items-center gap-1.5 text-sm font-semibold">
+                    <Check className="h-4 w-4" aria-hidden />
+                    {post.condition}
+                  </dd>
+                </div>
+              )}
+            </dl>
           </section>
 
-          <div className="py-10 border-t border-[#1b3226]/5">
-            <h3 className="text-xs font-black uppercase tracking-[0.2em] mb-6 opacity-40">
-              Description
-            </h3>
-            <p className="text-xl leading-relaxed font-medium text-[#1b3226]/80 max-w-2xl">
-              {description}
-            </p>
-          </div>
+          {/* Description */}
+          {description && (
+            <section>
+              <h2 className="mb-4 text-2xl font-bold text-[#1b3226]">Description</h2>
+              <p className="max-w-2xl whitespace-pre-line font-serif text-lg leading-relaxed text-[#1b3226]/85">
+                {description}
+              </p>
+            </section>
+          )}
 
-          <Icons informations={informations} />
+          {/* Caractéristiques */}
+          {informations && (
+            <section>
+              <h2 className="mb-4 text-2xl font-bold text-[#1b3226]">Caractéristiques</h2>
+              <Icons informations={informations} />
+            </section>
+          )}
         </div>
 
         {/* ── COLONNE DROITE ── */}
-        <div className="lg:col-span-4">
-          <div className="bg-[#1b3226] rounded-[2.5rem] p-8 text-white shadow-2xl sticky top-6 space-y-6">
-
-            {/* Favoris / Partager */}
-            <div className="flex gap-2">
-              <button className="flex-1 h-12 rounded-2xl border border-white/10 flex items-center justify-center gap-2 text-xs font-bold uppercase tracking-widest text-white/60 hover:bg-white/5 hover:text-white transition-all">
-                <Heart className="w-4 h-4" />
-                Favoris
-              </button>
-              <button className="flex-1 h-12 rounded-2xl border border-white/10 flex items-center justify-center gap-2 text-xs font-bold uppercase tracking-widest text-white/60 hover:bg-white/5 hover:text-white transition-all">
-                <Share2 className="w-4 h-4" />
-                Partager
-              </button>
-            </div>
-
-            {/* Prix */}
-            <div>
-              <p className="text-[10px] uppercase tracking-[0.2em] opacity-40 mb-2">
-                Prix souhaité
-              </p>
-              <div
-                className="text-6xl font-black text-[#D4E84A] tracking-tighter italic"
-                style={{ fontFamily: "'Syne', sans-serif" }}
-              >
-                {price}€
+        <aside className="space-y-4 lg:sticky lg:top-6">
+          <div className="space-y-6 rounded-[2rem] bg-[#1b3226] p-7 text-white shadow-[0_10px_30px_-12px_rgba(27,50,38,0.45)]">
+            {/* Prix + actions */}
+            <div className="flex items-start justify-between gap-3">
+              <div>
+                <p className="mb-2 text-xs text-white/60">Prix souhaité</p>
+                <p className="text-5xl font-bold leading-none text-[#D4E84A]">{priceText}</p>
+              </div>
+              <div className="flex items-center">
+                <button
+                  type="button"
+                  onClick={share}
+                  aria-label="Partager l'annonce"
+                  className="rounded-full p-2.5 transition hover:bg-white/10"
+                >
+                  {copied ? (
+                    <Check className="h-5 w-5" />
+                  ) : (
+                    <Share2 className="h-5 w-5" strokeWidth={1.5} />
+                  )}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setLiked((v) => !v)}
+                  aria-label={liked ? "Retirer des favoris" : "Ajouter aux favoris"}
+                  aria-pressed={liked}
+                  className="rounded-full p-2.5 transition hover:bg-white/10"
+                >
+                  <Heart
+                    className={`h-5 w-5 ${liked ? "fill-[#D4E84A] stroke-[#D4E84A]" : "stroke-white"}`}
+                    strokeWidth={1.5}
+                  />
+                </button>
               </div>
             </div>
 
-            {/* Boutons CTA */}
+            {/* Contact */}
             <div className="space-y-3">
-              <Button className="w-full h-16 rounded-2xl bg-[#D4E84A] text-[#1b3226] hover:scale-[1.02] transition-all font-black text-lg uppercase italic tracking-tighter">
+              <Button className="h-14 w-full rounded-xl bg-[#D4E84A] text-base font-bold text-[#1b3226] transition hover:bg-[#D4E84A] hover:brightness-95 active:scale-[0.99]">
                 Faire une offre
               </Button>
-              <div className="w-full h-16 rounded-2xl border border-white/10 flex items-center justify-center font-bold uppercase italic text-sm tracking-widest hover:bg-white/5 cursor-pointer transition-all">
-                Contacter le vendeur
-              </div>
+
+              {phone ? (
+                <a
+                  href={`https://wa.me/${phone}?text=${encodeURIComponent(
+                    `Bonjour, je suis intéressé(e) par votre annonce « ${title} » sur Kisiwa.`
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex h-14 w-full items-center justify-center gap-2 rounded-xl border border-white/25 font-semibold transition hover:bg-white/10"
+                >
+                  <MessageCircle className="h-5 w-5" aria-hidden />
+                  Contacter sur WhatsApp
+                </a>
+              ) : (
+                <button
+                  type="button"
+                  className="flex h-14 w-full items-center justify-center rounded-xl border border-white/25 font-semibold transition hover:bg-white/10"
+                >
+                  Contacter le vendeur
+                </button>
+              )}
             </div>
 
             {/* Vendeur */}
-            <div className="pt-6 border-t border-white/5">
-              <div className="bg-white rounded-3xl p-4 flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-full bg-[#1b3226] flex items-center justify-center font-black text-white">
-                    M
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-[#1b3226] leading-none">Moussa. A</h4>
-                    <div className="flex items-center gap-1 mt-1">
-                      <FaStar className="text-[#D4E84A] w-2.5 h-2.5" />
-                      <span className="text-[10px] text-[#1b3226]/40">(12 avis)</span>
-                    </div>
-                  </div>
+            <div className="flex items-center justify-between rounded-2xl bg-white p-4 text-[#1b3226]">
+              <div className="flex min-w-0 items-center gap-3">
+                <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-[#1b3226] font-bold text-white">
+                  {sellerName.trim().charAt(0).toUpperCase()}
                 </div>
-                <div className="w-8 h-8 rounded-full border border-[#1b3226]/10 flex items-center justify-center text-[#1b3226]">
-                  <ChevronRight className="w-4 h-4" />
+                <div className="min-w-0">
+                  <h3 className="truncate font-bold leading-none">{sellerName}</h3>
+                  {typeof post.reviewsCount === "number" && post.reviewsCount > 0 ? (
+                    <div className="mt-1.5 flex items-center gap-1 text-xs text-[#1b3226]/60">
+                      <FaStar className="h-3 w-3 text-[#D4E84A]" aria-hidden />
+                      {post.reviewsCount} avis
+                    </div>
+                  ) : (
+                    <p className="mt-1.5 text-xs text-[#1b3226]/60">
+                      {post.isPro ? "Vendeur professionnel" : "Particulier"}
+                    </p>
+                  )}
                 </div>
               </div>
+              <ChevronRight className="h-5 w-5 flex-shrink-0 text-[#1b3226]/50" aria-hidden />
             </div>
 
-            {/* Map intégrée */}
-            <div
-              className="rounded-[1.5rem] overflow-hidden border border-white/10"
-              style={{ height: "180px" }}
-            >
+            {/* Carte */}
+            <div className="overflow-hidden rounded-2xl border border-white/10" style={{ height: 180 }}>
               <MapContainer
                 center={position}
                 zoom={13}
@@ -190,20 +266,33 @@ export default function Product({ posts }: { posts: Post[] }) {
                 <Circle
                   center={position}
                   radius={800}
-                  pathOptions={{
-                    color: "#D4E84A",
-                    fillColor: "#D4E84A",
-                    fillOpacity: 0.15,
-                    weight: 2,
-                  }}
+                  pathOptions={{ color: "#D4E84A", fillColor: "#D4E84A", fillOpacity: 0.15, weight: 2 }}
                 />
               </MapContainer>
             </div>
-
           </div>
-        </div>
 
-      </main>
+          {/* Sécurité */}
+          <div className="rounded-[2rem] bg-white p-6 ring-1 ring-[#1b3226]/10">
+            <p className="mb-2 flex items-center gap-2 font-bold text-[#1b3226]">
+              <ShieldAlert className="h-5 w-5" aria-hidden />
+              Achetez en toute sécurité
+            </p>
+            <ul className="list-disc space-y-1 pl-5 text-sm text-[#1b3226]/75">
+              <li>Rencontrez le vendeur dans un lieu public.</li>
+              <li>Vérifiez le produit avant de payer.</li>
+              <li>N'envoyez jamais d'argent à l'avance.</li>
+            </ul>
+            <Link
+              href={`/contact?signaler=${post.id}`}
+              className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-[#1b3226] underline underline-offset-4"
+            >
+              <Flag className="h-4 w-4" aria-hidden />
+              Signaler cette annonce
+            </Link>
+          </div>
+        </aside>
+      </div>
     </div>
   );
 }
