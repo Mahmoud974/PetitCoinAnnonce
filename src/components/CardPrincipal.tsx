@@ -86,7 +86,7 @@ export default function CardModern({ posts }: { posts: Post }) {
           <div className="flex justify-between items-end">
             <div className="flex flex-col">
               <span className="text-3xl font-black text-[#D4E84A] tracking-tighter">
-                {price.toLocaleString()}€
+                {Number(price).toLocaleString("fr-FR")} €
               </span>
               {likes > 0 && (
                 <span className="text-[10px] text-white/50 italic mt-1">

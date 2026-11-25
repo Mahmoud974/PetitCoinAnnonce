@@ -108,5 +108,5 @@ export const clothsElements = [
       saison: "Toutes saisons",
       origine: "France"
     }
-  }
+  },
 ];

@@ -1,69 +1,104 @@
 generator client {
   provider = "prisma-client"
+  output   = "../src/generated/prisma"
 }
+
 
 datasource db {
   provider = "postgresql"
- 
- 
+}
+
+enum TypeAnnonce {
+  OFFRE
+  DEMANDE
+}
+
+enum Statut {
+  ACTIVE
+  PAUSE
+}
+
+enum Devise {
+  KMF
+  EUR
+}
+
+enum TypePrix {
+  FIXE
+  GRATUIT
+  A_NEGOCIER
+  PAR_MOIS
 }
 
 model Utilisateur {
-  id              String     @id @default(cuid())
+  id              String    @id @default(cuid())
   nom             String
-  email           String     @unique
-  motDePasse      String
+  email           String    @unique
+  motDePasse      String?   // hash bcrypt/argon2, jamais en clair
   telephone       String?
-  dateInscription DateTime   @default(now())
-  
-  // Relations
+  genre           String?
+  dateNaissance   DateTime?
+  adresse         String?
+  modeVacances    Boolean   @default(false)
+  dateInscription DateTime  @default(now())
+
   annonces        Annonce[]
   favoris         Favori[]
-  messagesEnvoyes Message[]  @relation("Expediteur")
-  messagesRecus   Message[]  @relation("Destinataire")
+  messagesEnvoyes Message[] @relation("Expediteur")
+  messagesRecus   Message[] @relation("Destinataire")
 }
 
 model Annonce {
-  id           String   @id @default(cuid())
-  titre        String
-  description  String
-  prix         Float
-  categorie    String
-  ville        String
-  photos       String[]  
-  dateCreation DateTime @default(now())
-  statut       String   @default("active")  
-  
- 
+  id            String      @id @default(cuid())
+  type          TypeAnnonce @default(OFFRE)
+  titre         String
+  description   String
+  infosComp     String?
+  categorie     String      // slug : "immobilier", "vehicules", ...
+  ville         String
+  photos        String[]
+
+  prix          Int?
+  devise        Devise      @default(KMF)
+  typePrix      TypePrix    @default(FIXE)
+
+  contact       String
+  modeContact   String?
+  professionnel Boolean     @default(false)
+
+  statut        Statut      @default(ACTIVE)
+  dateCreation  DateTime    @default(now())
+
   utilisateurId String
-  utilisateur   Utilisateur @relation(fields: [utilisateurId], references: [id])
+  utilisateur   Utilisateur @relation(fields: [utilisateurId], references: [id], onDelete: Cascade)
   favoris       Favori[]
   messages      Message[]
+
+  @@index([categorie, dateCreation])
+  @@index([utilisateurId])
 }
 
 model Favori {
-  id         String   @id @default(cuid())
-  dateAjout  DateTime @default(now())
-  
-  // Relations
+  id        String   @id @default(cuid())
+  dateAjout DateTime @default(now())
+
   utilisateurId String
-  utilisateur   Utilisateur @relation(fields: [utilisateurId], references: [id])
+  utilisateur   Utilisateur @relation(fields: [utilisateurId], references: [id], onDelete: Cascade)
   annonceId     String
-  annonce       Annonce @relation(fields: [annonceId], references: [id])
-  
-  @@unique([utilisateurId, annonceId])  
+  annonce       Annonce     @relation(fields: [annonceId], references: [id], onDelete: Cascade)
+
+  @@unique([utilisateurId, annonceId])
 }
 
 model Message {
-  id          String   @id @default(cuid())
-  contenu     String
-  dateEnvoi   DateTime @default(now())
-  
-  // Relations
-  expediteurId    String
-  expediteur      Utilisateur @relation("Expediteur", fields: [expediteurId], references: [id])
-  destinataireId  String
-  destinataire    Utilisateur @relation("Destinataire", fields: [destinataireId], references: [id])
-  annonceId       String
-  annonce         Annonce @relation(fields: [annonceId], references: [id])
+  id        String   @id @default(cuid())
+  contenu   String
+  dateEnvoi DateTime @default(now())
+
+  expediteurId   String
+  expediteur     Utilisateur @relation("Expediteur", fields: [expediteurId], references: [id], onDelete: Cascade)
+  destinataireId String
+  destinataire   Utilisateur @relation("Destinataire", fields: [destinataireId], references: [id], onDelete: Cascade)
+  annonceId      String
+  annonce        Annonce     @relation(fields: [annonceId], references: [id], onDelete: Cascade)
 }

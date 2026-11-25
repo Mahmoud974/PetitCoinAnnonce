@@ -10,7 +10,7 @@ import { voyageElements } from "@/app/db/items/voyage";
 import { servicesElements } from "@/app/db/items/services";
 import { immobilierElements } from "@/app/db/items/immobiliers";
 import { houseGardenElements } from "@/app/db/items/house-garden";
-
+import { hightechElements } from "@/app/db/items/hightech";
 
 
 const dataByCategory = {
@@ -24,7 +24,9 @@ const dataByCategory = {
   travel: voyageElements,
   services: servicesElements,
   immobiliers: immobilierElements,
-  houses: houseGardenElements
+  "house-garden": houseGardenElements,
+  hightech: hightechElements,
+  voyage: voyageElements,
 } as const;
 
 type Category = keyof typeof dataByCategory;
